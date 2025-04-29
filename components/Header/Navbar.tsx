@@ -12,7 +12,7 @@ import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
-  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
+  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />
 });
 
 const Navbar = () => {
@@ -82,9 +82,115 @@ const Navbar = () => {
             />
           </div>
         </Link>
+        {/* <!-- Danh mục & Địa điểm --> */}
+        <div className="flex space-x-2">
+          {/* <!-- Danh mục --> */}
+          <div className="relative">
+            <button
+              id="menu-btn"
+              className="bg-red-500 hover:bg-red-400 px-3 py-2 rounded-md flex items-center space-x-1"
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <span>Danh mục</span>
+            </button>
+            {/* <!-- Dropdown Danh mục --> */}
+            <div
+              id="menu-dropdown"
+              className="absolute mt-1 hidden bg-white text-black rounded-md shadow-lg w-48 z-10"
+            >
+              <ul>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Điện thoại
+                </li>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Laptop
+                </li>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Máy tính bảng
+                </li>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Phụ kiện
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* <!-- Vị trí --> */}
+          <div className="relative">
+            <button className="bg-red-500 hover:bg-red-400 px-3 py-2 rounded-md flex items-center space-x-1">
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                />
+              </svg>
+              <div className="flex flex-col items-start text-left leading-tight">
+                <span className="text-xs">Xem giá tại</span>
+                <span className="font-semibold">Hồ Chí Minh</span>
+              </div>
+              <svg
+                className="w-4 h-4 ml-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+            {/* <!-- Dropdown Tỉnh Thành --> */}
+            <div
+              className="absolute mt-1 hidden bg-white text-black rounded-md shadow-lg w-48 z-10"
+              id="city-dropdown"
+            >
+              <input
+                type="text"
+                placeholder="Nhập tỉnh/thành"
+                className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none"
+              />
+              <ul className="max-h-48 overflow-y-auto">
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Hà Nội
+                </li>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Đà Nẵng
+                </li>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Cần Thơ
+                </li>
+                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
+                  Huế
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
         {/* Navigation */}
-        <nav className="hidden text-white md:flex items-center space-x-6 text-sm text-gray-700">
+        {/* <nav className="hidden text-white md:flex items-center space-x-6 text-sm text-gray-700">
           <Link href="/Product" className="text-xl hover:text-gray-900">
             Products
           </Link>
@@ -94,7 +200,7 @@ const Navbar = () => {
           <a href="#" className="text-xl hover:text-gray-900">
             Contacts
           </a>
-        </nav>
+        </nav> */}
 
         {/* Search and Icons */}
         <div className="flex items-center text-white space-x-4">
@@ -144,6 +250,32 @@ const Navbar = () => {
                 ))}
               </div>
             )}
+          </div>
+          {/* <!-- Liên hệ, vị trí, giao hàng, giỏ hàng --> */}
+          <div className="flex items-center space-x-1">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M2 8c0-1.1.9-2 2-2h2l3.6 7.59-1.35 2.45A1.99 1.99 0 0 0 8 18h12v-2H8.42c-.14 0-.25-.11-.25-.25l.03-.12L9.1 14h7.45c.75 0 1.41-.41 1.75-1.03L23 4H6" />
+            </svg>
+            <a href="#">
+              <p>Hotline</p>
+              <p>0922306268 - 0928206268 </p>
+            </a>
+          </div>
+          <div className="flex items-center space-x-1">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+            </svg>
+            <span>Cửa hàng</span>
           </div>
 
           {/* Cart */}
