@@ -1,139 +1,238 @@
-import {
-  FaFacebookF,
-  FaYoutube,
-  FaTiktok,
-  FaMapMarkerAlt,
-  FaPhone,
-  FaEnvelope,
-} from "react-icons/fa";
-import { RiMessengerFill } from "react-icons/ri";
-import { SiZalo } from "react-icons/si";
-import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 import Image from "next/image";
+import React from "react";
+import LogoImage from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
+import notificationImage from "@/public/Image/dathongbao_48067cd02fae41b68bf0294777c39c94_compact.png";
+import zaloImage from "@/public/Image/zalo1.png";
+import faceImage from "@/public/Image/facebook.png";
+import tiktookImage from "@/public/Image/icon_left_icon_1.webp";
+import youtubeImage from "@/public/Image/youtube.png";
+import messImage from "@/public/Image/messenger-fb_8fcc524fbaad4b1195a150dc5e0575d7.webp";
+import codImage1 from "@/public/Image/2_anhicon1.webp";
+import codImage2 from "@/public/Image/2_anhicon2.webp";
 const Footer = () => {
   return (
-    <footer className="bg-black text-white text-sm">
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-gray-700">
-        {/* Column 1 - Company Info */}
-        <div>
-          <h3 className="text-xl font-bold mb-4">ĐĂNG KÍ NHẬN TIN</h3>
-          <div className="flex mb-4">
+    <footer className="bg-black py-12 px-6 md:px-12 lg:px-24">
+      <section className=" py-4 border-b border-gray-600">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <h2 className="text-lg text-white d-flex row d-flex-center">
+            Đăng kí nhận tin
+          </h2>
+          <div className="flex w-full md:w-auto">
             <input
               type="email"
               placeholder="Email"
-              className="p-2 rounded-l bg-white text-black flex-grow"
+              className="px-4 py-2 w-full md:w-80 bg-white text-black rounded-l"
             />
-            <button className="bg-red-600 text-white px-4 py-2 rounded-r flex items-center gap-1">
-              <svg width="16" height="16" fill="currentColor">
-                <path d="M0 0h16v16H0z" fill="none" />
-                <path d="M1 14l13-6L1 2v4l9 2-9 2z" />
-              </svg>
-              ĐĂNG KÝ
+            <button className="text-white px-4 py-2 bg-red-600 hover:bg-red-700 transition rounded-r text-white font-semibold">
+              <i className="fas fa-paper-plane mr-1"></i> Đăng ký
             </button>
           </div>
-          <Image src={logo} alt="Komex" className="h-10 mb-3" />
-          {/* Bạn có thể thay đường dẫn logo tùy ý */}
-          <p className="flex items-center gap-2">
-            <FaMapMarkerAlt /> Địa chỉ: Thôn Thạch Lỗi, Xã Thanh Xuân, Huyện Sóc
-            Sơn, Hà Nội
+        </div>
+      </section>
+      <div className="container mx-auto text-center md:text-left grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* Logo and Description */}
+        <div className="mb-8 md:mb-0">
+          <a href="#" className="flex items-center mb-4">
+            <Image
+              src={LogoImage}
+              alt="Logo"
+              height={50}
+              width={200}
+              className="w-32 mb-4"
+            />
+          </a>
+          <p className="mb-3 font-semibold uppercase text-white">
+            Công Ty Cổ Phần Komex Việt Nam
           </p>
-          <p className="flex items-center gap-2 mt-2">
-            <FaPhone /> 1900 0267
-          </p>
-          <p className="flex items-center gap-2 mt-2">
-            <FaEnvelope /> tmdt@komex.com.vn
-          </p>
-          <p className="mt-2">MST: 0102675442</p>
-          <p>Cấp ngày: 11/03/2008</p>
-          <p>Nơi cấp: Sở KHĐT TP Hà Nội</p>
-          <img
-            src="/bo-cong-thuong.png"
-            alt="Bộ Công Thương"
-            className="h-8 mt-3"
+          <ul className="space-y-2 text-white text-sm">
+            <li className="flex items-start gap-2">
+              📍{" "}
+              <span>
+                Địa chỉ: Thôn Thạch Lỗi, Xã Thanh Xuân, Huyện Sóc Sơn, Hà Nội
+              </span>
+            </li>
+            <li className="flex items-start gap-2">
+              📞 <span>1900 0267</span>
+            </li>
+            <li className="flex items-start gap-2">
+              ✉️ <span>tmdt@komex.com.vn</span>
+            </li>
+            <li>MST: 0102675442</li>
+            <li>Cấp ngày: 11/03/2008</li>
+            <li>Nơi cấp: Phòng ĐKKD - Sở KH&ĐT TP Hà Nội</li>
+          </ul>
+          <Image
+            src={notificationImage}
+            alt="Đã thông báo BCT"
+            width={100}
+            height={100}
+            className="mt-5 w-28"
           />
+
+          {/* <!-- Social icons floating left & right --> */}
+          <div className="fixed left-2 top-1/2 transform -translate-y-1/2 flex flex-col gap-4">
+            <Image
+              src={tiktookImage}
+              className="w-8 cursor-pointer"
+              alt="TikTok"
+            />
+            <Image
+              src={faceImage}
+              className="w-8 cursor-pointer"
+              alt="Facebook"
+            />
+            <Image
+              src={youtubeImage}
+              className="w-8 cursor-pointer"
+              alt="YouTube"
+            />
+          </div>
+          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 flex flex-col gap-4">
+            <Image
+              src={messImage}
+              className="w-8 cursor-pointer"
+              alt="Messenger"
+            />
+            <Image src={zaloImage} className="w-8 cursor-pointer" alt="Zalo" />
+          </div>
         </div>
 
-        {/* Column 2 - Categories */}
+        {/* Company Links */}
         <div>
-          <h3 className="font-bold text-lg mb-4">DANH MỤC NỔI BẬT</h3>
-          <ul className="space-y-2">
-            <li>• Đang Khuyến Mãi</li>
-            <li>• Smart Tivi</li>
-            <li>• Thiết Bị Gia Dụng</li>
-            <li>• Robot Hút Bụi</li>
-            <li>• Lọc Không Khí</li>
-            <li>• Quạt Thông Minh</li>
-            <li>• Điện Lạnh</li>
-            <li>• Camera Giám Sát</li>
-            <li>• Thiết bị sức khỏe</li>
-            <li>• Thiết Bị Tin Học</li>
+          <h6 className="font-bold mb-4 uppercase text-white text-sm">
+            Danh mục nổi bật
+          </h6>
+          <ul className="space-y-2 text-white text-sm">
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500 transition">
+                Đang Khuyến Mãi
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500 transition">
+                Smart Tivi
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500 transition">
+                Thiết Bị Gia Dụng
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500 transition">
+                Robot Hút Bụi
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500 transition">
+                Lọc Không Khí
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-red-500 transition">
+                Quạt Thông Minh
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-red-500 transition">
+                Điện Lạnh
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-red-500 transition">
+                Camera Giám Sát
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-red-500 transition">
+                Thiết bị sức khỏe
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-red-500 transition">
+                Thiết Bị Tin Học
+              </a>
+            </li>
           </ul>
         </div>
 
-        {/* Column 3 - Customer Support */}
+        {/* Support Links */}
         <div>
-          <h3 className="font-bold text-lg mb-4">HỖ TRỢ KHÁCH HÀNG</h3>
-          <ul className="space-y-2">
-            <li>• Hướng dẫn mua hàng</li>
-            <li>• Chính Sách Bảo Hành</li>
-            <li>• Chăm Sóc Khách Hàng</li>
-            <li>• Chính sách kiểm hàng</li>
-            <li>• Chính sách đổi trả</li>
-            <li>• Phương thức thanh toán</li>
-            <li>• Thông tin về vận chuyển</li>
-            <li>• Chính sách bảo mật thông tin</li>
+          <h6 className="font-semibold text-white mb-4 uppercase">
+            Hỗ trợ khách hàng
+          </h6>
+          <ul className="text-white text-sm">
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Hướng dẫn mua hàng
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Chính Sách Bảo Hành
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Chăm Sóc Khách Hàng
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Chính sách kiểm hàng
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Chính sách đổi trả
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Phương thức thanh toán
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Thông tin về vận chuyển
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                Chính sách bảo vệ thông tin của khách hàng
+              </a>
+            </li>
           </ul>
         </div>
 
-        {/* Column 4 - Hotline & Payment */}
+        {/* Contact Info */}
         <div>
-          <h3 className="font-bold text-lg mb-4">TỔNG ĐÀI HỖ TRỢ</h3>
-          <p>
-            GỌI BẢO HÀNH:{" "}
-            <span className="text-blue-400">0928206268 - 0922306268</span>{" "}
-            (8h-17h)
-          </p>
-          <p className="mt-2">
-            GỌI HỖ TRỢ KỸ THUẬT:{" "}
-            <span className="text-blue-400">0862858466</span> (8h-17h)
-          </p>
-          <h3 className="font-bold text-lg mt-6 mb-2">
-            PHƯƠNG THỨC THANH TOÁN
-          </h3>
-          <div className="flex gap-2">
-            <img src="/payment-cod1.png" alt="COD 1" className="h-6" />
-            <img src="/payment-cod2.png" alt="COD 2" className="h-6" />
+          <h6 className="font-semibold text-white mb-4 uppercase">
+            Tổng đài hỗ trợ
+          </h6>
+          <ul className="text-white text-sm">
+            <li className="mb-2">
+              <a href="#" className="hover:text-red-500">
+                GỌI BẢO HÀNH 0928206268- 0922306268 (8h-17h)
+              </a>
+            </li>
+            <li>
+              <a href="#" className="hover:text-red-500">
+                GỌI HỖ TRỢ KỸ THUẬT: 0862858466 (8h-17h)
+              </a>
+            </li>
+          </ul>
+          <h4 className="text-white uppercase font-bold mb-3">
+            Phương Thức Thanh Toán
+          </h4>
+          <div className="flex gap-4">
+            <Image src={codImage1} alt="COD 1" className="w-14" />
+            <Image src={codImage2} alt="COD 2" className="w-14" />
           </div>
         </div>
       </div>
-
-      {/* Bottom Bar */}
-      <div className="flex justify-between items-center px-6 py-4 bg-neutral-900 text-xs">
-        <p>© Copyright 2025 By Komex Digital. Powered by Komex Việt Nam.</p>
-        <div className="flex gap-2">
-          <button className="bg-white text-black p-1 rounded-full">
-            <FaFacebookF />
-          </button>
-          <button className="bg-black text-white p-1 rounded-full border border-white">
-            <FaTiktok />
-          </button>
-          <button className="bg-red-600 text-white p-1 rounded-full">
-            <FaYoutube />
-          </button>
-        </div>
-      </div>
-
-      {/* Floating Buttons */}
-      <div className="fixed right-4 bottom-4 flex flex-col gap-3 z-50">
-        <button className="bg-blue-600 p-2 rounded-full shadow-lg">
-          <RiMessengerFill size={20} />
-        </button>
-        <button className="bg-cyan-500 p-2 rounded-full shadow-lg">
-          <SiZalo size={20} />
-        </button>
-        <button className="bg-red-600 p-2 rounded-full shadow-lg text-white font-bold text-lg">
-          ↑
-        </button>
+      <div className="mt-8 text-center text-gray-500 text-xs">
+        © Copyright 2025 By Komex Digital.Powered by Komex Việt Nam.
       </div>
     </footer>
   );
