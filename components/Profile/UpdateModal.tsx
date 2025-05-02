@@ -1,9 +1,10 @@
 "use client";
 
 import { Modal, Form, Input, Radio, DatePicker, Button } from "antd";
-import { useState } from "react";
+
 import { useAppSelector } from "@/Redux/hook";
 import dayjs from "dayjs";
+import { UserProfile } from "@/Utils/type";
 
 interface Props {
   open: boolean;
@@ -11,10 +12,11 @@ interface Props {
 }
 
 const UpdateProfileModal = ({ open, onClose }: Props) => {
-  const user: any = useAppSelector((state) => state.user.user);
+  const user: UserProfile =
+    useAppSelector((state) => state.user.user) || ({} as UserProfile);
   const [form] = Form.useForm();
 
-  const handleUpdate = (values: any) => {
+  const handleUpdate = (values: UserProfile) => {
     console.log("Updated values:", values);
     // TODO: Gửi dữ liệu lên server
     onClose();

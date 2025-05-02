@@ -1,7 +1,5 @@
 import { AiFillHome } from "react-icons/ai";
 
-import { AiOutlineUser } from "react-icons/ai";
-
 import { AiOutlineHeart } from "react-icons/ai";
 
 import { AiOutlineMenu } from "react-icons/ai";

@@ -8,9 +8,9 @@ import { CartIntemType } from "@/Utils/type";
 import Link from "next/link";
 
 interface CardProps {
-  id: number | any;
+  id: number;
   productname: string;
-  Price: number | any;
+  Price: number;
   pathimg: string;
   productCode: string;
 }

@@ -6,25 +6,26 @@ import dynamic from "next/dynamic";
 import { useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Avatar, Badge } from "antd";
-import { UserProfile } from "@/Utils/type";
+import { ProductType, UserProfile } from "@/Utils/type";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
-  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />
+  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
 });
 
 const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const storea = useAppSelector((state) => state.cart.items);
-  const user: UserProfile | any = useAppSelector((state) => state.user.user);
+  const user: UserProfile =
+    useAppSelector((state) => state.user.user) || ({} as UserProfile);
   const fullPath = `${baseURL}${user?.Photo}`;
   const productList = useAppSelector((state) => state.product.listProduct);
 
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchDropdownRef = useRef<HTMLDivElement>(null);
   const avatarDropdownRef = useRef<HTMLDivElement>(null);
