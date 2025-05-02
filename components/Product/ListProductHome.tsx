@@ -1,9 +1,10 @@
 "use client";
 
-import { Key, useState } from "react";
+import { useState } from "react";
 import { GetAllProduct } from "@/Apis/Product";
 import CardProduct from "./Card";
 import { useAppSelector } from "@/Redux/hook";
+import { ProductType } from "@/Utils/type";
 
 const ListProductHome = () => {
   GetAllProduct();
@@ -14,7 +15,7 @@ const ListProductHome = () => {
   // Tính chỉ số bắt đầu và kết thúc
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts: any = product?.slice(
+  const currentProducts: ProductType[] = product?.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
