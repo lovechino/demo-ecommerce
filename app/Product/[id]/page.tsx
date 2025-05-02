@@ -1,8 +1,8 @@
 import ProductDetailUi from "@/UI/Product/ProductDetail";
 
-interface PropsId {
+type PropsId = {
   params: { id: string };
-}
+};
 
 const ProductDetail = ({ params }: PropsId) => {
   return <ProductDetailUi id={params.id} />;
