@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: tech_cloud
     steps:
-      - uses: actions\checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Build
         run: |
