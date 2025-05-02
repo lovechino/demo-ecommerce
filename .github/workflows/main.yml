@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: tech_cloud
     steps:
       - uses: actions/checkout@v4
 
