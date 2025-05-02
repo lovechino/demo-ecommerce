@@ -28,7 +28,6 @@ jobs:
           Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\node_modules -Recurse -Force
           Copy-Item .\node_modules C:\inetpub\wwwroot\EcomKomex\standalone\node_modules -Recurse -Force
           Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\.env -Force
-          Copy-Item .\.next\.env C:\inetpub\wwwroot\EcomKomex\standalone\.env -Force
 
       - name: Restart IIS website EcomKomex
         run: |
