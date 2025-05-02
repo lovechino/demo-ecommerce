@@ -1,11 +1,16 @@
 import ProductDetailUi from "@/UI/Product/ProductDetail";
+import { redirect } from "next/navigation";
 
-type PropsId = {
-  params: { id: string };
+type PageProps = {
+  params: Promise<{
+    id: string;
+  }>;
 };
 
-const ProductDetail = ({ params }: PropsId) => {
-  return <ProductDetailUi id={params.id} />;
-};
-
-export default ProductDetail;
+export default async function ProductDetail({ params }: PageProps) {
+  if (!params) {
+    redirect("/");
+  }
+  const value: string = (await params).id;
+  return <ProductDetailUi id={value} />;
+}
