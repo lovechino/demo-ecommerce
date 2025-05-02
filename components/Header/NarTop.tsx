@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const NavTop = ()=>{
     return(
         <div className="bg-gray-900 text-white text-xs py-2">
@@ -10,7 +12,7 @@ const NavTop = ()=>{
           <span>Help</span>
           <span>Buyer Protection</span>
           <a href="#" className="flex items-center space-x-1">
-            <img src="https://via.placeholder.com/15/FFFFFF/000000?Text=EN" alt="EN" className="rounded-sm" />
+            <Image src="https://via.placeholder.com/15/FFFFFF/000000?Text=EN" alt="EN" className="rounded-sm" width={20} height={20} />
             <span>EN</span>
           </a>
         </div>

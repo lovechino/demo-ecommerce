@@ -9,6 +9,17 @@ const nextConfig = {
         hostname: 'backend.smartwork.3i.com.vn',
         pathname: '/uploads/images/**', 
       },
+      
+      {
+        protocol: 'https',
+        hostname: 'file.hstatic.net',
+        pathname: '/**', 
+      },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        pathname: '/**', 
+      }
     
     ],
   },

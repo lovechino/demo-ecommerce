@@ -15,7 +15,7 @@ const ListProductHome = () => {
   // Tính chỉ số bắt đầu và kết thúc
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts: any = product?.slice(
+  const currentProducts: ProductType[] = product?.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
