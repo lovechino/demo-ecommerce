@@ -9,7 +9,7 @@ jobs:
   deploy:
     runs-on: tech_cloud
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions\checkout@v4
 
       - name: Build
         run: |
@@ -18,21 +18,21 @@ jobs:
 
       - name: Copy to standalone
         run: |
-          Remove-Item C:/inetpub/wwwroot/EcomKomex/standalone/public -Recurse -Force
-          Copy-Item ./public C:/inetpub/wwwroot/EcomKomex/standalone/public -Recurse -Force
-          Remove-Item C:/inetpub/wwwroot/EcomKomex/standalone/.next -Recurse -Force
-          Copy-Item ./.next/standalone/.next C:/inetpub/wwwroot/EcomKomex/standalone/.next -Recurse -Force
-          Copy-Item ./.next/static C:/inetpub/wwwroot/EcomKomex/standalone/.next/static -Recurse -Force
-          Remove-Item C:/inetpub/wwwroot/EcomKomex/standalone/package.json -Force
-          Copy-Item ./.next/standalone/package.json C:/inetpub/wwwroot/EcomKomex/standalone/package.json -Force
-          Remove-Item C:/inetpub/wwwroot/EcomKomex/standalone/node_modules -Recurse -Force
-          Copy-Item ./.next/standalone/node_modules C:/inetpub/wwwroot/EcomKomex/standalone/node_modules -Recurse -Force
-          Remove-Item C:/inetpub/wwwroot/EcomKomex/standalone/.env -Force
-          Copy-Item ./.next/standalone/.env C:/inetpub/wwwroot/EcomKomex/standalone/.env -Force
+          Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\public -Recurse -Force
+          Copy-Item .\public C:\inetpub\wwwroot\EcomKomex\standalone\public -Recurse -Force
+          Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\.next -Recurse -Force
+          Copy-Item .\.next\standalone\.next C:\inetpub\wwwroot\EcomKomex\tandalone\next -Recurse -Force
+          Copy-Item .\.next\static C:\inetpub\wwwroot\EcomKomex\standalone\.next\static -Recurse -Force
+          Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\package.json -Force
+          Copy-Item .\.next\standalone\package.json C:\inetpub\wwwroot\EcomKomex\standalone\package.json -Force
+          Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\node_modules -Recurse -Force
+          Copy-Item .\.next\standalone\node_modules C:\inetpub\wwwroot\EcomKomex\standalone\node_modules -Recurse -Force
+          Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\.env -Force
+          Copy-Item .\.next\standalone\.env C:\inetpub\wwwroot\EcomKomex\standalone\.env -Force
 
       - name: Restart IIS website EcomKomex
         run: |
           # Restart IIS website using appcmd
-          & "C:\Windows\System32\inetsrv\appcmd.exe" stop site /site.name:"EcomKomex"
+          & "C:\Windows\System32\inetsrv\appcmd.exe" stop site \site.name:"EcomKomex"
           Start-Sleep -Seconds 5
-          & "C:\Windows\System32\inetsrv\appcmd.exe" start site /site.name:"EcomKomex"
+          & "C:\Windows\System32\inetsrv\appcmd.exe" start site \site.name:"EcomKomex"
