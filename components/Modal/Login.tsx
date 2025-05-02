@@ -1,9 +1,9 @@
 "use client";
 
 import { LoginApi } from "@/Apis/User";
-import Notification from "@/components/Notification/Notifacation";
+
 import { setUser } from "@/Redux/auth";
-import { useAppDispatch, useAppSelector } from "@/Redux/hook";
+import { useAppDispatch } from "@/Redux/hook";
 import { useState } from "react";
 
 const ModalAuth = ({

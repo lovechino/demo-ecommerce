@@ -1,6 +1,6 @@
 "use client";
 
-import { Key, useState } from "react";
+import { useState } from "react";
 import { GetAllProduct } from "@/Apis/Product";
 import CardProduct from "./Card";
 import { useAppSelector } from "@/Redux/hook";
@@ -36,9 +36,9 @@ const ListProductHome = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {currentProducts.map(
           (item: {
-            id: Key | null | undefined;
+            id: number;
             productname: string;
-            Price: number | null | undefined;
+            Price: number;
             pathimg: string;
             productcode: string;
           }) => (
