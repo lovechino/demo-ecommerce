@@ -3,7 +3,7 @@
 import { LoginApi } from "@/Apis/User";
 import { setUser } from "@/Redux/auth";
 import { useAppDispatch } from "@/Redux/hook";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 const ModalAuth = ({
   isOpen,
@@ -42,24 +42,24 @@ const ModalAuth = ({
 
     setActiveTab("login");
   };
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
-      ) {
-        closeModal();
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       modalRef.current &&
+  //       !modalRef.current.contains(event.target as Node)
+  //     ) {
+  //       closeModal();
+  //     }
+  //   };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+  //   if (isOpen) {
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //   }
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen, closeModal]);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [isOpen]);
 
   if (!isOpen) return null;
 

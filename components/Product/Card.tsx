@@ -35,6 +35,7 @@ const CardProduct: React.FC<CardProps> = ({
         Price: item.Price,
         pathimg: fullPath,
         qualitiy: item.qualitiy,
+        maxQuantity: 10, // Example value, adjust as needed
       })
     );
   };
@@ -85,7 +86,14 @@ const CardProduct: React.FC<CardProps> = ({
       {/* Nút mua ngay */}
       <div
         onClick={() =>
-          buyProduct({ id, productname, Price, pathimg: fullPath, qualitiy: 1 })
+          buyProduct({
+            id,
+            productname,
+            Price,
+            pathimg: fullPath,
+            qualitiy: 1,
+            maxQuantity: 10,
+          })
         }
         className="mt-auto bg-blue-500 text-white w-full text-center py-2 rounded hover:bg-blue-600 transition-colors duration-200 cursor-pointer"
       >

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { setUser } from "@/Redux/auth";
 import dynamic from "next/dynamic";
+import { UserProfile } from "@/Utils/type";
 
 const LoginModal = dynamic(() => import("@/components/Modal/Login"), {
   ssr: false,
@@ -123,7 +124,7 @@ const BottomNav = () => {
                   </li>
                   <li>
                     <button
-                      onClick={() => dispatch(setUser({} as any))}
+                      onClick={() => dispatch(setUser({} as UserProfile))}
                       className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
                     >
                       Đăng xuất

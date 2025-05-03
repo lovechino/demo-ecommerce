@@ -104,13 +104,16 @@ const Footer = () => {
               📞 <span>1900 0267</span>
             </li>
             <li className="flex items-start gap-2">
-              ✉️ <span>tmdt@komex.com.vn</span>
+              ✉ <span>tmdt@komex.com.vn</span>
             </li>
             <li>MST: 0102675442</li>
             <li>Cấp ngày: 11/03/2008</li>
             <li>Nơi cấp: Phòng ĐKKD - Sở KH&ĐT TP Hà Nội</li>
           </ul>
-          <a href="http://online.gov.vn/Home/WebDetails/117272" className="flex items-center mt-4">
+          <a
+            href="http://online.gov.vn/Home/WebDetails/117272"
+            className="flex items-center mt-4"
+          >
             <Image
               src={notificationImage}
               alt="Đã thông báo BCT"
@@ -121,7 +124,7 @@ const Footer = () => {
           </a>
 
           {/* <!-- Social icons floating left & right --> */}
-          <div className="fixed left-2 top-1/2 transform -translate-y-1/2 flex flex-col gap-4">
+          <div className="fixed left-2 top-1/2 transform -translate-y-1/2 flex-col gap-4 hidden md:flex">
             <a href="https://www.tiktok.com/@komex.digital" rel="nofollow">
               <Image
                 src={tiktookImage}
@@ -144,7 +147,7 @@ const Footer = () => {
               />
             </a>
           </div>
-          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 flex flex-col gap-4">
+          <div className="fixed right-2 top-1/2 transform -translate-y-1/2 flex-col gap-4 hidden md:flex">
             <a href="https://www.messenger.com/t/komexdigital" rel="nofollow">
               <Image
                 src={messImage}
@@ -291,8 +294,12 @@ const Footer = () => {
             Phương Thức Thanh Toán
           </h4>
           <div className="flex gap-4">
-            <a href="#"><Image src={codImage1} alt="COD 1" className="w-14" /></a>
-            <a href="#"><Image src={codImage2} alt="COD 2" className="w-14" /></a>
+            <a href="#">
+              <Image src={codImage1} alt="COD 1" className="w-14" />
+            </a>
+            <a href="#">
+              <Image src={codImage2} alt="COD 2" className="w-14" />
+            </a>
           </div>
         </div>
       </div>

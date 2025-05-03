@@ -25,16 +25,12 @@ const Navbar = () => {
   const fullPath = `${baseURL}${user?.Photo}`;
   const productList = useAppSelector((state) => state.product.listProduct);
 
-  const currentLanguage = useAppSelector(
-    (state) => state.language.selectedLanguage
-  );
-
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
   const searchDropdownRef = useRef<HTMLDivElement>(null);
   const avatarDropdownRef = useRef<HTMLDivElement>(null);
-  const [showMenuDropdown, setShowMenuDropdown] = useState(false);
+
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [showStoreDropdown, setShowStoreDropdown] = useState(false);
 
