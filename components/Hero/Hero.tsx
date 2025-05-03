@@ -12,35 +12,35 @@ const categories = [
   { icon: "🏠", label: "Đồ gia dụng", anchor: "#do-gia-dung" },
   { icon: "👜", label: "Phụ kiện", anchor: "#phu-kien" },
   { icon: "💻", label: "PC, Màn hình, Máy in", anchor: "#pc" },
-  { icon: "📺", label: "Tivi", anchor: "#tivi" }
+  { icon: "📺", label: "Tivi", anchor: "#tivi" },
 ];
 
 const banners = [
   {
     src: "https://file.hstatic.net/200000637881/file/z5947605114220_b2cfd591298cd5a7b10cccb76d349c61_1024x1024.jpg",
     alt: "Galaxy M55",
-    href: "#galaxy-m55"
+    href: "#galaxy-m55",
   },
   {
     src: "https://file.hstatic.net/200000637881/file/z5947605114220_b2cfd591298cd5a7b10cccb76d349c61_1024x1024.jpg",
     alt: "iPad Air",
-    href: "#ipad-air"
+    href: "#ipad-air",
   },
   {
     src: "https://file.hstatic.net/200000637881/file/z5947605114220_b2cfd591298cd5a7b10cccb76d349c61_1024x1024.jpg",
     alt: "iPad Air",
-    href: "#ipad-air"
+    href: "#ipad-air",
   },
   {
     src: "https://file.hstatic.net/200000637881/file/z5947605114220_b2cfd591298cd5a7b10cccb76d349c61_1024x1024.jpg",
     alt: "Laptop Sale",
-    href: "#laptop-sale"
-  }
+    href: "#laptop-sale",
+  },
 ];
 
 const Hero = () => {
   return (
-    <section className="px-4 py-5 bg-gray-50 flex justify-center items-start gap-6 h-500px">
+    <section className=" hidden md:px-4 md:py-5 md:bg-gray-50 md:flex md:justify-center md:items-start md:gap-6 md:h-500px">
       {/* Sidebar */}
       <aside className="w-56 bg-white p-5 shadow-sm space-y-5 ">
         <ul className="space-y-3 text-sm">

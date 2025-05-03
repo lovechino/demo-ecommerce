@@ -25,6 +25,10 @@ const Navbar = () => {
   const fullPath = `${baseURL}${user?.Photo}`;
   const productList = useAppSelector((state) => state.product.listProduct);
 
+  const currentLanguage = useAppSelector(
+    (state) => state.language.selectedLanguage
+  );
+
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -74,66 +78,71 @@ const Navbar = () => {
 
   return (
     <header className="bg-red-500 py-4 shadow-sm">
-      <div className="container mx-auto px-6 flex flex-wrap items-center justify-between gap-y-4">
+      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between gap-2 md:gap-4 flex-nowrap">
         {/* Logo */}
-        <Link href="/">
+        <Link href="/" className="flex-shrink-0">
           <Image
             src={logo}
             alt="Logo"
-            width={100}
-            height={100}
-            className="h-10 w-auto"
+            width={80}
+            height={80}
+            className="h-8 w-auto md:h-10"
           />
         </Link>
 
-        {/* Danh mục & Vị trí */}
-        <div className="flex gap-4 items-center">
-          <div className="relative">
-            <button
-              onClick={() => setShowMenuDropdown(!showMenuDropdown)}
-              className="bg-red-500 hover:bg-red-400 px-3 py-2 rounded-md flex items-center gap-1 text-white"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <span>Danh mục</span>
-            </button>
-            <div
-              className={`absolute mt-1 ${
-                showMenuDropdown ? "" : "hidden"
-              } bg-white text-black rounded-md shadow-lg w-48 z-10`}
-            >
-              <ul>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Điện thoại
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Laptop
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Máy tính bảng
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Phụ kiện
-                </li>
-              </ul>
+        {/* Controls: Search, Vị trí, Cart */}
+        <div className="flex flex-1 items-center gap-2 md:gap-4 min-w-0">
+          {/* Search Bar */}
+          <div className="relative flex-1 min-w-0">
+            <input
+              type="text"
+              placeholder="aaa"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onFocus={() => setShowDropdown(true)}
+            />
+            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <FiSearch className="text-gray-400" />
             </div>
+            {showDropdown && suggestions.length > 0 && (
+              <div className="absolute top-full mt-1 z-50 w-full bg-white border border-gray-200 rounded shadow-lg max-h-96 overflow-y-auto">
+                <div className="px-4 py-2 text-gray-500 text-sm border-b">
+                  Sản phẩm gợi ý
+                </div>
+                {suggestions.map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    <Image
+                      src={`${baseURL}${item?.pathimg}`}
+                      alt={item?.productname}
+                      width={50}
+                      height={50}
+                      className="mr-2 rounded"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-black">
+                        {item?.productname}
+                      </p>
+                      <div className="text-xs text-gray-600">
+                        <span className="text-red-500 font-semibold">
+                          {item?.Price}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="relative">
+          {/* Vị trí */}
+          <div className="relative flex-shrink-0">
             <button
               onClick={() => setShowCityDropdown(!showCityDropdown)}
-              className="bg-red-500 hover:bg-red-400 px-3 py-2 rounded-md flex items-center gap-2 text-white"
+              className="bg-red-500 hover:bg-red-400 px-2 md:px-3 py-2 rounded-md flex items-center gap-1 text-white text-sm whitespace-nowrap"
             >
               <svg
                 className="w-4 h-4"
@@ -148,12 +157,9 @@ const Navbar = () => {
                   d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
                 />
               </svg>
-              <div className="flex flex-col items-start">
-                <span className="text-xs leading-none">Xem giá tại</span>
-                <span className="font-semibold text-sm leading-none">
-                  Hồ Chí Minh
-                </span>
-              </div>
+              <span className="hidden sm:inline font-semibold">
+                Hồ Chí Minh
+              </span>
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -179,81 +185,37 @@ const Navbar = () => {
                 className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none"
               />
               <ul className="max-h-48 overflow-y-auto">
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Hà Nội
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Đà Nẵng
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Cần Thơ
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  Huế
-                </li>
+                {["Hà Nội", "Đà Nẵng", "Cần Thơ", "Huế"].map((city) => (
+                  <li
+                    key={city}
+                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    {city}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
+
+          {/* Cart */}
+          <Link href="/Cart" className="flex-shrink-0">
+            <Badge count={storea.length} size="small" color="#f5222d">
+              <BsBag className="text-xl hover:text-gray-200 cursor-pointer" />
+            </Badge>
+          </Link>
         </div>
 
-        {/* Search */}
-        <div className="relative w-64" ref={searchDropdownRef}>
-          <input
-            type="text"
-            placeholder="Tìm kiếm sản phẩm..."
-            className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm shadow-sm"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => setShowDropdown(true)}
-          />
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <FiSearch className="text-gray-400" />
-          </div>
-          {showDropdown && suggestions.length > 0 && (
-            <div className="absolute top-full mt-1 z-50 w-full bg-white border border-gray-200 rounded shadow-lg max-h-96 overflow-y-auto">
-              <div className="px-4 py-2 text-gray-500 text-sm border-b">
-                Sản phẩm gợi ý
-              </div>
-              {suggestions.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                >
-                  <Image
-                    src={`${baseURL}${item?.pathimg}`}
-                    alt={item?.productname}
-                    width={50}
-                    height={50}
-                    className="mr-2 rounded"
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-black">
-                      {item?.productname}
-                    </p>
-                    <div className="text-xs text-gray-600">
-                      <span className="text-red-500 font-semibold">
-                        {item?.Price}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Icons */}
-        <div className="flex items-center gap-4 text-white">
-          <div className="text-xs text-left">
+        {/* Các thành phần khác (Hotline, Store, User) chỉ hiện trên md trở lên */}
+        <div className="hidden md:flex items-center gap-3 md:gap-4 text-white text-sm">
+          <div className="text-xs hidden sm:block">
             <p className="font-bold">Hotline</p>
             <p>0922306268 - 0928206268</p>
           </div>
-
-          {/* Cửa hàng gần bạn */}
+          {/* Store dropdown */}
           <div className="relative">
             <button
               onClick={() => setShowStoreDropdown(!showStoreDropdown)}
-              className="bg-red-500 hover:bg-red-400 px-3 py-2 rounded-md flex items-center gap-2 text-white"
+              className="bg-red-500 hover:bg-red-400 px-2 sm:px-3 py-2 rounded-md flex items-center gap-2"
             >
               <svg
                 className="w-4 h-4"
@@ -268,27 +230,9 @@ const Navbar = () => {
                   d="M5 3a2 2 0 00-2 2v13a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm2 5h10M7 12h10M7 16h6"
                 />
               </svg>
-              <div className="flex flex-col items-start">
-                <span className="text-[10px] leading-none">
-                  Cửa hàng gần bạn
-                </span>
-                <span className="text-[13px] font-semibold leading-none">
-                  123 Lê Lợi, Quận 1
-                </span>
-              </div>
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
+              <span className="hidden sm:inline font-semibold">
+                123 Lê Lợi, Q1
+              </span>
             </button>
             <div
               className={`absolute top-full left-0 mt-1 w-64 bg-white text-black rounded-md shadow-lg z-10 ${
@@ -301,25 +245,22 @@ const Navbar = () => {
                 className="w-full px-3 py-2 border-b border-gray-300 focus:outline-none"
               />
               <ul className="max-h-48 overflow-y-auto">
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  123 Lê Lợi, Quận 1
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  456 Nguyễn Huệ, Quận 1
-                </li>
-                <li className="px-3 py-2 hover:bg-gray-100 cursor-pointer">
-                  789 Trần Hưng Đạo, Quận 5
-                </li>
+                {[
+                  "123 Lê Lợi, Quận 1",
+                  "456 Nguyễn Huệ, Quận 1",
+                  "789 Trần Hưng Đạo, Quận 5",
+                ].map((addr) => (
+                  <li
+                    key={addr}
+                    className="px-3 py-2 hover:bg-gray-100 cursor-pointer"
+                  >
+                    {addr}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
-
-          <Link href="/Cart">
-            <Badge count={storea.length} size="small" color="#f5222d">
-              <BsBag className="text-xl text-white hover:text-gray-200 cursor-pointer" />
-            </Badge>
-          </Link>
-
+          {/* User */}
           {!user || Object.keys(user).length === 0 ? (
             <FiUser
               onClick={() => setShowModal(true)}
@@ -375,11 +316,11 @@ const Navbar = () => {
             </div>
           )}
         </div>
-
-        {showModal && (
-          <ModalAuth isOpen={showModal} closeModal={handleCloseModal} />
-        )}
       </div>
+
+      {showModal && (
+        <ModalAuth isOpen={showModal} closeModal={handleCloseModal} />
+      )}
     </header>
   );
 };

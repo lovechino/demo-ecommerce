@@ -8,12 +8,61 @@ import {
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { CartIntemType } from "@/Utils/type";
 import Link from "next/link";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import Image from "next/image";
+// import emptyCart from "@/public/Image/tải xuống.jpg";
+
+// Giả lập user đăng nhập
+const user = {
+  name: "Nguyễn Văn A",
+  phone: "0912345678",
+  email: "nguyenvana@email.com",
+};
 
 const CartPage = () => {
   const [selectedItems, setSelectedItems] = useState<CartIntemType[]>([]);
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
+
+  // Loading state cho cập nhật số lượng/xóa sản phẩm
+  const [loading, setLoading] = useState(false);
+
+  // Tổng số lượng sản phẩm đã chọn
+  const selectedTotalQuantity = useMemo(() => {
+    return selectedItems.reduce((total, item) => total + item.qualitiy, 0);
+  }, [selectedItems]);
+
+  // Mã giảm giá
+  const [coupon, setCoupon] = useState("KEEPWARM");
+  const [couponStatus, setCouponStatus] = useState<null | "success" | "error">(
+    null
+  );
+  const [couponMessage, setCouponMessage] = useState("");
+
+  const handleApplyCoupon = () => {
+    setLoading(true);
+    setTimeout(() => {
+      if (coupon.trim().toUpperCase() === "KEEPWARM") {
+        setCouponStatus("success");
+        setCouponMessage("Mã giảm giá đã được áp dụng!");
+      } else {
+        setCouponStatus("error");
+        setCouponMessage("Mã giảm giá không hợp lệ!");
+      }
+      setLoading(false);
+    }, 800);
+  };
+
+  // Phương thức thanh toán (radio)
+  const [paymentMethod, setPaymentMethod] = useState(
+    "Thanh toán khi nhận hàng"
+  );
+  const paymentMethods = [
+    "Thanh toán khi nhận hàng",
+    "Ví MOMO",
+    "Thanh toán qua ZaloPay",
+    "Ví điện tử VNPAY",
+  ];
 
   const handleItemCheckboxChange = (item: CartIntemType) => {
     const isSelected = selectedItems.some(
@@ -28,7 +77,7 @@ const CartPage = () => {
     }
   };
 
-  const handleCheckAll = (event: any) => {
+  const handleCheckAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setSelectedItems([...items]);
       console.log("đã chọn tất cả sản phẩm");
@@ -48,6 +97,62 @@ const CartPage = () => {
       0
     );
   }, [selectedItems]);
+
+  // Hàm lấy số lượng tối đa cho sản phẩm
+  const getMaxQuantity = (item: CartIntemType): number => {
+    return item.maxQuantity ?? 10;
+  };
+
+  // Hàm tăng số lượng sản phẩm, kiểm tra tồn kho
+  const handleIncrease = (item: CartIntemType) => {
+    const max = getMaxQuantity(item);
+    if (item.qualitiy < max) {
+      dispatch(inCreaseItem(item));
+    } else {
+      alert(`Số lượng tối đa cho sản phẩm này là ${max}`);
+    }
+  };
+
+  // Xóa nhiều sản phẩm cùng lúc
+  const handleRemoveSelected = () => {
+    selectedItems.forEach((item) => dispatch(removeItem(item.id)));
+    setSelectedItems([]);
+  };
+
+  // Lưu selectedItems vào localStorage mỗi khi thay đổi
+  useEffect(() => {
+    localStorage.setItem("selectedCartItems", JSON.stringify(selectedItems));
+  }, [selectedItems]);
+
+  // Khi load trang, lấy lại selectedItems từ localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem("selectedCartItems");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) setSelectedItems(parsed);
+      } catch {}
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  // Khi user đã đăng nhập, tự động điền thông tin khách hàng
+  useEffect(() => {
+    if (user) {
+      const nameInput = document.getElementById(
+        "customerName"
+      ) as HTMLInputElement;
+      const phoneInput = document.getElementById(
+        "customerPhone"
+      ) as HTMLInputElement;
+      const emailInput = document.getElementById(
+        "customerEmail"
+      ) as HTMLInputElement;
+      if (nameInput) nameInput.value = user.name;
+      if (phoneInput) phoneInput.value = user.phone;
+      if (emailInput) emailInput.value = user.email;
+    }
+  }, []);
 
   return (
     <>
@@ -185,24 +290,24 @@ const CartPage = () => {
 
             {/* Payment options */}
             <div className="space-y-4">
-              {[
-                "Thanh toán khi nhận hàng",
-                "Ví MOMO",
-                "Thanh toán qua ZaloPay",
-                "Ví điện tử VNPAY",
-              ].map((method, idx) => (
+              {paymentMethods.map((method, idx) => (
                 <div
                   key={idx}
                   className="flex items-center gap-4 p-3 border rounded-lg"
                 >
-                  <input type="checkbox" />
+                  <input
+                    type="radio"
+                    name="payment-method"
+                    checked={paymentMethod === method}
+                    onChange={() => setPaymentMethod(method)}
+                  />
                   <label className="flex items-center gap-2">
                     <img
                       src={`https://mcdn.coolmate.me/image/October2024/mceclip${idx}_${
                         idx === 1 ? 171 : idx === 2 ? 6 : idx === 3 ? 81 : 42
                       }.png`}
                       className="w-8 h-8"
-                      alt="ịmage"
+                      alt="payment"
                     />
                     {method}
                   </label>
@@ -226,12 +331,42 @@ const CartPage = () => {
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Giỏ hàng</h2>
 
+            {/* Tổng số sản phẩm đã chọn */}
+            {selectedItems.length > 0 && (
+              <div className="mb-2 text-blue-600 font-semibold">
+                Đã chọn {selectedTotalQuantity} sản phẩm
+              </div>
+            )}
+
+            {/* Xóa nhiều sản phẩm đã chọn */}
+            {selectedItems.length > 0 && (
+              <div className="mb-2">
+                <button
+                  onClick={handleRemoveSelected}
+                  className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                >
+                  Xóa các sản phẩm đã chọn
+                </button>
+              </div>
+            )}
+
             {items.length === 0 ? (
-              <em className="text-gray-400">
-                Giỏ hàng của bạn đang trống
-                <br />
-                Bắt đầu mua sắm thôi!
-              </em>
+              <div className="flex flex-col items-center justify-center py-8">
+                {/* <Image
+                  src={emptyCart}
+                  alt="empty cart"
+                  className="w-32 h-32 mb-4"
+                /> */}
+                <em className="text-gray-400 mb-2">
+                  Giỏ hàng của bạn đang trống\nBắt đầu mua sắm thôi!
+                </em>
+                <Link
+                  href="/"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2"
+                >
+                  Tiếp tục mua sắm
+                </Link>
+              </div>
             ) : (
               <div className="overflow-x-auto mt-6">
                 <table className="w-full text-sm">
@@ -305,13 +440,19 @@ const CartPage = () => {
                               type="number"
                               min="1"
                               value={item.qualitiy}
-                              onChange={(e) => dispatch(updateQuantity(item))}
+                              onChange={(e) =>
+                                dispatch(
+                                  updateQuantity({
+                                    ...item,
+                                    qualitiy: Number(e.target.value),
+                                  })
+                                )
+                              }
                               className="w-12 h-8 text-center border border-gray-300 rounded"
-                              readOnly
                             />
 
                             <button
-                              onClick={() => dispatch(inCreaseItem(item))}
+                              onClick={() => handleIncrease(item)}
                               className="w-8 h-8 flex items-center justify-center border border-gray-300 rounded text-lg font-semibold hover:bg-gray-100"
                             >
                               +
@@ -364,15 +505,52 @@ const CartPage = () => {
             <div className="flex gap-2">
               <input
                 type="text"
-                value="KEEPWARM"
+                value={coupon}
+                onChange={(e) => setCoupon(e.target.value)}
                 className="border p-2 rounded-lg"
+                placeholder="Nhập mã giảm giá"
               />
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                onClick={handleApplyCoupon}
+                disabled={loading}
+              >
                 Áp dụng
               </button>
             </div>
           </div>
-          <p className="text-green-600 text-sm">Mã giảm giá đã được áp dụng</p>
+          {couponStatus === "success" && (
+            <p className="text-green-600 text-sm mt-1">{couponMessage}</p>
+          )}
+          {couponStatus === "error" && (
+            <p className="text-red-600 text-sm mt-1">{couponMessage}</p>
+          )}
+
+          {/* Loading spinner */}
+          {loading && (
+            <div className="flex justify-center items-center my-2">
+              <svg
+                className="animate-spin h-6 w-6 text-blue-600"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                ></path>
+              </svg>
+              <span className="ml-2">Đang xử lý...</span>
+            </div>
+          )}
 
           {/* Pricing Info */}
           <div className="bg-white p-6 rounded-lg shadow space-y-2">
@@ -415,9 +593,11 @@ const CartPage = () => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-center gap-4">
-          <Link href="#" className="text-blue-500 underline">
-            Đăng nhập
-          </Link>
+          {!user && (
+            <Link href="/login" className="text-blue-500 underline">
+              Đăng nhập
+            </Link>
+          )}
           <div className="flex flex-col items-end">
             <div className="font-semibold">
               Tổng tiền:{" "}
@@ -425,9 +605,11 @@ const CartPage = () => {
               {/* Hiển thị tổng tiền sản phẩm đã chọn */}
             </div>
           </div>
-          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg">
-            Thanh toán
-          </button>
+          <Link href={`/Cart/Payment`} className="w-full md:w-auto">
+            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg">
+              Thanh toán
+            </button>
+          </Link>
         </div>
       </div>
     </>

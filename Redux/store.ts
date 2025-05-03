@@ -12,7 +12,7 @@ import {
 import storage from "./Storage";
 import { combineReducers } from "redux";
 import thunk from "redux-thunk";
-
+import languageReducer from "./languageSlice";
 import productSlice from "./product";
 import userSlice from "./auth";
 import cartSlice from "./cart";
@@ -27,6 +27,7 @@ export const rootReducer = combineReducers({
   product: productSlice,
   user: userSlice,
   cart: cartSlice,
+  language: languageReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

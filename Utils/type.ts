@@ -38,6 +38,7 @@ export interface CartIntemType {
   Price: number;
   pathimg: string;
   qualitiy: number | 0;
+  maxQuantity: number;
 }
 
 export interface ChildrenType {

@@ -1,10 +1,9 @@
 "use client";
 
 import { LoginApi } from "@/Apis/User";
-
 import { setUser } from "@/Redux/auth";
 import { useAppDispatch } from "@/Redux/hook";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const ModalAuth = ({
   isOpen,
@@ -14,21 +13,63 @@ const ModalAuth = ({
   closeModal: () => void;
 }) => {
   const [activeTab, setActiveTab] = useState<"login" | "register">("login");
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [loginUsername, setLoginUsername] = useState<string>("");
+  const [loginPassword, setLoginPassword] = useState<string>("");
+  const [registerUsername, setRegisterUsername] = useState<string>("");
+  const [registerEmail, setRegisterEmail] = useState<string>("");
+  const [registerPassword, setRegisterPassword] = useState<string>("");
   const dispatch = useAppDispatch();
+  const modalRef = useRef<HTMLDivElement>(null);
   if (!isOpen) return null;
+
   const handleLogin = async () => {
-    const res = await LoginApi({ username, password });
+    const res = await LoginApi({
+      username: loginUsername,
+      password: loginPassword,
+    });
     console.log("res", res.Object);
     dispatch(setUser(res.Object));
     closeModal();
   };
 
+  const handleRegister = async () => {
+    console.log(
+      "Registering with:",
+      registerUsername,
+      registerEmail,
+      registerPassword
+    );
+
+    setActiveTab("login");
+  };
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        closeModal();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, closeModal]);
+
+  if (!isOpen) return null;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400 bg-opacity-50">
       {/* Modal Content */}
-      <div className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative animate-fadeIn">
+      <div
+        ref={modalRef}
+        className="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative animate-fadeIn"
+      >
         {/* Close Button */}
         <button
           onClick={closeModal}
@@ -72,8 +113,8 @@ const ModalAuth = ({
                 type="username"
                 placeholder="Enter your username"
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                value={loginUsername}
+                onChange={(e) => setLoginUsername(e.target.value)}
               />
             </div>
             <div>
@@ -84,8 +125,8 @@ const ModalAuth = ({
                 type="password"
                 placeholder="Enter your password"
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={loginPassword}
+                onChange={(e) => setLoginPassword(e.target.value)}
               />
             </div>
             <button
@@ -105,6 +146,8 @@ const ModalAuth = ({
                 type="text"
                 placeholder="Choose a username"
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={registerUsername}
+                onChange={(e) => setRegisterUsername(e.target.value)}
               />
             </div>
             <div>
@@ -115,6 +158,8 @@ const ModalAuth = ({
                 type="email"
                 placeholder="Enter your email"
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={registerEmail}
+                onChange={(e) => setRegisterEmail(e.target.value)}
               />
             </div>
             <div>
@@ -125,10 +170,13 @@ const ModalAuth = ({
                 type="password"
                 placeholder="Create a password"
                 className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                value={registerPassword}
+                onChange={(e) => setRegisterPassword(e.target.value)}
               />
             </div>
             <button
-              type="submit"
+              type="button" // Prevent default form submission
+              onClick={handleRegister}
               className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition"
             >
               Register
