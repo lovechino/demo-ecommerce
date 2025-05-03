@@ -68,10 +68,10 @@ const NavTop = () => {
         <div className="mb-2 md:mb-0">discountMessage</div>
         <div className="flex items-center space-x-4">
           <span className="hidden sm:inline">careers</span>
-          <Link href="/Blog" className="hidden sm:inline">
+          <Link href="/Blog" className=" sm:inline">
             Blog
           </Link>
-          <span className="hidden sm:inline">buyerProtection</span>
+          <span className=" sm:inline">buyerProtection</span>
           <div className="relative">
             <button
               className="flex items-center space-x-1 focus:outline-none"
