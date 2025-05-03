@@ -20,10 +20,9 @@ const ModalAuth = ({
   if (!isOpen) return null;
   const handleLogin = async () => {
     const res = await LoginApi({ username, password });
-    if (res.Error === false) {
-      dispatch(setUser(res.Object));
-      closeModal();
-    }
+    console.log("res", res.Object);
+    dispatch(setUser(res.Object));
+    closeModal();
   };
 
   return (

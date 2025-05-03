@@ -53,20 +53,35 @@ export type NotificationType = "success" | "info" | "warning" | "error";
 
 export interface UserProfile {
   Id: number;
-  UserId: number | null;
   UserName: string;
-  Password?: string; // Passwords should ideally be handled securely and might not always be present in this type
+  Password?: string;
   FullName: string;
   Email: string;
   Address: string;
-  IsOnline: number; // Or boolean if 0/1 represents offline/online
+  IsOnline: number;
   Phone: string;
-  Photo?: string; // Path to the photo, could be optional
-  Gender?: "male" | "female" | string; // Use a union type for known genders
-  BirthDay?: string; // ISO 8601 format: "YYYY-MM-DDTHH:mm:ss"
-  sBirthDay?: string; // Locale-specific format: "DD/MM/YYYY"
-  CreatedTime?: string; // ISO 8601 format: "YYYY-MM-DDTHH:mm:ss"
+  Photo?: string;
+  Gender?: "male" | "female" | string;
+  BirthDay?: string;
+  sBirthDay?: string;
+  CreatedTime?: string;
   IsDeleted: boolean;
+}
+export interface DefaultUser {
+  Id: "";
+  UserName: "";
+  Password?: "";
+  FullName: "";
+  Email: "";
+  Address: "";
+  IsOnline: "";
+  Phone: "";
+  Photo?: "";
+  Gender?: "";
+  BirthDay?: "";
+  sBirthDay?: "";
+  CreatedTime?: "";
+  IsDeleted: "";
 }
 
 export interface LngCtx {

@@ -3,13 +3,14 @@ import { useState, useEffect, useRef } from "react";
 import { BsBag } from "react-icons/bs";
 import { FiLoader, FiSearch, FiUser } from "react-icons/fi";
 import dynamic from "next/dynamic";
-import { useAppSelector } from "@/Redux/hook";
+import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Avatar, Badge } from "antd";
 import { ProductType, UserProfile } from "@/Utils/type";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
+import { setUser } from "@/Redux/auth";
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
   loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
@@ -19,8 +20,8 @@ const Navbar = () => {
   const [showModal, setShowModal] = useState(false);
   const handleCloseModal = () => setShowModal(false);
   const storea = useAppSelector((state) => state.cart.items);
-  const user: UserProfile =
-    useAppSelector((state) => state.user.user) || ({} as UserProfile);
+  const user = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
   const fullPath = `${baseURL}${user?.Photo}`;
   const productList = useAppSelector((state) => state.product.listProduct);
 
@@ -319,7 +320,7 @@ const Navbar = () => {
             </Badge>
           </Link>
 
-          {user === null ? (
+          {!user || Object.keys(user).length === 0 ? (
             <FiUser
               onClick={() => setShowModal(true)}
               className="text-xl hover:text-gray-200 cursor-pointer"
@@ -361,7 +362,10 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <button className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                      <button
+                        onClick={() => dispatch(setUser({} as UserProfile))}
+                        className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                      >
                         Đăng xuất
                       </button>
                     </li>

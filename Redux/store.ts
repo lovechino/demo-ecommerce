@@ -9,7 +9,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "./Storage";
 import { combineReducers } from "redux";
 import thunk from "redux-thunk";
 
@@ -21,6 +21,7 @@ const persistConfig = {
   key: "root",
   storage,
   version: 1,
+  whitelist: ["user", "product"],
 };
 export const rootReducer = combineReducers({
   product: productSlice,
@@ -28,15 +29,6 @@ export const rootReducer = combineReducers({
   cart: cartSlice,
 });
 
-// export const makeStore = () => {
-//   return configureStore({
-//     reducer: {
-//       product: productSlice,
-//       user: userSlice,
-//       cart: cartSlice,
-//     },
-//   });
-// };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,

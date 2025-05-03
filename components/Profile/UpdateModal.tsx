@@ -12,8 +12,7 @@ interface Props {
 }
 
 const UpdateProfileModal = ({ open, onClose }: Props) => {
-  const user: UserProfile =
-    useAppSelector((state) => state.user.user) || ({} as UserProfile);
+  const user = useAppSelector((state) => state.user.user);
   const [form] = Form.useForm();
 
   const handleUpdate = (values: UserProfile) => {
