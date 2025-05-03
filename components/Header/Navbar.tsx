@@ -46,7 +46,7 @@ const Navbar = () => {
     } else {
       setShowDropdown(false);
     }
-  }, [query]);
+  }, [query, fetchSuggestions]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

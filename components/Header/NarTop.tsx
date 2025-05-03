@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 const NavTop = () => {
   return (
     <div className="bg-gray-900 text-white text-xs py-2">
