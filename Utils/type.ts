@@ -251,3 +251,55 @@ export interface Product {
   DeletedTime: any;
   IsDeleted: boolean;
 }
+
+export interface Article {
+  id: number;
+  title: string;
+  alias: string;
+  cat_id: number;
+  published: boolean;
+  intro_text: string;
+  full_text: string;
+  video: string | null;
+  gallery: string;
+  extra_fields: any | null; // Hoặc định nghĩa kiểu cụ thể nếu biết cấu trúc
+  extra_fields_search: string | null;
+  created: string | null; // Có thể là Date nếu xử lý thời gian
+  created_by: number | null;
+  created_by_alias: string;
+  checked_out: number | null;
+  checked_out_time: string | null; // Có thể là Date nếu xử lý thời gian
+  modified: string; // Có thể là Date nếu xử lý thời gian
+  modified_by: number | null;
+  publish_up: string | null; // Có thể là Date nếu xử lý thời gian
+  publish_down: string | null; // Có thể là Date nếu xử lý thời gian
+  trash: number | null; // Có thể là boolean tùy theo cách biểu diễn
+  access: number | null;
+  ordering: number | null;
+  featured: number | null; // Có thể là boolean tùy theo cách biểu diễn
+  featured_ordering: number;
+  image_caption: string;
+  image_credits: string; // Quan sát thấy giá trị "null" dưới dạng string
+  video_caption: string | null;
+  video_credits: string | null;
+  hits: number | null;
+  params: string | null; // Hoặc định nghĩa kiểu cụ thể nếu biết cấu trúc JSON
+  meta_desc: string | null;
+  meta_data: string | null; // Hoặc định nghĩa kiểu cụ thể nếu biết cấu trúc JSON
+  meta_key: string | null;
+  plugins: string | null; // Hoặc định nghĩa kiểu cụ thể nếu biết cấu trúc JSON
+  language: string;
+  template: string;
+  date_post: string; // Có thể là Date nếu xử lý thời gian
+  ListUserView: any | null; // Hoặc định nghĩa kiểu cụ thể nếu biết cấu trúc
+  short_content: string;
+  multiple_language: string; // Chuỗi JSON, cần parse nếu muốn truy cập
+  cat_related: string;
+  json_log: string;
+  count_view: number;
+  show_intro: boolean;
+  author: string;
+  Tags: string;
+  expiry_date: string; // Có thể là Date nếu xử lý thời gian
+  org_id: number | null;
+}

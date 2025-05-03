@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setLanguage } from "@/Redux/languageSlice";
 import { useAppSelector } from "@/Redux/hook";
+import Link from "next/link";
 
 const NavTop = () => {
   const dispatch = useDispatch();
@@ -67,7 +68,9 @@ const NavTop = () => {
         <div className="mb-2 md:mb-0">discountMessage</div>
         <div className="flex items-center space-x-4">
           <span className="hidden sm:inline">careers</span>
-          <span className="hidden sm:inline">help</span>
+          <Link href="/Blog" className="hidden sm:inline">
+            Blog
+          </Link>
           <span className="hidden sm:inline">buyerProtection</span>
           <div className="relative">
             <button
