@@ -41,7 +41,7 @@ const categories = [
 
 export default function Hero() {
   const product = useSelector((state : RootState)=>state.product.list)
-  const products = product.slice(1,6)
+  const products = product?.slice(1,6)
   return (
     <main className="max-w-7xl mx-auto px-4 py-4">
       <div className="flex flex-col md:flex-row gap-4">
@@ -72,13 +72,19 @@ export default function Hero() {
             <div className="relative bg-[#f5f7ff] p-4">
               <div className="flex flex-col md:flex-row">
                 <div className="md:w-3/5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Image src={`${baseURL}${product[0].pathimg}`} alt="Samsung" width={100} height={20} className="h-5 w-auto" />
+                  {
+                    product && product?.length >0 && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                    <Image src={`${baseURL}${product[0]?.pathimg}`} alt="Samsung" width={100} height={20} className="h-5 w-auto" />
                     <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">12GB | 256GB</div>
                     <div className="text-xs">Màu xanh dương</div>
                   </div>
 
                   <h1 className="text-3xl md:text-4xl font-bold mb-4">{product[0]?.productname}</h1>
+                      </div>
+                    )
+                  }
 
                   <div className="bg-white rounded-lg p-3 mb-3 inline-block">
                     <div className="text-sm text-gray-500">Giá chỉ còn</div>
@@ -120,8 +126,9 @@ export default function Hero() {
 
                   <button className="bg-blue-800 text-white py-2 px-6 rounded-md font-medium">MUA NGAY</button>
                 </div>
-
-                <div className="md:w-2/5 flex justify-center items-center mt-4 md:mt-0">
+                {
+                  product && product?.length >0 && (
+                    <div className="md:w-2/5 flex justify-center items-center mt-4 md:mt-0">
                   <Image
                     src={`${baseURL}${product[0].pathimg}`}
                     alt="Samsung Galaxy S25 Ultra"
@@ -130,13 +137,15 @@ export default function Hero() {
                     className="h-auto"
                   />
                 </div>
+                  )
+                }
               </div>
             </div>
           </div>
 
           {/* Product categories */}
           <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
-            {products.map((product, index) => (
+            {products&& products?.length >0 && products?.map((product, index) => (
               <Link
                 href="#"
                 key={index}
@@ -152,7 +161,10 @@ export default function Hero() {
           </div>
 
           {/* iPad Air banner */}
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          {
+            product && product?.length >0 && (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-pink-100 rounded-md p-4 flex flex-col items-center">
               <div className="text-xl font-medium mb-2">{product[1].productname}</div>
               <div className="text-sm mb-3">{product[1].supName}</div>
@@ -165,6 +177,8 @@ export default function Hero() {
               <button className="bg-white text-xs rounded-full px-4 py-1 border">MUA NGAY</button>
             </div>
           </div>
+            )
+          }
         </div>
       </div>
     </main>

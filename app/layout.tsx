@@ -8,9 +8,9 @@ import BottomNav from "@/components/Header/BottomNav";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 const siteName = "Komex Digital";
-const siteUrl = "https://your-komex-digital-website.com"; // Thay thế bằng URL thực tế của bạn
-const description = "Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu."; // Mô tả ngắn gọn về trang web của bạn
-const keywords = ["thiết bị điện tử", "công nghệ", "sản phẩm kỹ thuật số", "giải pháp công nghệ"]; // Các từ khóa liên quan
+const siteUrl = "https://your-komex-digital-website.com";
+const description = "Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu.";
+const keywords = ["thiết bị điện tử", "công nghệ", "sản phẩm kỹ thuật số", "giải pháp công nghệ"];
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   description: description,
   keywords: keywords.join(", "),
   icons: logo.src,
-  metadataBase: new URL(siteUrl),
+ 
   openGraph: {
     title: siteName,
     description: description,
@@ -38,24 +38,24 @@ export const metadata: Metadata = {
     siteName: siteName,
     images: [
       {
-        url: "https://file.hstatic.net/200000637881/file/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.png",
+        url: "https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/company_logos/2zcB726UgVFR5RBnjJ66CqIuBQ9U0XKo_1694581378____e37386722a535bca4a4b7b79d79c315c.png",
         width: 1200,
         height: 630,
         alt: siteName,
       },
     ],
-    locale: "vi_VN", 
+    locale: "vi_VN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: siteName,
     description: description,
-    site: "@komexdigital", 
-    creator: "@yourhandle", 
+    site: "@komexdigital",
+    creator: "@yourhandle",
     images: [
       {
-        url: "https://file.hstatic.net/200000637881/file/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.png",
+        url: "https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/company_logos/2zcB726UgVFR5RBnjJ66CqIuBQ9U0XKo_1694581378____e37386722a535bca4a4b7b79d79c315c.png",
         width: 1200,
         height: 630,
         alt: siteName,
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   },
   authors: [
     {
-      name: "Your Name", // Tên của bạn hoặc tên tổ chức
+      name: "Komex",
       url: siteUrl,
     },
   ],
@@ -82,7 +82,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi"> {/* Cập nhật ngôn ngữ thành tiếng Việt */}
+    <html>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

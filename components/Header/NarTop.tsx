@@ -10,7 +10,7 @@ import Link from "next/link";
 
 const NavTop = () => {
   const dispatch = useDispatch();
-  // const { t, i18n } = useTranslation();
+  
   const currentLanguage = useAppSelector(
     (state) => state.language.selectedLanguage
   );
