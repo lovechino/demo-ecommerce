@@ -44,3 +44,11 @@ export const getReviewProducts = async () => {
     .get("/MobileLogin/GetListProductReview")
     .then((res) => res.data);
 };
+
+export const GetListGroupProduct = async()=>{
+  return await axiosInstance.get("/MobileLogin/GetListGroupProduct").then(res=>res.data)
+}
+
+export const GetListProductByGroup = async (id : string) => {
+  return await axiosInstance.post(`/Product/GetListProductByGroup?groupcode=${id}`).then(res=>res.data)
+}

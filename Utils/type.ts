@@ -175,6 +175,24 @@ export interface LngCtx {
   };
 }
 
+export interface Menu {
+  Id: number;
+  Code: string;
+  Name: string;
+  GroupType: string | null;
+  ParentID: null | number;
+  Level: null | number;
+  Description: string;
+  LngCtx: string | null;
+  CreatedBy: string;
+  UpdatedBy: null | string;
+  CreatedTime: string;
+  UpdatedTime: string;
+  DeletedBy: null | string;
+  DeletedTime: null | string;
+  IsDeleted: boolean;
+}
+
 export interface Product {
   Id: number;
   ProductCode: string;

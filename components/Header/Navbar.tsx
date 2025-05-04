@@ -13,6 +13,7 @@ import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee
 import { setUser } from "@/Redux/auth";
 import ProvinceSelectorModal from "./ProvinceSelectorModal";
 
+
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
   loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
 });
@@ -24,8 +25,8 @@ const Navbar = () => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const fullPath = `${baseURL}${user?.Photo}`;
-  const productList = useAppSelector((state) => state.product.list);
-
+  const productList = useAppSelector((state) => state.product.list)
+ 
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -41,7 +42,7 @@ const Navbar = () => {
     if (!text.trim()) return setSuggestions([]);
     setSuggestions(productList);
   };
-
+  
   useEffect(() => {
     if (query) {
       fetchSuggestions(query);
@@ -138,18 +139,7 @@ const Navbar = () => {
     )}
   </div>
   <div className=" text-white p-2 ml-10">
-    {/* <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className="w-6 h-6 mr-2"
-    >
-      <path
-        fillRule="evenodd"
-        d="M16.704 4.153a.75.75 0 011.09.851l-7 13a.75.75 0 01-1.03.114l-3.11-3.11a.75.75 0 011.06-1.06l2.59 2.59 6.41-12.41a.75.75 0 01.85-.109z"
-        clipRule="evenodd"
-      />
-    </svg> */}
+   
     <div>
       <p className=" hidden md:block">Gọi mua hàng</p>
       <span className="">1800.2097</span>
