@@ -4,7 +4,7 @@ import { GetProductById, getReviewProducts } from "@/Apis/Product";
 import CardProduct from "@/components/Product/Card";
 import { useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
-import { ProductType } from "@/Utils/type";
+import { Product, ProductType } from "@/Utils/type";
 import { useEffect, useState } from "react";
 
 interface DetailType {
@@ -12,7 +12,7 @@ interface DetailType {
 }
 
 const ProductDetailUi = ({ id }: DetailType) => {
-  const [product, setProduct] = useState<any>(null);
+  const [product, setProduct] = useState<Product>();
   const [resview, setReview] = useState<any>(null);
   const GetData = async () => {
     const response = await GetProductById(id);
@@ -29,13 +29,13 @@ const ProductDetailUi = ({ id }: DetailType) => {
       .replace(/\s+/g, "-"); // Thay khoảng trắng bằng dấu "-"
   };
 
-  const listProduct = useAppSelector((state) => state.product.listProduct);
+  const listProduct = useAppSelector((state) => state.product.list);
   const newMap: ProductType[] = listProduct.filter(
     (item: ProductType) =>
       normalizeGroupName(item.productgroup) === product?.GroupCode
   );
   const subProdct: ProductType[] = newMap.filter(
-    (item: ProductType) => item.id !== product?.id
+    (item: ProductType) => item.id !== product?.Id
   );
   useEffect(() => {
     GetData();

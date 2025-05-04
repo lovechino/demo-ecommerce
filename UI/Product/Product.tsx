@@ -3,7 +3,7 @@
 import CardProduct from "@/components/Product/Card";
 import { useAppSelector } from "@/Redux/hook";
 import { ProductType } from "@/Utils/type";
-import { Key, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { FaFilter, FaTruck, FaTags } from "react-icons/fa";
 import { MdSort } from "react-icons/md";
 
@@ -28,7 +28,7 @@ const sortOptions = [
 const ProductPage = () => {
   const [selectedSort, setSelectedSort] = useState<string>("");
   const [sortedProducts, setSortedProducts] = useState<ProductType[]>([]);
-  const product = useAppSelector((state) => state.product.listProduct);
+  const product = useAppSelector((state) => state.product.list);
 
   useEffect(() => {
     const sorted = [...product].sort((a: ProductType, b: ProductType) => {

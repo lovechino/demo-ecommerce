@@ -8,7 +8,7 @@ import { ProductType } from "@/Utils/type";
 
 const ListProductHome = () => {
   GetAllProduct();
-  const product = useAppSelector((state) => state.product.listProduct);
+  const product = useAppSelector((state) => state.product.list);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10; // số sản phẩm mỗi trang
 
@@ -34,7 +34,7 @@ const ListProductHome = () => {
     <div className="container mx-auto px-4 py-10">
       <h2 className="text-2xl font-bold mb-4 text-center">Sản Phẩm</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {currentProducts.map(
+        {currentProducts?.map(
           (item: {
             id: number;
             productname: string;

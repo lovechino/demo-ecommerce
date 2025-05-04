@@ -1,13 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { ProductType } from "@/Utils/type";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+interface listtype {
+  list : ProductType[] | []
+}
+
+const initialState: listtype = {
+  list : []
+};
+
 
 const productSlice = createSlice({
   name: "product",
-  initialState: {
-    listProduct: [],
-  },
+ initialState,
   reducers: {
-    setListProduct: (state, action) => {
-      state.listProduct = action.payload;
+    setListProduct: (state, action : PayloadAction<ProductType[]>) => {
+      state.list = action.payload;
     },
   },
 });

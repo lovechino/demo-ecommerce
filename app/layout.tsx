@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: logo.src,
+        url: "https://file.hstatic.net/200000637881/file/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.png",
         width: 1200,
         height: 630,
         alt: "Komex Digital",
