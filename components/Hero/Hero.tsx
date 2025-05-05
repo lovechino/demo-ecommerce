@@ -7,10 +7,11 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import { baseURL } from "@/Utils/Axios";
 import { useEffect, useState } from "react";
-import { GetListGroupProduct } from "@/Apis/Product";
+import { GetAllProduct, GetListGroupProduct } from "@/Apis/Product";
 import { Menu } from "@/Utils/type";
 
 export default function Hero() {
+  GetAllProduct()
   const product = useSelector((state: RootState) => state.product.list);
   const products = product?.slice(1, 6);
   const [menu, setMenu] = useState<Menu[]>([]);

@@ -7,6 +7,8 @@ import {
   AiOutlineHeart,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/Redux/cart";
 
 
 interface CardProps {
@@ -32,6 +34,7 @@ const CardProduct: React.FC<CardProps> = ({
  
 }) => {
   const fullPath = `${baseURL}${pathimg}`;
+  const dispatch = useDispatch();
 
 
   return (
@@ -60,7 +63,7 @@ const CardProduct: React.FC<CardProps> = ({
       <div className="p-3 flex flex-col gap-1 h-[220px]">
         <h3 className="text-sm font-semibold line-clamp-2 h-10 mb-1">{productname}</h3>
         <div className="flex items-baseline gap-2">
-          <span className="text-red-600 font-bold text-lg">{Price?.toLocaleString("vi-VN")}đ</span>
+          <span className="text-red-600 font-bold text-lg">{(Price ? Price : 0).toLocaleString("vi-VN")}đ</span>
           <span className="text-gray-400 text-xs line-through">34.990.000đ</span>
         </div>
         <div className="text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 mb-1">Smember giảm thêm đến <span className="text-red-500 font-semibold">304.000đ</span></div>
@@ -78,7 +81,19 @@ const CardProduct: React.FC<CardProps> = ({
         </div>
         {/* Nút mua ngay */}
         <button
-          className="mt-3 w-full flex items-center justify-center gap-2 text-white font-semibold text-lg py-2 rounded-full bg-gradient-to-r from-pink-500 to-fuchsia-600 hover:from-pink-600 hover:to-fuchsia-700 transition-all shadow-md"
+          className="mt-3 w-full flex items-center justify-center gap-2 text-white font-semibold text-lg py-2 rounded-full bg-gradient-to-r from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600 transition-all shadow-md"
+          onClick={() => {
+            dispatch(
+              addItem({
+                id,
+                productname,
+                Price,
+                pathimg,
+                qualitiy: 1,
+                maxQuantity: 99,
+              })
+            );
+          }}
         >
           Mua ngay
           <AiOutlineShoppingCart className="text-2xl" />

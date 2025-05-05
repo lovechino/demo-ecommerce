@@ -12,7 +12,7 @@ import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 import { setUser } from "@/Redux/auth";
 import ProvinceSelectorModal from "./ProvinceSelectorModal";
-
+import Fuse from "fuse.js"; // ✅ Thêm dòng này
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
   loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
@@ -25,8 +25,8 @@ const Navbar = () => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const fullPath = `${baseURL}${user?.Photo}`;
-  const productList = useAppSelector((state) => state.product.list)
- 
+  const productList = useAppSelector((state) => state.product.list);
+
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductType[]>([]);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -35,14 +35,27 @@ const Navbar = () => {
 
   const [selectedProvince, setSelectedProvince] = useState("Hà Nội");
   const [showCityDropdown, setShowCityDropdown] = useState(false);
-
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false);
 
-  const FetchSuggestions = async (text: string) => {
-    if (!text.trim()) return setSuggestions([]);
-    setSuggestions(productList);
+  // ✅ Cấu hình Fuse.js
+  const fuse = new Fuse(productList, {
+    keys: ["productname"],
+    threshold: 0.4,
+    distance: 100,
+    minMatchCharLength: 2,
+  });
+
+  // ✅ Tìm kiếm gần đúng
+  const FetchSuggestions = (text: string) => {
+    if (!text.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const results = fuse.search(text).map((res) => res.item);
+    setSuggestions(results);
   };
-  
+
   useEffect(() => {
     if (query) {
       FetchSuggestions(query);
@@ -50,7 +63,7 @@ const Navbar = () => {
     } else {
       setShowDropdown(false);
     }
-  }, [query, FetchSuggestions]);
+  }, [query]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -75,104 +88,97 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="bg-red-500 py-3 shadow-md sticky top-0 z-10">
-      <div className="  container mx-auto px-4 md:px-6 grid grid-flow-col justify-items-center  gap-3 md:gap-4 flex-wrap">
+    <header className="bg-[#e60012] py-2 shadow-md sticky top-0 z-20">
+      <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-2 px-4">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0 flex justify-center items-center">
+        <Link href="/" className="flex-shrink-0 flex items-center mr-2">
           <Image
             src={logo}
             alt="Logo Komex Digital"
-            width={80}
-            height={80}
+            width={120}
+            height={40}
             className="h-8 w-auto md:h-10"
           />
         </Link>
 
         {/* Ô tìm kiếm */}
-        <div className="w-full flex flex-row items-center">
-  <div className="relative w-3/4 gap-3">
-    <div ref={searchDropdownRef} >
-    <input
-      type="text"
-      placeholder="Tìm sản phẩm..."
-      className="w-full px-3 py-2 border border-red-300 rounded-md text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-white bg-red-300"
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      onFocus={() => setShowDropdown(true)}
-      
-    />
-    <div className="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
-      <FiSearch />
-    </div>
-    </div>
-
-    {showDropdown && suggestions.length > 0 && (
-      <div className="absolute top-full left-0 mt-1 z-50 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-96 overflow-y-auto">
-        <div className="px-4 py-2 text-gray-500 text-sm border-b">
-          Sản phẩm gợi ý
-        </div>
-        {suggestions.map((item, idx) => (
-          <div
-            key={idx}
-            className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-          >
-            <Image
-              src={`${baseURL}${item?.pathimg}`}
-              alt={item?.productname}
-              width={40}
-              height={40}
-              className="mr-2 rounded object-cover"
-            />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-black truncate">
-                {item?.productname}
-              </p>
-              <p className="text-xs text-gray-600">
-                <span className="text-red-500 font-semibold">
-                  {item?.Price}
-                </span>
-              </p>
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex items-center gap-2 w-full max-w-xl">
+            <div className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
+              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72A2 2 0 0 1 22 16.92z" stroke="white"/></svg>
+              <span>Gọi mua hàng <b>1800.2097</b></span>
+            </div>
+            <div className="relative flex-1" ref={searchDropdownRef}>
+              <input
+                type="text"
+                placeholder="Bạn cần tìm gì?"
+                className="w-full px-4 py-2 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-400 shadow-sm"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => setShowDropdown(true)}
+              />
+              <div className="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
+                <FiSearch />
+              </div>
+              {showDropdown && suggestions.length > 0 && (
+                <div className="absolute top-full left-0 mt-1 z-50 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-96 overflow-y-auto">
+                  <div className="px-4 py-2 text-gray-500 text-sm border-b">
+                    Sản phẩm gợi ý
+                  </div>
+                  {suggestions.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    >
+                      <Image
+                        src={`${baseURL}${item?.pathimg}`}
+                        alt={item?.productname}
+                        width={40}
+                        height={40}
+                        className="mr-2 rounded object-cover"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-black truncate">
+                          {item?.productname}
+                        </p>
+                        <p className="text-xs text-gray-600">
+                          <span className="text-red-500 font-semibold">
+                            {item?.Price}
+                          </span>
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
-        ))}
-      </div>
-    )}
-  </div>
-  <div className=" text-white p-2 ml-10">
-   
-    <div>
-      <p className=" hidden md:block">Gọi mua hàng</p>
-      <span className="">1800.2097</span>
-    </div>
-  </div>
-</div>
+        </div>
 
-        {/* Các biểu tượng và dropdown bên phải */}
+        {/* Các biểu tượng bên phải */}
         <div className="flex items-center gap-2 md:gap-3">
-          {" "}
-          {/* Giảm gap cho mobile */}
-          {/* Vị trí dropdown (chỉ hiển thị trên desktop) */}
+          <div className="hidden md:flex flex-row items-center gap-2">
+            <button className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="white" strokeWidth="2" /></svg>
+              Cửa hàng gần bạn
+            </button>
+            <button className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="10" rx="2" stroke="white" strokeWidth="2" /></svg>
+              Tra cứu đơn hàng
+            </button>
+          </div>
+          {/* Vị trí dropdown */}
           <div className="relative hidden md:block">
             <button
               onClick={() => setShowCityDropdown(!showCityDropdown)}
-              className="bg-red-600 hover:bg-red-400 px-3 py-2 rounded-md flex items-center gap-1 text-white text-sm"
+              className="bg-[#d32f2f] hover:bg-[#e53935] px-4 py-2 rounded-xl flex items-center gap-1 text-white text-sm font-medium"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
               </svg>
               <span className="font-semibold">{selectedProvince}</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             <ProvinceSelectorModal
@@ -182,53 +188,42 @@ const Navbar = () => {
               onSelectProvince={setSelectedProvince}
             />
           </div>
+
           {/* Giỏ hàng */}
           <Link href="/Cart" className="flex-shrink-0 relative">
-            {" "}
-            {/* Thêm relative để định vị badge */}
             <Badge count={storea.length} size="small" color="#f5222d">
               <BsBag className="text-xl text-white hover:text-gray-200 cursor-pointer" />
             </Badge>
           </Link>
+
           {/* User Avatar */}
           {!user || Object.keys(user).length === 0 ? (
             <FiUser
               onClick={() => setShowModal(true)}
-              className="text-xl text-white hover:text-gray-200 cursor-pointer"
+              className="text-xl text-white hover:text-gray-200 cursor-pointer bg-[#d32f2f] rounded-xl p-2 ml-2"
             />
           ) : (
             <div className="relative" ref={avatarDropdownRef}>
               <div
                 onClick={() => setShowAvatarDropdown((prev) => !prev)}
-                className="cursor-pointer"
+                className="cursor-pointer bg-[#d32f2f] rounded-xl p-1 ml-2"
               >
-                <Avatar size="small" src={fullPath} alt="User Avatar" />{" "}
-                {/* Sử dụng size small */}
+                <Avatar size={30} src={fullPath} alt="User Avatar" />
               </div>
               {showAvatarDropdown && (
                 <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded shadow-md z-50 text-black text-sm">
                   <div className="px-4 py-3 border-b">
-                    <p className="font-semibold">
-                      {user?.FullName || "Người dùng"}
-                    </p>
-                    <p className="text-gray-500 text-xs">
-                      {user?.Email || "example@email.com"}
-                    </p>
+                    <p className="font-semibold">{user?.FullName || "Người dùng"}</p>
+                    <p className="text-gray-500 text-xs">{user?.Email || "example@email.com"}</p>
                   </div>
                   <ul className="py-2 text-gray-700">
                     <li>
-                      <Link
-                        href="/Profile"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <Link href="/Profile" className="block px-4 py-2 hover:bg-gray-100">
                         Thông tin tài khoản
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        href="/Cart"
-                        className="block px-4 py-2 hover:bg-gray-100"
-                      >
+                      <Link href="/Cart" className="block px-4 py-2 hover:bg-gray-100">
                         Lịch sử giao hàng
                       </Link>
                     </li>

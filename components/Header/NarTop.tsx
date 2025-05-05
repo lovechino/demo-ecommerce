@@ -65,14 +65,14 @@ const NavTop = () => {
   return (
     <div className="bg-gray-900 text-white text-xs py-2">
       <div className="container mx-auto px-6 flex flex-col md:flex-row justify-center md:justify-between items-center">
-        <div className="mb-2 md:mb-0">discountMessage</div>
+        <div className="mb-2 md:mb-0">Khuyến mãi lớn cuối tuần! Mua ngay nhận ưu đãi.</div>
         <div className="flex items-center space-x-4">
-          <span className="hidden sm:inline">careers</span>
+          <span className="hidden sm:inline">Tuyển dụng</span>
           <Link href="/Blog" className=" sm:inline">
-            Blog
+            Tin tức
           </Link>
-          <span className=" sm:inline">buyerProtection</span>
-          <div className="relative">
+          <span className=" sm:inline">Bảo vệ người mua</span>
+          <div className="relative" ref={dropdownRef}>
             <button
               className="flex items-center space-x-1 focus:outline-none"
               onClick={toggleLanguageDropdown}
@@ -88,8 +88,7 @@ const NavTop = () => {
             </button>
             {isLanguageDropdownOpen && (
               <div
-                ref={dropdownRef}
-                className="absolute top-full right-0 mt-1 bg-gray-800 border border-gray-700 rounded shadow-md z-10"
+                className="absolute top-full right-0 mt-1 bg-gray-800 border border-gray-700 rounded shadow-md z-50"
               >
                 {languages.map((lang) => (
                   <button
