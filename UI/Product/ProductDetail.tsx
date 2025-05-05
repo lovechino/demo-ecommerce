@@ -6,6 +6,8 @@ import { useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Product, ProductType } from "@/Utils/type";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addItem } from "@/Redux/cart";
 
 interface DetailType {
   id: string;
@@ -45,6 +47,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
   const fullpath = `${baseURL}${product?.Image}`;
   const packingArray = product?.Packing?.split(" x ") || [];
 
+  const dispatch = useDispatch();
+  const [showToast, setShowToast] = useState(false);
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="text-center mb-8">
@@ -59,33 +64,33 @@ const ProductDetailUi = ({ id }: DetailType) => {
         <div className="flex-1">
           <div className="grid grid-cols-5 gap-2 mb-4">
             <img
-              className="w-full h-auto cursor-pointer border rounded"
+              className="w-full h-auto cursor-pointer  rounded"
               src={fullpath}
               alt="Ảnh nhỏ 1"
             />
             <img
-              className="w-full h-auto cursor-pointer border rounded"
+              className="w-full h-auto cursor-pointer  rounded"
               src={fullpath}
               alt="Ảnh nhỏ 2"
             />
             <img
-              className="w-full h-auto cursor-pointer border rounded"
+              className="w-full h-auto cursor-pointer  rounded"
               src={fullpath}
               alt="Ảnh nhỏ 3"
             />
             <img
-              className="w-full h-auto cursor-pointer border rounded"
+              className="w-full h-auto cursor-pointer  rounded"
               src={fullpath}
               alt="Ảnh nhỏ 4"
             />
             <img
-              className="w-full h-auto cursor-pointer border rounded"
+              className="w-full h-auto cursor-pointer  rounded"
               src={fullpath}
               alt="Ảnh nhỏ 5"
             />
           </div>
-          <div className="border rounded overflow-hidden">
-            <img className="w-full" src={fullpath} alt="Ảnh chính sản phẩm" />
+          <div className=" rounded overflow-hidden">
+            <img className="max-w-xs w-full h-auto mx-auto rounded" src={fullpath} alt="Ảnh chính sản phẩm" />
           </div>
         </div>
 
@@ -118,11 +123,17 @@ const ProductDetailUi = ({ id }: DetailType) => {
           </div>
 
           <div className="text-2xl font-bold text-red-500">
-            {product?.Price} đ
+            {product?.Price ? product.Price : 0} đ
           </div>
 
+          {/* Description responsive */}
+          <div
+            className="text-gray-700 text-base md:text-lg break-words px-2 py-1 md:px-0 md:py-0 border-l-4 border-blue-200 bg-white rounded md:rounded-none mb-2"
+            dangerouslySetInnerHTML={{ __html: (product?.Description && product.Description.trim() !== '' ? product.Description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nunc ut laoreet gravida, urna sem cursus erat, vitae dictum lorem enim at enim.') }}
+          />
+
           <div className="flex gap-4">
-            {packingArray.map((item: any, index: number) => (
+            {packingArray.map((item: string, index: number) => (
               <button
                 key={index}
                 className="px-4 py-2 border rounded hover:bg-gray-100"
@@ -134,8 +145,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setQuality(quality - 1)}
-              // disabled={}
+              onClick={() => setQuality((prev) => Math.max(1, prev - 1))}
               className="w-8 h-8 flex justify-center items-center border rounded hover:bg-gray-100"
             >
               -
@@ -147,14 +157,39 @@ const ProductDetailUi = ({ id }: DetailType) => {
               onChange={(e) => setQuality(Number(e.target.value))}
               readOnly
             />
-            <button className="w-8 h-8 flex justify-center items-center border rounded hover:bg-gray-100">
+            <button
+              onClick={() => setQuality((prev) => prev + 1)}
+              className="w-8 h-8 flex justify-center items-center border rounded hover:bg-gray-100"
+            >
               +
             </button>
           </div>
 
-          <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded">
+          <button
+            className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded"
+            onClick={() => {
+              if (!product) return;
+              dispatch(
+                addItem({
+                  id: product.Id,
+                  productname: product.ProductName,
+                  Price: product.Price || 0,
+                  pathimg: product.Image,
+                  qualitiy: quality,
+                  maxQuantity: 99,
+                })
+              );
+              setShowToast(true);
+              setTimeout(() => setShowToast(false), 2500);
+            }}
+          >
             Thêm vào giỏ hàng
           </button>
+          {showToast && (
+            <div className="fixed top-6 right-6 z-50 bg-green-500 text-white px-6 py-3 rounded shadow-lg animate-fade-in">
+              Đã thêm vào giỏ hàng thành công!
+            </div>
+          )}
 
           <div className="pt-4">
             <h3 className="font-semibold">Đặc điểm nổi bật</h3>

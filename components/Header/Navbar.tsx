@@ -38,19 +38,19 @@ const Navbar = () => {
 
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false);
 
-  const fetchSuggestions = async (text: string) => {
+  const FetchSuggestions = async (text: string) => {
     if (!text.trim()) return setSuggestions([]);
     setSuggestions(productList);
   };
   
   useEffect(() => {
     if (query) {
-      fetchSuggestions(query);
+      FetchSuggestions(query);
       setShowDropdown(true);
     } else {
       setShowDropdown(false);
     }
-  }, [query, fetchSuggestions]);
+  }, [query, FetchSuggestions]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
