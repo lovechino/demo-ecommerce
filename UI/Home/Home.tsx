@@ -18,15 +18,9 @@ const ListPrudctHome = dynamic(
 const HomeScreeen = () => {
   return (
     <div>
-      {/* <NavTop />
-             <Navbar /> */}
       <Hero />
       <ListPrudctHome />
-      <ListPrudctHome />
-      <ListPrudctHome />
-      <ListPrudctHome />
       <Footer />
-      {/* <BottomNav/> */}
     </div>
   );
 };

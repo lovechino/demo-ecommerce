@@ -23,7 +23,7 @@ const CartPage = () => {
   const [selectedItems, setSelectedItems] = useState<CartIntemType[]>([]);
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
-
+  console.log("items", items);
   // Loading state cho cập nhật số lượng/xóa sản phẩm
   const [loading, setLoading] = useState(false);
 

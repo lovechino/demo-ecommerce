@@ -2,12 +2,13 @@
 
 import { GetProductById, getReviewProducts } from "@/Apis/Product";
 // import CardProduct from "@/components/Product/Card";
-import { useAppSelector } from "@/Redux/hook";
+import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Product, ProductType } from "@/Utils/type";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import sptt from "@/public/Image/WhatsApp Image 2025-05-05 at 16.55.07_d9bf088d.jpg";
+import { addItem } from "@/Redux/cart";
 // import { addItem } from "@/Redux/cart";
 
 interface DetailType {
@@ -18,7 +19,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
   const [product, setProduct] = useState<Product>();
 
   const [resview, setReview] = useState<any>(null);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const GetData = async () => {
     const response = await GetProductById(id);
     const resReview = await getReviewProducts();
@@ -172,17 +173,18 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 </div>
                 <button
                   className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:cursor-pointer hover:bg-pink-600"
-                  // onClick={() =>
-                  //   dispatch(
-                  //     addItem({
-                  //       id: product?.Id,
-                  //       productname: product?.ProductName,
-                  //       Price: product?.Price,
-                  //       pathimg: product?.Image,
-                  //       qualitiy: 1,
-                  //     })
-                  //   )
-                  // }
+                  onClick={() =>
+                    dispatch(
+                      addItem({
+                        id: product?.Id,
+                        productname: product?.ProductName,
+                        Price: product?.Price,
+                        pathimg: product?.Image,
+                        qualitiy: quality,
+                        maxQuantity: 10,
+                      })
+                    )
+                  }
                 >
                   MUA NGAY
                 </button>
@@ -276,22 +278,29 @@ const ProductDetailUi = ({ id }: DetailType) => {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 my-4">
             <button
-              onClick={() => setQuality(quality - 1)}
-              // disabled={}
-              className="w-8 h-8 flex justify-center items-center border rounded hover:bg-gray-100"
+              onClick={() => setQuality((q) => Math.max(1, q - 1))}
+              className="w-6 h-6 flex justify-center items-center border rounded text-base hover:bg-gray-100"
+              aria-label="Giảm số lượng"
             >
               -
             </button>
             <input
-              className="w-16 border rounded text-center"
-              type="text"
+              className="w-12 border rounded text-center text-sm"
+              type="number"
+              min={1}
               value={quality}
-              onChange={(e) => setQuality(Number(e.target.value))}
-              readOnly
+              onChange={(e) => {
+                const val = Math.max(1, Number(e.target.value));
+                setQuality(val);
+              }}
             />
-            <button className="w-8 h-8 flex justify-center items-center border rounded hover:bg-gray-100">
+            <button
+              onClick={() => setQuality((q) => q + 1)}
+              className="w-6 h-6 flex justify-center items-center border rounded text-base hover:bg-gray-100"
+              aria-label="Tăng số lượng"
+            >
               +
             </button>
           </div>
@@ -321,21 +330,22 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
           {/* Nút mua ngay + thêm vào giỏ */}
           <div className="flex gap-2">
-            <button className="flex-1 bg-red-500 text-white py-1.5 md:py-2 lg:py-3 rounded hover:bg-red-600">
-              <span
-                // onClick={() =>
-                //   dispatch(
-                //     addItem({
-                //       id: product?.Id,
-                //       productname: product?.ProductName,
-                //       Price: product?.Price,
-                //       pathimg: product?.Image,
-                //       qualitiy: 1,
-                //     })
-                //   )
-                // }
-                className="text-sm md:text-base lg:text-lg font-bold"
-              >
+            <button
+              onClick={() =>
+                dispatch(
+                  addItem({
+                    id: product?.Id,
+                    productname: product?.ProductName,
+                    Price: product?.Price,
+                    pathimg: product?.Image,
+                    qualitiy: quality,
+                    maxQuantity: 10,
+                  })
+                )
+              }
+              className="flex-1 bg-red-500 text-white py-1.5 md:py-2 lg:py-3 rounded hover:bg-red-600 hover:cursor-pointer"
+            >
+              <span className="text-sm md:text-base lg:text-lg font-bold">
                 MUA NGAY
               </span>
               <br />
