@@ -10,29 +10,12 @@ import { baseURL } from "@/Utils/Axios";
 import { useEffect, useState } from "react";
 import { GetAllProduct, GetListGroupProduct } from "@/Apis/Product";
 import { Menu } from "@/Utils/type";
-import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
-import placeholderImg from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
-// const placeholderImg = "https://via.placeholder.com/300x300?text=No+Image";
+import placeholderImg from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 export default function Hero() {
   GetAllProduct();
   const product = useSelector((state: RootState) => state.product.list);
-
-  if (!product) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <Image
-          src={logo}
-          alt="logo"
-          width={100}
-          height={100}
-          className="animate-spin"
-        />
-      </div>
-    );
-  }
-
   const products = product?.slice(1, 16);
   const [menu, setMenu] = useState<Menu[]>([]);
   const [selectedProductIndex, setSelectedProductIndex] = useState(0);
