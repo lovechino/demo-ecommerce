@@ -12,7 +12,7 @@ import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 import { setUser } from "@/Redux/auth";
 import ProvinceSelectorModal from "./ProvinceSelectorModal";
-import Fuse from "fuse.js";
+// import Fuse from "fuse.js";
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
   loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
@@ -38,32 +38,32 @@ const Navbar = () => {
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false);
 
   // ✅ Cấu hình Fuse.js
-  const fuse = new Fuse(productList, {
-    keys: ["productname"],
-    threshold: 0.4,
-    distance: 100,
-    minMatchCharLength: 2,
-  });
+  // const fuse = new Fuse(productList, {
+  //   keys: ["productname"],
+  //   threshold: 0.4,
+  //   distance: 100,
+  //   minMatchCharLength: 2,
+  // });
 
-  // ✅ Tìm kiếm gần đúng
-  const FetchSuggestions = (text: string) => {
-    if (!text.trim()) {
-      setSuggestions([]);
-      return;
-    }
+  // // ✅ Tìm kiếm gần đúng
+  // const FetchSuggestions = (text: string) => {
+  //   if (!text.trim()) {
+  //     setSuggestions([]);
+  //     return;
+  //   }
 
-    const results = fuse.search(text).map((res: any) => res.item);
-    setSuggestions(results);
-  };
+  //   const results = fuse.search(text).map((res: any) => res.item);
+  //   setSuggestions(results);
+  // };
 
-  useEffect(() => {
-    if (query) {
-      FetchSuggestions(query);
-      setShowDropdown(true);
-    } else {
-      setShowDropdown(false);
-    }
-  }, [query]);
+  // useEffect(() => {
+  //   if (query) {
+  //     FetchSuggestions(query);
+  //     setShowDropdown(true);
+  //   } else {
+  //     setShowDropdown(false);
+  //   }
+  // }, [query]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
