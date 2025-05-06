@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { BsBag } from "react-icons/bs";
-import { FiLoader, FiSearch, FiUpload, FiUser } from "react-icons/fi";
+import { FiLoader, FiSearch, FiUser } from "react-icons/fi";
 import dynamic from "next/dynamic";
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
