@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { BsBag } from "react-icons/bs";
-import { FiLoader, FiSearch, FiUser } from "react-icons/fi";
+import { FiLoader, FiSearch, FiUpload, FiUser } from "react-icons/fi";
 import dynamic from "next/dynamic";
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
@@ -238,6 +238,7 @@ const Navbar = () => {
           {/* User Avatar */}
           {!user || Object.keys(user).length === 0 ? (
             <FiUser
+              size={30}
               onClick={() => setShowModal(true)}
               className="text-xl text-white hover:text-gray-200 cursor-pointer bg-[#d32f2f] rounded-xl p-2 ml-2"
             />

@@ -42,22 +42,23 @@ const ListProductHome = () => {
   console.log(menu);
 
   return (
-    <div className="container mx-auto px-2 py-6">
+    <div className="w-full max-w-7xl mx-auto flex flex-col justify-center items-center px-2 py-6">
       {menu.map((group) => {
         const products = groupProducts[group.Code] || [];
         if (products.length === 0) return null;
         // Không lọc theo filter, chỉ hiển thị toàn bộ sản phẩm của nhóm
         const filteredProducts = products;
         return (
-          <div key={group.Code} className="mb-8">
-            <div className="flex flex-col lg:flex-row  gap-2 mb-2 gap-4">
-              <h2 className="text-2xl font-bold text-gray-800">{group.Name}</h2>
-              <div className="flex gap-1">
+          <div key={group.Code} className="mb-8 w-full">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2 md:gap-4">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center md:text-left">
+                {group.Name}
+              </h2>
+              <div className="flex flex-wrap gap-1 justify-center md:justify-start">
                 {filterOptions.map((opt) => (
                   <button
                     key={opt.value}
-                    className={`px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap bg-white hover:bg-blue-50`}
-                    // Không cần onClick nữa
+                    className="px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap bg-white hover:bg-blue-50"
                   >
                     {opt.label}
                   </button>

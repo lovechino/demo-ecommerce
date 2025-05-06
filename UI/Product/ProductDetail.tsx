@@ -2,12 +2,13 @@
 
 import { GetProductById, getReviewProducts } from "@/Apis/Product";
 // import CardProduct from "@/components/Product/Card";
-import { useAppSelector } from "@/Redux/hook";
+import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Product, ProductType } from "@/Utils/type";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import sptt from "@/public/Image/WhatsApp Image 2025-05-05 at 16.55.07_d9bf088d.jpg";
+import { addItem } from "@/Redux/cart";
 
 interface DetailType {
   id: string;
@@ -15,7 +16,9 @@ interface DetailType {
 
 const ProductDetailUi = ({ id }: DetailType) => {
   const [product, setProduct] = useState<Product>();
+
   const [resview, setReview] = useState<any>(null);
+  const dispatch = useAppDispatch();
   const GetData = async () => {
     const response = await GetProductById(id);
     const resReview = await getReviewProducts();
@@ -67,16 +70,17 @@ const ProductDetailUi = ({ id }: DetailType) => {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold">{product?.ProductName}</h1>
-        {/* <p className="text-gray-600 mt-2">
-          Nhóm Sản Phẩm : {product?.GroupCode}
-        </p> */}
       </div>
 
       <div className="flex flex-col lg:flex-row items-center gap-2 mt-4">
         {/* Hình ảnh */}
         <div className="w-full lg:w-1/2">
-          <div className="border border-black/20 rounded-lg overflow-hidden shadow-sm mb-4">
-            <img className="w-full" src={fullpath} alt="Ảnh chính sản phẩm" />
+          <div className="border border-black/20 rounded-lg overflow-hidden shadow-sm mb-4 flex justify-center">
+            <img
+              className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto"
+              src={fullpath}
+              alt="Ảnh chính sản phẩm"
+            />
           </div>
           <div className="grid grid-cols-5 gap-2 mb-4 border-black/20">
             <img
@@ -166,7 +170,20 @@ const ProductDetailUi = ({ id }: DetailType) => {
                     (Tiết kiệm 0đ)
                   </div>
                 </div>
-                <button className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:bg-pink-600">
+                <button
+                  className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:cursor-pointer hover:bg-pink-600"
+                  onClick={() =>
+                    dispatch(
+                      addItem({
+                        id: product?.Id,
+                        productname: product?.ProductName,
+                        Price: product?.Price,
+                        pathimg: product?.Image,
+                        qualitiy: 1,
+                      })
+                    )
+                  }
+                >
                   MUA NGAY
                 </button>
               </div>
@@ -305,7 +322,20 @@ const ProductDetailUi = ({ id }: DetailType) => {
           {/* Nút mua ngay + thêm vào giỏ */}
           <div className="flex gap-2">
             <button className="flex-1 bg-red-500 text-white py-1.5 md:py-2 lg:py-3 rounded hover:bg-red-600">
-              <span className="text-sm md:text-base lg:text-lg font-bold">
+              <span
+                onClick={() =>
+                  dispatch(
+                    addItem({
+                      id: product?.Id,
+                      productname: product?.ProductName,
+                      Price: product?.Price,
+                      pathimg: product?.Image,
+                      qualitiy: 1,
+                    })
+                  )
+                }
+                className="text-sm md:text-base lg:text-lg font-bold"
+              >
                 MUA NGAY
               </span>
               <br />
