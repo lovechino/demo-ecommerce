@@ -8,19 +8,21 @@ import { Menu, ProductType } from "@/Utils/type";
 
 const ListProductHome = () => {
   const [menu, setMenu] = useState<Menu[]>([]);
-  const [groupProducts, setGroupProducts] = useState<{ [key: string]: ProductType[] }>({});
+  const [groupProducts, setGroupProducts] = useState<{
+    [key: string]: ProductType[];
+  }>({});
   const filterOptions = [
-    { label: 'Tất cả', value: '' },
-    { label: 'iPhone', value: 'iphone' },
-    { label: 'Samsung', value: 'samsung' },
-    { label: 'Xiaomi', value: 'xiaomi' },
-    { label: 'Nokia', value: 'nokia' },
-    { label: 'Oppo', value: 'oppo' },
-    { label: 'Vivo', value: 'vivo' },
-    { label: 'Realme', value: 'realme' },
-    { label: 'Asus', value: 'asus' },
-    { label: 'Honor', value: 'honor' },
-    { label: 'Tecno', value: 'tecno' },
+    { label: "Tất cả", value: "" },
+    { label: "iPhone", value: "iphone" },
+    { label: "Samsung", value: "samsung" },
+    { label: "Xiaomi", value: "xiaomi" },
+    { label: "Nokia", value: "nokia" },
+    { label: "Oppo", value: "oppo" },
+    { label: "Vivo", value: "vivo" },
+    { label: "Realme", value: "realme" },
+    { label: "Asus", value: "asus" },
+    { label: "Honor", value: "honor" },
+    { label: "Tecno", value: "tecno" },
   ];
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const ListProductHome = () => {
     };
     fetchMenuAndProducts();
   }, []);
-  console.log(menu)
+  console.log(menu);
 
   return (
     <div className="container mx-auto px-2 py-6">
@@ -48,8 +50,8 @@ const ListProductHome = () => {
         const filteredProducts = products;
         return (
           <div key={group.Code} className="mb-8">
-            <div className="flex items-center  gap-2 mb-2 gap-4">
-            <h2 className="text-2xl font-bold text-gray-800">{group.Name}</h2>
+            <div className="flex flex-col lg:flex-row  gap-2 mb-2 gap-4">
+              <h2 className="text-2xl font-bold text-gray-800">{group.Name}</h2>
               <div className="flex gap-1">
                 {filterOptions.map((opt) => (
                   <button
@@ -61,7 +63,6 @@ const ListProductHome = () => {
                   </button>
                 ))}
               </div>
-            
             </div>
             <div className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
               {filteredProducts.map((item: ProductType) => (

@@ -50,16 +50,16 @@ const ProductDetailUi = ({ id }: DetailType) => {
     {
       Image:
         "https://cdn.tgdd.vn/Products/Images/5698/299348/arm-humanmotion-h1pro-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Hum..."
+      title: "Giảm 100K khi mua kèm giá treo Hum...",
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299350/arm-xiaomi-mi-display-1c-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá đỡ..."
+      title: "Giảm 100K khi mua kèm giá đỡ...",
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299349/arm-northbayou-f80-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Nort..."
-    }
+      title: "Giảm 100K khi mua kèm giá treo Nort...",
+    },
   ];
   const [showAll, setShowAll] = useState(false);
 
@@ -72,9 +72,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
         </p> */}
       </div>
 
-      <div className="flex items-center gap-2 mt-4 overflow-x-auto">
+      <div className="flex flex-col lg:flex-row items-center gap-2 mt-4">
         {/* Hình ảnh */}
-        <div className="flex-1">
+        <div className="w-full lg:w-1/2">
           <div className="border border-black/20 rounded-lg overflow-hidden shadow-sm mb-4">
             <img className="w-full" src={fullpath} alt="Ảnh chính sản phẩm" />
           </div>
@@ -175,7 +175,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
         </div>
 
         {/* Thông tin sản phẩm */}
-        <div className="flex-1 space-y-4">
+        <div className="w-full lg:w-1/2 space-y-4">
           <h2 className="text-2xl font-semibold text-left">
             {product?.ProductName}
             <span className="ml-2 text-sm bg-green-200 text-green-800 px-2 py-1 rounded">
@@ -304,14 +304,17 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
           {/* Nút mua ngay + thêm vào giỏ */}
           <div className="flex gap-2">
-            <button className="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600">
-              MUA NGAY <br />
-              <span className="text-xs font-normal">
+            <button className="flex-1 bg-red-500 text-white py-1.5 md:py-2 lg:py-3 rounded hover:bg-red-600">
+              <span className="text-sm md:text-base lg:text-lg font-bold">
+                MUA NGAY
+              </span>
+              <br />
+              <span className="text-[10px] md:text-xs lg:text-sm font-normal">
                 (Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)
               </span>
             </button>
-            <button className="p-2 border rounded text-red-500 hover:bg-gray-100">
-              🛒
+            <button className="p-1.5 md:p-2 lg:p-3 border rounded text-red-500 hover:bg-gray-100">
+              <span className="text-lg md:text-xl lg:text-2xl">🛒</span>
             </button>
           </div>
 
@@ -370,265 +373,52 @@ const ProductDetailUi = ({ id }: DetailType) => {
         </div>
       </div> */}
       <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">SẢN PHẨM TƯƠNG TỰ</h2>
-        <div className="flex space-x-4 overflow-x-auto">
-          {/* Card 1 */}
-          <div className="relative bg-white rounded-2xl shadow p-4 w-64 flex-shrink-0 border border-black/20">
-            <div className="absolute -top-3 left-0">
-              <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                Giảm 25%
-              </span>
-            </div>
-            <Image
-              src={sptt}
-              alt="sptt"
-              className="mx-auto h-28 object-contain"
-            />
-            <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-              1<small className="text-base">ms</small>
-            </div>
-            <div className="text-red-600 font-bold text-center text-base">
-              24 inch 100 Hz Full HD
-            </div>
-            <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-              Màn hình ASUS VU249CFE 24 inch
-            </div>
-            <div className="text-red-600 font-bold text-lg text-center mt-2">
-              2.990.000đ{" "}
-              <span className="text-gray-400 line-through text-base font-normal">
-                3.990.000đ
-              </span>
-            </div>
-            <div className="bg-gray-100 text-xs text-gray-700 rounded px-2 py-1 mt-2 text-center">
-              Tặng ly thủy tinh bọc da ASUS
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span></span>
-              <span className="text-gray-400 text-sm flex items-center">
-                <svg
-                  className="w-5 h-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                </svg>
-                Yêu thích
-              </span>
-            </div>
+        <div className="flex flex-col gap-4">
+          <h2 className="text-xl font-bold">SẢN PHẨM TƯƠNG TỰ</h2>
+          <div className="flex gap-2 mb-4">
+            <button className="px-4 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold">
+              Mua kèm giá sốc
+            </button>
+            <button className="px-4 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold">
+              Phụ kiện mua cùng
+            </button>
           </div>
-          {/* Card 2 */}
-          <div className="relative bg-white rounded-2xl shadow p-4 w-64 flex-shrink-0 border border-black/20">
-            <div className="absolute -top-3 left-0">
-              <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                Giảm 6%
-              </span>
-            </div>
-            <Image src={sptt} alt="" className="mx-auto h-28 object-contain" />
-            <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-              5<small className="text-base">ms</small>
-            </div>
-            <div className="text-red-600 font-bold text-center text-base">
-              16 inch 60 Hz Full HD
-            </div>
-            <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-              Màn hình di động ASUS ZenScreen MB169C 16 inch
-            </div>
-            <div className="text-red-600 font-bold text-lg text-center mt-2">
-              3.190.000đ{" "}
-              <span className="text-gray-400 line-through text-base font-normal">
-                3.390.000đ
-              </span>
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                Trả góp 0%
-              </span>
-              <span className="text-gray-400 text-sm flex items-center">
-                <svg
-                  className="w-5 h-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                </svg>
-                Yêu thích
-              </span>
-            </div>
-          </div>
-          {/* Card 3 */}
-          <div className="relative bg-white rounded-2xl shadow p-4 w-64 flex-shrink-0 border border-black/20">
-            <div className="absolute -top-3 left-0">
-              <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                Giảm 14%
-              </span>
-            </div>
-            <Image
-              src={sptt}
-              alt="sptt"
-              className="mx-auto h-28 object-contain"
-            />
-            <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-              1<small className="text-base">ms</small>{" "}
-              <span className="text-gray-700 text-xs ml-2">sRGB 116%</span>
-            </div>
-            <div className="text-red-600 font-bold text-center text-base">
-              27 inch 120 Hz Full HD
-            </div>
-            <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-              Màn hình MSI Pro MP275 E2 27 inch
-            </div>
-            <div className="text-red-600 font-bold text-lg text-center mt-2">
-              2.990.000đ{" "}
-              <span className="text-gray-400 line-through text-base font-normal">
-                3.490.000đ
-              </span>
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span></span>
-              <span className="text-gray-400 text-sm flex items-center">
-                <svg
-                  className="w-5 h-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                </svg>
-                Yêu thích
-              </span>
-            </div>
-          </div>
-          {/* Card 4 */}
-          <div className="relative bg-white rounded-2xl shadow p-4 w-64 flex-shrink-0 border border-black/20">
-            <div className="absolute -top-3 left-0">
-              <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                Giảm 2%
-              </span>
-            </div>
-            <Image
-              src={sptt}
-              alt="sptt"
-              className="mx-auto h-28 object-contain"
-            />
-            <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-              0.5<small className="text-base">ms</small>
-            </div>
-            <div className="text-red-600 font-bold text-center text-base">
-              25 inch 200 Hz Full HD
-            </div>
-            <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-              Màn hình Gaming MSI MAG 255F E20 25 inch
-            </div>
-            <div className="text-red-600 font-bold text-lg text-center mt-2">
-              3.090.000đ{" "}
-              <span className="text-gray-400 line-through text-base font-normal">
-                3.169.000đ
-              </span>
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                Trả góp 0%
-              </span>
-              <span className="text-gray-400 text-sm flex items-center">
-                <svg
-                  className="w-5 h-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                </svg>
-                Yêu thích
-              </span>
-            </div>
-          </div>
-          {/* Card 5 */}
-          <div className="relative bg-white rounded-2xl shadow p-4 w-64 flex-shrink-0 border border-black/20">
-            <div className="absolute -top-3 left-0">
-              <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                Giảm 2%
-              </span>
-            </div>
-            <Image
-              src={sptt}
-              alt="sptt"
-              className="mx-auto h-28 object-contain"
-            />
-            <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-              0.5<small className="text-base">ms</small>
-            </div>
-            <div className="text-red-600 font-bold text-center text-base">
-              25 inch 200 Hz Full HD
-            </div>
-            <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-              Màn hình Gaming MSI MAG 255F E20 25 inch
-            </div>
-            <div className="text-red-600 font-bold text-lg text-center mt-2">
-              3.090.000đ{" "}
-              <span className="text-gray-400 line-through text-base font-normal">
-                3.169.000đ
-              </span>
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                Trả góp 0%
-              </span>
-              <span className="text-gray-400 text-sm flex items-center">
-                <svg
-                  className="w-5 h-5 mr-1"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                </svg>
-                Yêu thích
-              </span>
-            </div>
-          </div>
-          {/* Card 6 */}
-          <div className="relative bg-white rounded-2xl shadow p-4 w-64 flex-shrink-0 border border-black/20">
-            <div className="absolute -top-3 left-0">
-              <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                Giảm 11%
-              </span>
-            </div>
-            <Image
-              src={sptt}
-              alt="sptt"
-              className="mx-auto h-28 object-contain"
-            />
-            <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-              1<small className="text-base">ms</small>
-            </div>
-            <div className="text-red-600 font-bold text-center text-base">
-              25 inch 180 Hz Full HD
-            </div>
-            <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-              Màn hình Gaming MSI G255F 25 inch
-            </div>
-            <div className="text-red-600 font-bold text-lg text-center mt-2">
-              3.190.000đ{" "}
-              <span className="text-gray-400 line-through text-base font-normal">
-                3.590.000đ
-              </span>
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                Trả góp 0%
-              </span>
-              <span className="flex items-center">
-                <span className="text-yellow-400 mr-1">★★★★★</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {/* Card 1 */}
+            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
+              <div className="absolute -top-3 left-0">
+                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                  Giảm 25%
+                </span>
+              </div>
+              <Image
+                src={sptt}
+                alt="sptt"
+                className="mx-auto h-28 object-contain"
+              />
+              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                1<small className="text-base">ms</small>
+              </div>
+              <div className="text-red-600 font-bold text-center text-base">
+                24 inch 100 Hz Full HD
+              </div>
+              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                Màn hình ASUS VU249CFE 24 inch
+              </div>
+              <div className="text-red-600 font-bold text-lg text-center mt-2">
+                2.990.000đ{" "}
+                <span className="text-gray-400 line-through text-base font-normal">
+                  3.990.000đ
+                </span>
+              </div>
+              <div className="bg-gray-100 text-xs text-gray-700 rounded px-2 py-1 mt-2 text-center">
+                Tặng ly thủy tinh bọc da ASUS
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span></span>
                 <span className="text-gray-400 text-sm flex items-center">
                   <svg
-                    className="w-5 h-5 ml-1"
+                    className="w-5 h-5 mr-1"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
@@ -638,7 +428,234 @@ const ProductDetailUi = ({ id }: DetailType) => {
                   </svg>
                   Yêu thích
                 </span>
-              </span>
+              </div>
+            </div>
+            {/* Card 2 */}
+            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
+              <div className="absolute -top-3 left-0">
+                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                  Giảm 6%
+                </span>
+              </div>
+              <Image
+                src={sptt}
+                alt=""
+                className="mx-auto h-28 object-contain"
+              />
+              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                5<small className="text-base">ms</small>
+              </div>
+              <div className="text-red-600 font-bold text-center text-base">
+                16 inch 60 Hz Full HD
+              </div>
+              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                Màn hình di động ASUS ZenScreen MB169C 16 inch
+              </div>
+              <div className="text-red-600 font-bold text-lg text-center mt-2">
+                3.190.000đ{" "}
+                <span className="text-gray-400 line-through text-base font-normal">
+                  3.390.000đ
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                  Trả góp 0%
+                </span>
+                <span className="text-gray-400 text-sm flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
+                  </svg>
+                  Yêu thích
+                </span>
+              </div>
+            </div>
+            {/* Card 3 */}
+            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
+              <div className="absolute -top-3 left-0">
+                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                  Giảm 14%
+                </span>
+              </div>
+              <Image
+                src={sptt}
+                alt="sptt"
+                className="mx-auto h-28 object-contain"
+              />
+              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                1<small className="text-base">ms</small>{" "}
+                <span className="text-gray-700 text-xs ml-2">sRGB 116%</span>
+              </div>
+              <div className="text-red-600 font-bold text-center text-base">
+                27 inch 120 Hz Full HD
+              </div>
+              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                Màn hình MSI Pro MP275 E2 27 inch
+              </div>
+              <div className="text-red-600 font-bold text-lg text-center mt-2">
+                2.990.000đ{" "}
+                <span className="text-gray-400 line-through text-base font-normal">
+                  3.490.000đ
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span></span>
+                <span className="text-gray-400 text-sm flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
+                  </svg>
+                  Yêu thích
+                </span>
+              </div>
+            </div>
+            {/* Card 4 */}
+            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
+              <div className="absolute -top-3 left-0">
+                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                  Giảm 2%
+                </span>
+              </div>
+              <Image
+                src={sptt}
+                alt="sptt"
+                className="mx-auto h-28 object-contain"
+              />
+              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                0.5<small className="text-base">ms</small>
+              </div>
+              <div className="text-red-600 font-bold text-center text-base">
+                25 inch 200 Hz Full HD
+              </div>
+              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                Màn hình Gaming MSI MAG 255F E20 25 inch
+              </div>
+              <div className="text-red-600 font-bold text-lg text-center mt-2">
+                3.090.000đ{" "}
+                <span className="text-gray-400 line-through text-base font-normal">
+                  3.169.000đ
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                  Trả góp 0%
+                </span>
+                <span className="text-gray-400 text-sm flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
+                  </svg>
+                  Yêu thích
+                </span>
+              </div>
+            </div>
+            {/* Card 5 */}
+            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
+              <div className="absolute -top-3 left-0">
+                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                  Giảm 2%
+                </span>
+              </div>
+              <Image
+                src={sptt}
+                alt="sptt"
+                className="mx-auto h-28 object-contain"
+              />
+              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                0.5<small className="text-base">ms</small>
+              </div>
+              <div className="text-red-600 font-bold text-center text-base">
+                25 inch 200 Hz Full HD
+              </div>
+              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                Màn hình Gaming MSI MAG 255F E20 25 inch
+              </div>
+              <div className="text-red-600 font-bold text-lg text-center mt-2">
+                3.090.000đ{" "}
+                <span className="text-gray-400 line-through text-base font-normal">
+                  3.169.000đ
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                  Trả góp 0%
+                </span>
+                <span className="text-gray-400 text-sm flex items-center">
+                  <svg
+                    className="w-5 h-5 mr-1"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
+                  </svg>
+                  Yêu thích
+                </span>
+              </div>
+            </div>
+            {/* Card 6 */}
+            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
+              <div className="absolute -top-3 left-0">
+                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                  Giảm 11%
+                </span>
+              </div>
+              <Image
+                src={sptt}
+                alt="sptt"
+                className="mx-auto h-28 object-contain"
+              />
+              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                1<small className="text-base">ms</small>
+              </div>
+              <div className="text-red-600 font-bold text-center text-base">
+                25 inch 180 Hz Full HD
+              </div>
+              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                Màn hình Gaming MSI G255F 25 inch
+              </div>
+              <div className="text-red-600 font-bold text-lg text-center mt-2">
+                3.190.000đ{" "}
+                <span className="text-gray-400 line-through text-base font-normal">
+                  3.590.000đ
+                </span>
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                  Trả góp 0%
+                </span>
+                <span className="flex items-center">
+                  <span className="text-yellow-400 mr-1">★★★★★</span>
+                  <span className="text-gray-400 text-sm flex items-center">
+                    <svg
+                      className="w-5 h-5 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
+                    </svg>
+                    Yêu thích
+                  </span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -670,6 +687,76 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 ngày.
               </li>
             </ul>
+          </div>
+
+          {/* Thông số kỹ thuật - Hiển thị trên mobile */}
+          <div className="lg:hidden bg-white border border-black/20 shadow p-6 rounded-xl">
+            <h2 className="text-lg font-bold mb-4 text-gray-800">
+              Thông số kỹ thuật
+            </h2>
+
+            <div className="space-y-4 text-sm text-gray-700">
+              <div className="flex justify-between">
+                <span className="font-medium">Kích thước màn hình:</span>
+                <span>6.74 inches</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Công nghệ màn hình:</span>
+                <span>AMOLED</span>
+              </div>
+              <div>
+                <div className="font-medium">Camera sau:</div>
+                <div className="text-sm pl-2 mt-1">
+                  Camera góc rộng: 50 MP
+                  <br />
+                  Kính tiềm vọng: 64 MP, PDAF, 5x optical zoom
+                  <br />
+                  Góc siêu rộng: 8 MP, f/2.2
+                </div>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Camera trước:</span>
+                <span>32 MP, f/2.4</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Chipset:</span>
+                <span>Snapdragon 8 Plus Gen 1</span>
+              </div>
+
+              <div
+                className={`transition-all duration-300 ease-in-out ${
+                  showAll
+                    ? "h-auto opacity-100"
+                    : "h-0 opacity-0 overflow-hidden"
+                }`}
+              >
+                <div className="space-y-4">
+                  <div className="flex justify-between">
+                    <span className="font-medium">Công nghệ NFC:</span>
+                    <span>Có</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Dung lượng RAM:</span>
+                    <span>12 GB</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Bộ nhớ trong:</span>
+                    <span>256 GB</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium">Pin:</span>
+                    <span>4700 mAh</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button
+              className="text-blue-600 mt-4 text-sm font-medium hover:underline"
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? "Thu gọn" : "Xem thêm chi tiết"}
+            </button>
           </div>
 
           {/* Nội dung chính */}
@@ -800,8 +887,8 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </form>
           </div>
         </div>
-        {/* Cột phải: Thông số kỹ thuật */}
-        <div className="bg-white border border-black/20 shadow p-6 rounded-xl h-100">
+        {/* Cột phải: Thông số kỹ thuật - Chỉ hiển thị trên desktop */}
+        <div className="hidden lg:block bg-white border border-black/20 shadow p-6 rounded-xl">
           <h2 className="text-lg font-bold mb-4 text-gray-800">
             Thông số kỹ thuật
           </h2>
@@ -834,8 +921,12 @@ const ProductDetailUi = ({ id }: DetailType) => {
               <span>Snapdragon 8 Plus Gen 1</span>
             </div>
 
-            {showAll && (
-              <>
+            <div
+              className={`transition-all duration-300 ease-in-out ${
+                showAll ? "h-auto opacity-100" : "h-0 opacity-0 overflow-hidden"
+              }`}
+            >
+              <div className="space-y-4">
                 <div className="flex justify-between">
                   <span className="font-medium">Công nghệ NFC:</span>
                   <span>Có</span>
@@ -852,8 +943,8 @@ const ProductDetailUi = ({ id }: DetailType) => {
                   <span className="font-medium">Pin:</span>
                   <span>4700 mAh</span>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
           </div>
 
           <button
@@ -863,7 +954,6 @@ const ProductDetailUi = ({ id }: DetailType) => {
             {showAll ? "Thu gọn" : "Xem thêm chi tiết"}
           </button>
         </div>
-        
       </div>
     </div>
   );

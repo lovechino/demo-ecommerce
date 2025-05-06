@@ -11,7 +11,7 @@ import { GetAllProduct, GetListGroupProduct } from "@/Apis/Product";
 import { Menu } from "@/Utils/type";
 
 export default function Hero() {
-  GetAllProduct()
+  GetAllProduct();
   const product = useSelector((state: RootState) => state.product.list);
   const products = product?.slice(1, 6);
   const [menu, setMenu] = useState<Menu[]>([]);
@@ -29,7 +29,7 @@ export default function Hero() {
     <main className="max-w-7xl mx-auto px-4 py-4">
       <div className="flex flex-row md:flex-row gap-4">
         {/* Sidebar categories */}
-        <div className="w-full md:w-1/5 overflow-hidden border-white">
+        <div className="hidden md:block w-full md:w-1/5 overflow-hidden border-white">
           <div className="bg-white p-3 font-medium text-gray-700 border-b border-white rounded-t-md">
             Danh mục sản phẩm
           </div>
@@ -65,7 +65,9 @@ export default function Hero() {
                 {/* Ảnh sản phẩm lớn với thông tin đè lên */}
                 {products && products[selectedProductIndex] && (
                   <div className="relative w-full aspect-[4/2] md:aspect-[4/2] flex items-center justify-center">
-                    <Link href={`/Product/${products[selectedProductIndex].productcode}`}>
+                    <Link
+                      href={`/Product/${products[selectedProductIndex].productcode}`}
+                    >
                       <Image
                         src={`${baseURL}${products[selectedProductIndex].pathimg}`}
                         alt={products[selectedProductIndex].productname}
@@ -73,34 +75,6 @@ export default function Hero() {
                         className="object-contain w-full h-full cursor-pointer"
                       />
                     </Link>
-                    {/* Thông tin đè lên ảnh */}
-                    {/* <div className="absolute left-2 bottom-2 bg-white/40 rounded-lg shadow-md p-2 md:p-3 max-w-[80%]">
-                      <div className="flex items-center gap-1 mb-1">
-                        <Image
-                          src={`${baseURL}${products[selectedProductIndex]?.pathimg}`}
-                          alt={products[selectedProductIndex].productname}
-                          width={40}
-                          height={8}
-                          className="h-3 w-auto object-cover"
-                        />
-                        <div className="bg-blue-100 text-blue-800 text-[10px] px-1 py-0.5 rounded-full">
-                          12GB | 256GB
-                        </div>
-                        <div className="text-[10px]">Màu xanh dương</div>
-                      </div>
-                      <h1 className="text-base md:text-lg font-bold mb-1">
-                        {products[selectedProductIndex]?.productname}
-                      </h1>
-                      <div className="bg-white rounded-lg p-1 mb-1 inline-block">
-                        <div className="text-[10px] text-gray-500">Giá chỉ còn</div>
-                        <div className="text-base font-bold">
-                          {products[selectedProductIndex]?.Price}<sup>đ</sup>
-                        </div>
-                      </div>
-                      <button className="bg-blue-800 text-white py-0.5 px-2 rounded-md font-medium text-xs mt-1">
-                        MUA NGAY
-                      </button>
-                    </div> */}
                   </div>
                 )}
               </div>
@@ -108,19 +82,41 @@ export default function Hero() {
           </div>
           {/* Product categories row - luôn ở dưới main banner */}
           <div className="mt-3">
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <div className="hidden md:grid md:grid-cols-5 gap-2">
               {products &&
                 products?.length > 0 &&
                 products?.map((product, index) => (
                   <button
                     key={index}
-                    className={`border border-white rounded-md p-2 text-center hover:shadow-md transition-shadow bg-white flex flex-col justify-between ${selectedProductIndex === index ? 'ring-2 ring-blue-400' : ''}`}
+                    className={`border border-white rounded-md p-2 text-center hover:shadow-md transition-shadow bg-white flex flex-col justify-between ${
+                      selectedProductIndex === index
+                        ? "ring-2 ring-blue-400"
+                        : ""
+                    }`}
                     onClick={() => setSelectedProductIndex(index)}
                   >
                     <div className="text-sm font-medium mb-1">
-                      <span className="block text-xs md:text-sm font-medium truncate max-w-full">{product.productname}</span>
+                      <span className="block text-xs md:text-sm font-medium truncate max-w-full">
+                        {product.productname}
+                      </span>
                     </div>
                   </button>
+                ))}
+            </div>
+            {/* Dots navigation for mobile */}
+            <div className="md:hidden flex justify-center gap-2 mt-2">
+              {products &&
+                products?.length > 0 &&
+                products?.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedProductIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                      selectedProductIndex === index
+                        ? "bg-blue-500"
+                        : "bg-gray-300"
+                    }`}
+                  />
                 ))}
             </div>
           </div>
@@ -132,7 +128,7 @@ export default function Hero() {
           {/* iPad Air banner */}
           {product && product?.length > 1 && (
             <div className="bg-pink-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white">
-              <Link href={`/Product/${product[1].productcode}`}> 
+              <Link href={`/Product/${product[1].productcode}`}>
                 <Image
                   src={`${baseURL}${product[1].pathimg}`}
                   alt={product[1].productname}
@@ -157,7 +153,7 @@ export default function Hero() {
           )}
           {product && product?.length > 8 && (
             <div className="bg-green-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white">
-              <Link href={`/Product/${product[9].productcode}`}> 
+              <Link href={`/Product/${product[9].productcode}`}>
                 <Image
                   src={`${baseURL}${product[9].pathimg}`}
                   alt={product[9].productname}

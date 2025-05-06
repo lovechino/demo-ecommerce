@@ -12,7 +12,7 @@ import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 import { setUser } from "@/Redux/auth";
 import ProvinceSelectorModal from "./ProvinceSelectorModal";
-import Fuse from "fuse.js"; // ✅ Thêm dòng này
+import Fuse from "fuse.js";
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
   loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
@@ -52,7 +52,7 @@ const Navbar = () => {
       return;
     }
 
-    const results = fuse.search(text).map((res) => res.item);
+    const results = fuse.search(text).map((res: any) => res.item);
     setSuggestions(results);
   };
 
@@ -88,7 +88,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className="bg-[#e60012] py-2 shadow-md sticky top-0 z-20">
+    <header className="bg-[#e60012] py-2 w-full shadow-md sticky top-0 z-20">
       <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-2 px-4">
         {/* Logo */}
         <Link href="/" className="flex-shrink-0 flex items-center mr-2">
@@ -104,9 +104,22 @@ const Navbar = () => {
         {/* Ô tìm kiếm */}
         <div className="flex-1 flex items-center justify-center">
           <div className="flex items-center gap-2 w-full max-w-xl">
-            <div className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
-              <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72A2 2 0 0 1 22 16.92z" stroke="white"/></svg>
-              <span>Gọi mua hàng <b>1800.2097</b></span>
+            <div className="hidden md:flex bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl items-center gap-2 font-medium">
+              <svg
+                className="w-5 h-5 mr-1"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2A19.72 19.72 0 0 1 3.08 5.18 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.72c.13 1.05.37 2.07.72 3.06a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.99.35 2.01.59 3.06.72A2 2 0 0 1 22 16.92z"
+                  stroke="white"
+                />
+              </svg>
+              <span>
+                Gọi mua hàng <b>1800.2097</b>
+              </span>
             </div>
             <div className="relative flex-1" ref={searchDropdownRef}>
               <input
@@ -159,11 +172,27 @@ const Navbar = () => {
         <div className="flex items-center gap-2 md:gap-3">
           <div className="hidden md:flex flex-row items-center gap-2">
             <button className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="white" strokeWidth="2" /></svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor">
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </svg>
               Cửa hàng gần bạn
             </button>
             <button className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="10" rx="2" stroke="white" strokeWidth="2" /></svg>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor">
+                <rect
+                  x="2"
+                  y="7"
+                  width="20"
+                  height="10"
+                  rx="2"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </svg>
               Tra cứu đơn hàng
             </button>
           </div>
@@ -174,11 +203,21 @@ const Navbar = () => {
               className="bg-[#d32f2f] hover:bg-[#e53935] px-4 py-2 rounded-xl flex items-center gap-1 text-white text-sm font-medium"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                />
               </svg>
               <span className="font-semibold">{selectedProvince}</span>
               <svg className="w-4 h-4" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </button>
             <ProvinceSelectorModal
@@ -213,17 +252,27 @@ const Navbar = () => {
               {showAvatarDropdown && (
                 <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded shadow-md z-50 text-black text-sm">
                   <div className="px-4 py-3 border-b">
-                    <p className="font-semibold">{user?.FullName || "Người dùng"}</p>
-                    <p className="text-gray-500 text-xs">{user?.Email || "example@email.com"}</p>
+                    <p className="font-semibold">
+                      {user?.FullName || "Người dùng"}
+                    </p>
+                    <p className="text-gray-500 text-xs">
+                      {user?.Email || "example@email.com"}
+                    </p>
                   </div>
                   <ul className="py-2 text-gray-700">
                     <li>
-                      <Link href="/Profile" className="block px-4 py-2 hover:bg-gray-100">
+                      <Link
+                        href="/Profile"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                      >
                         Thông tin tài khoản
                       </Link>
                     </li>
                     <li>
-                      <Link href="/Cart" className="block px-4 py-2 hover:bg-gray-100">
+                      <Link
+                        href="/Cart"
+                        className="block px-4 py-2 hover:bg-gray-100"
+                      >
                         Lịch sử giao hàng
                       </Link>
                     </li>
