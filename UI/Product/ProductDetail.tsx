@@ -2,13 +2,13 @@
 
 import { GetProductById, getReviewProducts } from "@/Apis/Product";
 // import CardProduct from "@/components/Product/Card";
-import { useAppDispatch, useAppSelector } from "@/Redux/hook";
+import { useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Product, ProductType } from "@/Utils/type";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import sptt from "@/public/Image/WhatsApp Image 2025-05-05 at 16.55.07_d9bf088d.jpg";
-import { addItem } from "@/Redux/cart";
+// import { addItem } from "@/Redux/cart";
 
 interface DetailType {
   id: string;
@@ -18,7 +18,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
   const [product, setProduct] = useState<Product>();
 
   const [resview, setReview] = useState<any>(null);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const GetData = async () => {
     const response = await GetProductById(id);
     const resReview = await getReviewProducts();
@@ -172,17 +172,17 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 </div>
                 <button
                   className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:cursor-pointer hover:bg-pink-600"
-                  onClick={() =>
-                    dispatch(
-                      addItem({
-                        id: product?.Id,
-                        productname: product?.ProductName,
-                        Price: product?.Price,
-                        pathimg: product?.Image,
-                        qualitiy: 1,
-                      })
-                    )
-                  }
+                  // onClick={() =>
+                  //   dispatch(
+                  //     addItem({
+                  //       id: product?.Id,
+                  //       productname: product?.ProductName,
+                  //       Price: product?.Price,
+                  //       pathimg: product?.Image,
+                  //       qualitiy: 1,
+                  //     })
+                  //   )
+                  // }
                 >
                   MUA NGAY
                 </button>
@@ -323,17 +323,17 @@ const ProductDetailUi = ({ id }: DetailType) => {
           <div className="flex gap-2">
             <button className="flex-1 bg-red-500 text-white py-1.5 md:py-2 lg:py-3 rounded hover:bg-red-600">
               <span
-                onClick={() =>
-                  dispatch(
-                    addItem({
-                      id: product?.Id,
-                      productname: product?.ProductName,
-                      Price: product?.Price,
-                      pathimg: product?.Image,
-                      qualitiy: 1,
-                    })
-                  )
-                }
+                // onClick={() =>
+                //   dispatch(
+                //     addItem({
+                //       id: product?.Id,
+                //       productname: product?.ProductName,
+                //       Price: product?.Price,
+                //       pathimg: product?.Image,
+                //       qualitiy: 1,
+                //     })
+                //   )
+                // }
                 className="text-sm md:text-base lg:text-lg font-bold"
               >
                 MUA NGAY

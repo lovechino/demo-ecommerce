@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Avatar, Badge } from "antd";
-import { ProductType, UserProfile } from "@/Utils/type";
+import { UserProfile } from "@/Utils/type";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
@@ -25,11 +25,11 @@ const Navbar = () => {
   const user = useAppSelector((state) => state.user.user);
   const dispatch = useAppDispatch();
   const fullPath = `${baseURL}${user?.Photo}`;
-  const productList = useAppSelector((state) => state.product.list);
+  // const productList = useAppSelector((state) => state.product.list);
 
   const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState<ProductType[]>([]);
-  const [showDropdown, setShowDropdown] = useState(false);
+  // const [suggestions, setSuggestions] = useState<ProductType[]>([]);
+
   const searchDropdownRef = useRef<HTMLDivElement>(null);
   const avatarDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -71,7 +71,7 @@ const Navbar = () => {
         searchDropdownRef.current &&
         !searchDropdownRef.current.contains(event.target as Node)
       ) {
-        setShowDropdown(false);
+        // setShowDropdown(false);
       }
 
       if (
@@ -128,12 +128,12 @@ const Navbar = () => {
                 className="w-full px-4 py-2 rounded-xl bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-400 shadow-sm"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                onFocus={() => setShowDropdown(true)}
+                // onFocus={() => setShowDropdown(true)}
               />
               <div className="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
                 <FiSearch />
               </div>
-              {showDropdown && suggestions.length > 0 && (
+              {/* {showDropdown && suggestions.length > 0 && (
                 <div className="absolute top-full left-0 mt-1 z-50 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-96 overflow-y-auto">
                   <div className="px-4 py-2 text-gray-500 text-sm border-b">
                     Sản phẩm gợi ý
@@ -163,7 +163,7 @@ const Navbar = () => {
                     </div>
                   ))}
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </div>
