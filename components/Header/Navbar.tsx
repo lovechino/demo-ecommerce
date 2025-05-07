@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { BsBag } from "react-icons/bs";
 import { FiLoader, FiSearch, FiUser } from "react-icons/fi";
 import dynamic from "next/dynamic";
@@ -40,12 +40,14 @@ const Navbar = () => {
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false);
 
   // Cấu hình Fuse.js
-  const fuse = new Fuse(productList, {
-    keys: ["productname"],
-    threshold: 0.4,
-    distance: 100,
-    minMatchCharLength: 2,
-  });
+  const fuse = useMemo(() => {
+    return new Fuse(productList, {
+      keys: ["productname"],
+      threshold: 0.4,
+      distance: 100,
+      minMatchCharLength: 2,
+    });
+  }, [productList]);
 
   const FetchSuggestions = useCallback(
     (text: string) => {
