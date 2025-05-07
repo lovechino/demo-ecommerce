@@ -53,7 +53,7 @@ export default function Hero() {
               width={20}
               height={20}
             />
-            <span className="text-base">Danh mục sản phẩm</span>
+            <span className="text-base text-white">Danh mục sản phẩm</span>
           </div>
           <ul className="bg-white rounded-b-md shadow-md border-white">
             {menu ? (
@@ -199,19 +199,19 @@ export default function Hero() {
                 )}
 
                 <div className="absolute inset-0 flex flex-col items-start justify-center ml-5 mt-20">
-                  <h2 className="text-xs md:text-sm font-bold text-blue-500 drop-shadow-md">
+                  <h2 className="text-xs md:text-sm font-bold text-blue-500 drop-shadow-md transition-transform duration-300 hover:-translate-y-1">
                     ÐÓN XUÂN SANG
                   </h2>
-                  <h1 className="text-xs md:text-base font-extrabold text-pink-500 mb-4 drop-shadow-md">
-                    DEAL R?N RÀNG
+                  <h1 className="text-xs md:text-base font-extrabold text-pink-500 mb-4 drop-shadow-md transition-transform duration-300 hover:-translate-y-1">
+                    DEAL RỘN RÀNG
                   </h1>
 
-                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md  border-3 border-white  ">
+                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md border-3 border-white transition-transform duration-300 hover:-translate-y-1">
                     <span className="text-white text-xs md:text-sm font-bold mr-1">
-                      GI?M Ð?N 40%
+                      GIẢM ÐẾN 40%
                     </span>
                   </div>
-                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md  border-3 border-white">
+                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md border-3 border-white transition-transform duration-300 hover:-translate-y-1">
                     <span className="text-white text-xs md:text-sm font-bold mr-1">
                       Hàng chính hãng
                     </span>

@@ -55,21 +55,21 @@ const ProductDetailUi = ({ id }: DetailType) => {
   }, [id]);
 
   const fullpath = `${baseURL}${product?.Image}`;
-  const packingArray = product?.Packing?.split(" x ") || [];
+  // const packingArray = product?.Packing?.split(" x ") || [];
   const bundledItems = [
     {
       Image:
         "https://cdn.tgdd.vn/Products/Images/5698/299348/arm-humanmotion-h1pro-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Hum..."
+      title: "Giảm 100K khi mua kèm giá treo Hum...",
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299350/arm-xiaomi-mi-display-1c-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá đỡ..."
+      title: "Giảm 100K khi mua kèm giá đỡ...",
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299349/arm-northbayou-f80-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Nort..."
-    }
+      title: "Giảm 100K khi mua kèm giá treo Nort...",
+    },
   ];
   const capacities = [
     { label: "S25 Ultra 1TB", price: 36490000 },
@@ -78,7 +78,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "S25 Plus 512GB", price: 26190000 },
     { label: "S25 Plus 256GB", price: 23190000 },
     { label: "S25 512GB", price: 22690000 },
-    { label: "S25 256GB", price: 19690000 }
+    { label: "S25 256GB", price: 19690000 },
   ];
   const selectedCapacity = "S25 Ultra 256GB";
 
@@ -87,7 +87,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "Công nghệ màn hình", value: "AMOLED" },
     {
       label: "Camera sau",
-      value: "50 MP (chính), 64MP kính tiềm vọng, 8MP góc siêu rộng"
+      value: "50 MP (chính), 64MP kính tiềm vọng, 8MP góc siêu rộng",
     },
     { label: "Camera trước", value: "32 MP, f/2.4" },
     { label: "Chipset", value: "Snapdragon 8 Plus Gen 1" },
@@ -100,7 +100,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "Kích thước", value: "163.1 x 74.2 x 7.9 mm" },
     { label: "Trọng lượng", value: "196g" },
     { label: "Màu sắc", value: "Đen, Trắng, Xanh" },
-    { label: "Bảo hành", value: "12 tháng chính hãng" }
+    { label: "Bảo hành", value: "12 tháng chính hãng" },
   ];
 
   return (
@@ -149,49 +149,63 @@ const ProductDetailUi = ({ id }: DetailType) => {
         </div>
       )}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold">{product?.ProductName}</h1>
+        <h1 className="text-3xl font-bold transition-transform duration-300 hover:-translate-y-1">
+          {product?.ProductName}
+        </h1>
       </div>
 
       <div className="flex flex-col lg:flex-row items-center gap-2 mt-4">
         {/* Hình ảnh */}
-        <div className="w-full lg:w-1/2">
-          <div className="border border-black/20 rounded-lg overflow-hidden shadow-sm mb-4 flex justify-center">
+        <div className="w-full lg:w-1/2 flex flex-col items-center">
+          <div className="border border-black/20 rounded-lg overflow-hidden shadow-sm mb-4 flex justify-center items-center w-full max-w-[500px] mx-auto">
             <img
-              className="w-full max-w-xs md:max-w-sm lg:max-w-md h-auto"
+              className="w-full h-[400px] object-contain"
               src={fullpath}
               alt="Ảnh chính sản phẩm"
             />
           </div>
-          <div className="grid grid-cols-5 gap-2 mb-4 border-black/20">
-            <img
-              className="w-full h-auto cursor-pointer border border-black/20 rounded"
-              src={fullpath}
-              alt="Ảnh nhỏ 1"
-            />
-            <img
-              className="w-full h-auto cursor-pointer border border-black/20 rounded"
-              src={fullpath}
-              alt="Ảnh nhỏ 2"
-            />
-            <img
-              className="w-full h-auto cursor-pointer border border-black/20 rounded"
-              src={fullpath}
-              alt="Ảnh nhỏ 3"
-            />
-            <img
-              className="w-full h-auto cursor-pointer border border-black/20 rounded"
-              src={fullpath}
-              alt="Ảnh nhỏ 4"
-            />
-            <img
-              className="w-full h-auto cursor-pointer border border-black/20 rounded"
-              src={fullpath}
-              alt="Ảnh nhỏ 5"
-            />
+          <div className="grid grid-cols-5 gap-2 mb-4 w-full max-w-[500px] mx-auto">
+            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
+              <img
+                className="w-full h-full object-contain"
+                src={fullpath}
+                alt="Ảnh nhỏ 1"
+              />
+            </div>
+            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
+              <img
+                className="w-full h-full object-contain"
+                src={fullpath}
+                alt="Ảnh nhỏ 2"
+              />
+            </div>
+            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
+              <img
+                className="w-full h-full object-contain"
+                src={fullpath}
+                alt="Ảnh nhỏ 3"
+              />
+            </div>
+            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
+              <img
+                className="w-full h-full object-contain"
+                src={fullpath}
+                alt="Ảnh nhỏ 4"
+              />
+            </div>
+            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
+              <img
+                className="w-full h-full object-contain"
+                src={fullpath}
+                alt="Ảnh nhỏ 5"
+              />
+            </div>
           </div>
           {/* Thông tin sản phẩm */}
-          <div className="col-span-1 border border-black/20 p-4 rounded-lg">
-            <h3 className="text-lg font-semibold mb-3">Thông tin sản phẩm</h3>
+          <div className="col-span-1 border border-black/20 p-4 rounded-lg w-full max-w-xs md:max-w-sm lg:max-w-md">
+            <h3 className="text-lg font-semibold mb-3 text-center">
+              Thông tin sản phẩm
+            </h3>
             <ul className="text-sm text-gray-700 space-y-2">
               <li className="flex items-center gap-2">
                 Mới, đầy đủ phụ kiện từ nhà sản xuất
@@ -209,10 +223,10 @@ const ProductDetailUi = ({ id }: DetailType) => {
               </li>
             </ul>
           </div>
-          <div className=" flex flex-col gap-6 p-4 bg-white rounded-xl shadow-md">
+          <div className="flex flex-col gap-6 p-4 bg-white rounded-xl shadow-md w-full max-w-xs md:max-w-sm lg:max-w-md">
             {/* Gợi ý phụ kiện mua kèm */}
             <div>
-              <div className="flex gap-2 mb-4">
+              <div className="flex gap-2 mb-4 justify-center">
                 <button className="px-4 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold">
                   Mua kèm giá sốc
                 </button>
@@ -240,8 +254,8 @@ const ProductDetailUi = ({ id }: DetailType) => {
                   </div>
                 ))}
               </div>
-              <div className="flex justify-between items-center mt-4">
-                <div className="text-gray-700 font-semibold text-base">
+              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
+                <div className="text-gray-700 font-semibold text-base text-center sm:text-left">
                   Tạm tính:{" "}
                   <span className="text-red-600 text-lg font-bold">
                     {formatCurrency(Number(product?.Price))}đ
@@ -251,7 +265,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                   </div>
                 </div>
                 <button
-                  className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:cursor-pointer hover:bg-pink-600"
+                  className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:cursor-pointer hover:bg-pink-600 w-full sm:w-auto"
                   onClick={() =>
                     dispatch(
                       addItem({
@@ -260,7 +274,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                         Price: product?.Price,
                         pathimg: product?.Image,
                         qualitiy: quality,
-                        maxQuantity: 10
+                        maxQuantity: 10,
                       })
                     )
                   }
@@ -273,15 +287,15 @@ const ProductDetailUi = ({ id }: DetailType) => {
         </div>
 
         {/* Thông tin sản phẩm */}
-        <div className="w-full lg:w-1/2 space-y-4">
-          <h2 className="text-2xl font-semibold text-left">
+        <div className="w-full lg:w-1/2 space-y-4 flex flex-col items-center lg:items-start">
+          <h2 className="text-2xl font-semibold text-center lg:text-left transition-transform duration-300 hover:-translate-y-1">
             {product?.ProductName}
             <span className="ml-2 text-sm bg-green-200 text-green-800 px-2 py-1 rounded">
               Còn Hàng
             </span>
           </h2>
 
-          <div className="text-sm text-gray-600 space-x-2">
+          <div className="text-sm text-gray-600 space-x-2 text-center lg:text-left">
             <span>
               Thương hiệu:{" "}
               <span className="text-red-600 font-semibold">TIROSS</span>
@@ -291,7 +305,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
               MSP: <span className="font-semibold text-red-600">TS9447</span>
             </span>
           </div>
-          <div className="space-x-2 text-xl font-bold text-red-600">
+          <div className="space-x-2 text-xl font-bold text-red-600 text-center lg:text-left">
             {formatCurrency(2090000)}₫
             <span className="line-through text-gray-400 text-base font-normal">
               {formatCurrency(2500000)}₫
@@ -364,7 +378,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
             {product?.Price} vnđ
           </div> */}
 
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             {packingArray.map((item: string, index: number) => (
               <button
                 key={index}
@@ -373,33 +387,36 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 {item}
               </button>
             ))}
-          </div>
+          </div> */}
 
-          <div className="flex items-center gap-2 my-4">
-            <button
-              onClick={() => setQuality((q) => Math.max(1, q - 1))}
-              className="w-6 h-6 flex justify-center items-center border rounded text-base hover:bg-gray-100"
-              aria-label="Giảm số lượng"
-            >
-              -
-            </button>
-            <input
-              className="w-12 border rounded text-center text-sm"
-              type="number"
-              min={1}
-              value={quality}
-              onChange={(e) => {
-                const val = Math.max(1, Number(e.target.value));
-                setQuality(val);
-              }}
-            />
-            <button
-              onClick={() => setQuality((q) => q + 1)}
-              className="w-6 h-6 flex justify-center items-center border rounded text-base hover:bg-gray-100"
-              aria-label="Tăng số lượng"
-            >
-              +
-            </button>
+          <div className="flex flex-col ml-5 gap-2 mb-5">
+            <span className="text-base">Số Lượng Sản Phẩm</span>
+            <div className="flex flex-row gap-4">
+              <button
+                onClick={() => setQuality((q) => Math.max(1, q - 1))}
+                className="w-6 h-6 flex justify-center items-center border rounded-2xl text-base hover:bg-gray-100"
+                aria-label="Giảm số lượng"
+              >
+                -
+              </button>
+              <input
+                className="w-12 border rounded-2xl text-center text-sm"
+                type="number"
+                min={1}
+                value={quality}
+                onChange={(e) => {
+                  const val = Math.max(1, Number(e.target.value));
+                  setQuality(val);
+                }}
+              />
+              <button
+                onClick={() => setQuality((q) => q + 1)}
+                className="w-6 h-6 flex justify-center items-center border rounded-2xl text-base hover:bg-gray-100"
+                aria-label="Tăng số lượng"
+              >
+                +
+              </button>
+            </div>
           </div>
 
           {/* <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded">
@@ -436,7 +453,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                     Price: product?.Price,
                     pathimg: product?.Image,
                     qualitiy: quality,
-                    maxQuantity: 10
+                    maxQuantity: 10,
                   })
                 )
               }

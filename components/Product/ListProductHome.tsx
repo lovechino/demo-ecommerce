@@ -29,15 +29,15 @@ const ListProductHome = () => {
   ];
   const scrollRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
-  const scrollLeft = (code: string) => {
-    const ref = scrollRefs.current[code];
-    if (ref) ref.scrollBy({ left: -400, behavior: "smooth" });
-  };
+  // const scrollLeft = (code: string) => {
+  //   const ref = scrollRefs.current[code];
+  //   if (ref) ref.scrollBy({ left: -400, behavior: "smooth" });
+  // };
 
-  const scrollRight = (code: string) => {
-    const ref = scrollRefs.current[code];
-    if (ref) ref.scrollBy({ left: 400, behavior: "smooth" });
-  };
+  // const scrollRight = (code: string) => {
+  //   const ref = scrollRefs.current[code];
+  //   if (ref) ref.scrollBy({ left: 400, behavior: "smooth" });
+  // };
   const handleScroll = (code: string, direction: "left" | "right") => {
     const ref = scrollRefs.current[code];
     if (ref) {
