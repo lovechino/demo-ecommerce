@@ -60,16 +60,16 @@ const ProductDetailUi = ({ id }: DetailType) => {
     {
       Image:
         "https://cdn.tgdd.vn/Products/Images/5698/299348/arm-humanmotion-h1pro-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Hum...",
+      title: "Giảm 100K khi mua kèm giá treo Hum..."
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299350/arm-xiaomi-mi-display-1c-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá đỡ...",
+      title: "Giảm 100K khi mua kèm giá đỡ..."
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299349/arm-northbayou-f80-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Nort...",
-    },
+      title: "Giảm 100K khi mua kèm giá treo Nort..."
+    }
   ];
   const capacities = [
     { label: "S25 Ultra 1TB", price: 36490000 },
@@ -78,7 +78,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "S25 Plus 512GB", price: 26190000 },
     { label: "S25 Plus 256GB", price: 23190000 },
     { label: "S25 512GB", price: 22690000 },
-    { label: "S25 256GB", price: 19690000 },
+    { label: "S25 256GB", price: 19690000 }
   ];
   const selectedCapacity = "S25 Ultra 256GB";
 
@@ -87,7 +87,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "Công nghệ màn hình", value: "AMOLED" },
     {
       label: "Camera sau",
-      value: "50 MP (chính), 64MP kính tiềm vọng, 8MP góc siêu rộng",
+      value: "50 MP (chính), 64MP kính tiềm vọng, 8MP góc siêu rộng"
     },
     { label: "Camera trước", value: "32 MP, f/2.4" },
     { label: "Chipset", value: "Snapdragon 8 Plus Gen 1" },
@@ -100,7 +100,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "Kích thước", value: "163.1 x 74.2 x 7.9 mm" },
     { label: "Trọng lượng", value: "196g" },
     { label: "Màu sắc", value: "Đen, Trắng, Xanh" },
-    { label: "Bảo hành", value: "12 tháng chính hãng" },
+    { label: "Bảo hành", value: "12 tháng chính hãng" }
   ];
 
   return (
@@ -260,7 +260,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                         Price: product?.Price,
                         pathimg: product?.Image,
                         qualitiy: quality,
-                        maxQuantity: 10,
+                        maxQuantity: 10
                       })
                     )
                   }
@@ -357,7 +357,12 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 <path d="..." />
               </svg>
             </div>
+            {/* <span className="text-sm text-gray-600">(5 đánh giá)</span> */}
           </div>
+
+          {/* <div className="text-2xl font-bold text-red-500">
+            {product?.Price} vnđ
+          </div> */}
 
           <div className="flex gap-4">
             {packingArray.map((item: string, index: number) => (
@@ -397,6 +402,10 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </button>
           </div>
 
+          {/* <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded">
+            Thêm vào giỏ hàng
+          </button> */}
+
           <div className="pt-4">
             <h3 className="font-semibold">Đặc điểm nổi bật</h3>
             <p className="text-gray-700">Sản phẩm tuyệt vời cho sức khỏe.</p>
@@ -427,7 +436,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                     Price: product?.Price,
                     pathimg: product?.Image,
                     qualitiy: quality,
-                    maxQuantity: 10,
+                    maxQuantity: 10
                   })
                 )
               }
@@ -892,11 +901,11 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 <input
                   type="file"
                   className="block w-full text-sm text-gray-500
-        file:mr-4 file:py-2 file:px-4
-        file:rounded file:border-0
-        file:text-sm file:font-semibold
-        file:bg-red-700 file:text-white
-        hover:file:bg-red-800"
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-red-700 file:text-white
+                    hover:file:bg-red-800"
                 />
               </div>
 
@@ -920,8 +929,8 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </form>
           </div>
         </div>
-
-        <div className="hidden lg:block bg-white border border-black/20 shadow p-6 rounded-xl">
+        {/* Cột phải: Thông số kỹ thuật - Chỉ hiển thị trên desktop */}
+        <div className="hidden lg:block bg-white border border-black/20 shadow p-6 rounded-xl h-fit">
           <h2 className="text-lg font-bold mb-4 text-gray-800">
             Thông số kỹ thuật
           </h2>

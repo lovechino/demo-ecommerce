@@ -59,7 +59,7 @@ export default function Hero() {
             {menu ? (
               menu?.map((category, index) => (
                 <Link key={index} href={`/Menu/${category?.Code}`}>
-                  <li>
+                  <li className=" mt-2">
                     <div className="flex items-center justify-between p-3 hover:bg-blue-200 transition-colors duration-150 cursor-pointer">
                       <div className="flex items-center gap-3">
                         {/* Có th? thêm icon ? dây n?u mu?n */}
@@ -88,7 +88,7 @@ export default function Hero() {
         <div className="w-full md:w-3/5 flex flex-col gap-4">
           {/* Main Samsung banner */}
           <motion.div
-            className="border border-white rounded-md overflow-hidden mb-0 cursor-pointer"
+            className="border border-black/20 rounded-md overflow-hidden mb-0 cursor-pointer"
             onClick={() =>
               (window.location.href = `/Product/${products[selectedProductIndex].productcode}`)
             }
@@ -103,7 +103,7 @@ export default function Hero() {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               <motion.div
-                className="relative w-full aspect-[4/2] md:aspect-[4/2] flex items-center justify-center"
+                className="relative w-full h-[400px] flex items-center justify-center"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.4 }}
@@ -161,7 +161,8 @@ export default function Hero() {
                         "?nh s?n ph?m"
                       }
                       fill
-                      className="object-contain w-full h-full cursor-pointer"
+                      className="object-cover w-full h-full cursor-pointer"
+                      priority
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -216,34 +217,37 @@ export default function Hero() {
                     </span>
                   </div>
                 </div>
+
+                {/* Product categories row - moved inside main banner */}
+                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                  {products &&
+                    products.length > 0 &&
+                    products.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProductIndex(index);
+                        }}
+                        className={`w-2 h-2 rounded-full transition-colors duration-200
+                        ${
+                          selectedProductIndex === index
+                            ? "bg-blue-500"
+                            : "bg-gray-300"
+                        }
+                      `}
+                        aria-label={`Ch?n s?n ph?m ${index + 1}`}
+                      />
+                    ))}
+                </div>
               </motion.div>
             </motion.div>
           </motion.div>
-
-          {/* Product categories row - luôn ? du?i main banner */}
-          <div className="mt-3 flex justify-center gap-2">
-            {products &&
-              products.length > 0 &&
-              products.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedProductIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors duration-200
-                  ${
-                    selectedProductIndex === index
-                      ? "bg-blue-500"
-                      : "bg-gray-300"
-                  }
-                `}
-                  aria-label={`Ch?n s?n ph?m ${index + 1}`}
-                />
-              ))}
-          </div>
         </div>
 
         {/* Right banners */}
         {/* w-full md:w-1/5 flex flex-col gap-4 border-white */}
-        <div className=" hidden md:flex md:flex-col md:gap-4 w-full md:w-1/5 border-white">
+        <div className=" hidden md:flex md:flex-col md:gap-6 w-full md:w-1/5 border-white">
           {/* iPad Air banner */}
           {product && product?.length > 1 && (
             <div className="bg-pink-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white">
