@@ -12,7 +12,7 @@ import codImage2 from "@/public/Image/2_anhicon2.webp";
 
 const Footer = () => {
   return (
-    <footer className="bg-black py-12 px-6 md:px-12 lg:px-24">
+    <footer className=" hidden md:bg-black md:py-12 md:px-6 md:px-12 lg:px-24">
       {/* <section className=" py-4 border-b border-gray-600">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <h2 className="text-lg text-white d-flex row d-flex-center">

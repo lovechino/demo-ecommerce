@@ -1,4 +1,6 @@
-import ProfileUI from "@/UI/Profile/profile";
+import dynamic from "next/dynamic";
+
+const ProfileUI = dynamic(() => import("@/UI/Profile/profile"));
 
 const ProfilePage = () => {
   return <ProfileUI />;

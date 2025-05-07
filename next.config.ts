@@ -1,5 +1,16 @@
-/** @type {import('next').Config} */
-const nextConfig = {
+import { NextConfig } from "next";
+import { Configuration } from "webpack";
+import withBundleAnalyzer from "@next/bundle-analyzer";
+import TerserPlugin from "terser-webpack-plugin";
+
+const withAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+
+  compress: true,
   images: {
     remotePatterns: [
       {
@@ -7,12 +18,6 @@ const nextConfig = {
         hostname: "backend.smartwork.3i.com.vn",
         pathname: "/uploads/images/**",
       },
-      {
-        protocol: "https",
-        hostname: "backend.smartwork.3i.com.vnundefined",
-        pathname: "",
-      },
-
       {
         protocol: "https",
         hostname: "file.hstatic.net",
@@ -30,6 +35,33 @@ const nextConfig = {
       },
     ],
   },
+  modularizeImports: {
+    lodash: {
+      transform: "lodash/{{member}}",
+    },
+    "date-fns": {
+      transform: "date-fns/{{member}}",
+    },
+  },
+
+  experimental: {
+    scrollRestoration: true,
+  },
+
+  webpack(config: Configuration, { isServer }: { isServer: boolean }) {
+    if (!isServer && config.optimization?.minimizer) {
+      config.optimization.minimizer.push(
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: true,
+            },
+          },
+        })
+      );
+    }
+    return config;
+  },
 };
 
-module.exports = nextConfig;
+export default withAnalyzer(nextConfig);

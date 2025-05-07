@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { GetListGroupProduct, GetListProductByGroup } from "@/Apis/Product";
-import CardProduct from "./Card";
 
 import { Menu, ProductType } from "@/Utils/type";
+import dynamic from "next/dynamic";
 
+const CardProduct = dynamic(() => import("./Card"));
 const ListProductHome = () => {
   const [menu, setMenu] = useState<Menu[]>([]);
   const [groupProducts, setGroupProducts] = useState<{
@@ -39,7 +40,6 @@ const ListProductHome = () => {
     };
     fetchMenuAndProducts();
   }, []);
-  console.log(menu);
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col justify-center items-center px-2 py-6">
@@ -50,8 +50,8 @@ const ListProductHome = () => {
         const filteredProducts = products;
         return (
           <div key={group.Code} className="mb-8 w-full">
-            <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2 md:gap-4">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center md:text-left">
+            <div className="flex flex-col  md:flex-row md:items-center gap-2 mb-2 md:gap-4">
+              <h2 className="text-xl text-left md:text-2xl font-bold text-gray-800 text-center md:text-left">
                 {group.Name}
               </h2>
               <div className="flex flex-wrap gap-1 justify-center md:justify-start">
