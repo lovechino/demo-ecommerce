@@ -260,12 +260,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 <path d="..." />
               </svg>
             </div>
-            {/* <span className="text-sm text-gray-600">(5 đánh giá)</span> */}
           </div>
-
-          {/* <div className="text-2xl font-bold text-red-500">
-            {product?.Price} vnđ
-          </div> */}
 
           <div className="flex gap-4">
             {packingArray.map((item: string, index: number) => (
@@ -304,10 +299,6 @@ const ProductDetailUi = ({ id }: DetailType) => {
               +
             </button>
           </div>
-
-          {/* <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded">
-            Thêm vào giỏ hàng
-          </button> */}
 
           <div className="pt-4">
             <h3 className="font-semibold">Đặc điểm nổi bật</h3>
@@ -927,7 +918,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </form>
           </div>
         </div>
-        {/* Cột phải: Thông số kỹ thuật - Chỉ hiển thị trên desktop */}
+
         <div className="hidden lg:block bg-white border border-black/20 shadow p-6 rounded-xl">
           <h2 className="text-lg font-bold mb-4 text-gray-800">
             Thông số kỹ thuật

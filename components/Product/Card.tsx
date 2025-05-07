@@ -35,7 +35,7 @@ const CardProduct: React.FC<CardProps> = ({
   return (
     <div
       key={id}
-      className="bg-white rounded-xl border border-white overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full"
+      className="bg-white rounded-xl border border-white overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between h-full "
     >
       <div className="relative">
         {discount && (
@@ -46,40 +46,45 @@ const CardProduct: React.FC<CardProps> = ({
         <div className="absolute top-2 right-2 bg-white text-blue-600 text-xs font-bold px-2 py-1 rounded-md border border-blue-200 z-10">
           Trả góp 0%
         </div>
-        <Link href={`/Product/${productCode}`}>
-          <div
-            className="flex items-center justify-center bg-white"
-            style={{ minHeight: "160px", height: "180px" }}
-          >
-            <Image
-              src={fullPath}
-              alt={productname}
-              width={160}
-              height={160}
-              className="object-contain max-h-36 w-auto h-auto"
-            />
-          </div>
-        </Link>
       </div>
       <div className="p-3 flex flex-col gap-1">
-        <h3 className="text-sm font-semibold line-clamp-2 h-10 mb-1">
-          {productname}
-        </h3>
-        <div className="flex items-baseline gap-2">
-          <span className="text-red-600 font-bold text-lg">
-            {(Price ? Price : 0).toLocaleString("vi-VN")}đ
-          </span>
-          <span className="text-gray-400 text-xs line-through">
-            34.990.000đ
-          </span>
-        </div>
-        <div className="text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 mb-1">
-          Smember giảm thêm đến{" "}
-          <span className="text-red-500 font-semibold">304.000đ</span>
-        </div>
-        <div className="text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 mb-1">
-          Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6 tháng
-        </div>
+        <Link href={`/Product/${productCode}`}>
+          <div className="bg-white rounded p-2 transform transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+            <div
+              className="flex items-center justify-center bg-white"
+              style={{ minHeight: "160px", height: "180px" }}
+            >
+              <Image
+                src={fullPath}
+                alt={productname}
+                width={160}
+                height={160}
+                className="object-contain max-h-36 w-auto h-auto"
+              />
+            </div>
+
+            <h3 className="text-sm font-semibold line-clamp-2 h-10 mb-1">
+              {productname}
+            </h3>
+            <div className="flex items-baseline gap-2">
+              <span className="text-red-600 font-bold text-lg">
+                {(Price ? Price : 0).toLocaleString("vi-VN")}đ
+              </span>
+              <span className="text-gray-400 text-xs line-through">
+                34.990.000đ
+              </span>
+            </div>
+            <div className="text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 mb-1">
+              Smember giảm thêm đến{" "}
+              <span className="text-red-500 font-semibold">304.000đ</span>
+            </div>
+            <div className="text-xs text-gray-500 bg-gray-100 rounded px-2 py-1 mb-1">
+              Không phí chuyển đổi khi trả góp 0% qua thẻ tín dụng kỳ hạn 3-6
+              tháng
+            </div>
+          </div>
+                  
+        </Link>
         <div className="flex items-center justify-between mt-auto">
           <div className="flex">
             {[1, 2, 3, 4, 5].map((star) => (

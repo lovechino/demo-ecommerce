@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { BsBag } from "react-icons/bs";
 import { FiLoader, FiSearch, FiUser } from "react-icons/fi";
 import dynamic from "next/dynamic";
@@ -16,7 +16,7 @@ import Fuse from "fuse.js";
 import { useRouter } from "next/navigation";
 
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
-  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />
+  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
 });
 
 const Navbar = () => {
@@ -44,21 +44,23 @@ const Navbar = () => {
     keys: ["productname"],
     threshold: 0.4,
     distance: 100,
-    minMatchCharLength: 2
+    minMatchCharLength: 2,
   });
 
-  // Tìm kiếm gần đúng
-  const FetchSuggestions = (text: string) => {
-    if (!text.trim()) {
-      setSuggestions([]);
-      return;
-    }
+  const FetchSuggestions = useCallback(
+    (text: string) => {
+      if (!text.trim()) {
+        setSuggestions([]);
+        return;
+      }
 
-    const results = fuse
-      .search(text)
-      .map((res: { item: ProductType }) => res.item);
-    setSuggestions(results);
-  };
+      const results = fuse
+        .search(text)
+        .map((res: { item: ProductType }) => res.item);
+      setSuggestions(results);
+    },
+    [fuse]
+  );
 
   useEffect(() => {
     if (query) {
@@ -67,7 +69,7 @@ const Navbar = () => {
     } else {
       setShowDropdown(false);
     }
-  }, [query]);
+  }, [query, FetchSuggestions]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
