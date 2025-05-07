@@ -13,14 +13,10 @@ import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee
 import { setUser } from "@/Redux/auth";
 import ProvinceSelectorModal from "./ProvinceSelectorModal";
 import Fuse from "fuse.js";
+import { useRouter } from "next/navigation";
 
-interface FuseResultItem<T> {
-  item: T;
-  refIndex: number;
-  score?: number;
-}
 const ModalAuth = dynamic(() => import("../Modal/Login"), {
-  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />,
+  loading: () => <FiLoader className="animate-spin text-blue-500 text-2xl" />
 });
 
 const Navbar = () => {
@@ -31,10 +27,11 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const fullPath = `${baseURL}${user?.Photo}`;
   const productList = useAppSelector((state) => state.product.list);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const router = useRouter();
+
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState<ProductType[]>([]);
-
+  const [showDropdown, setShowDropdown] = useState(false);
   const searchDropdownRef = useRef<HTMLDivElement>(null);
   const avatarDropdownRef = useRef<HTMLDivElement>(null);
 
@@ -42,23 +39,25 @@ const Navbar = () => {
   const [showCityDropdown, setShowCityDropdown] = useState(false);
   const [showAvatarDropdown, setShowAvatarDropdown] = useState(false);
 
+  // Cấu hình Fuse.js
   const fuse = new Fuse(productList, {
     keys: ["productname"],
     threshold: 0.4,
     distance: 100,
-    minMatchCharLength: 2,
+    minMatchCharLength: 2
   });
 
-  // ✅ Tìm kiếm gần đúng
+  // Tìm kiếm gần đúng
   const FetchSuggestions = (text: string) => {
     if (!text.trim()) {
       setSuggestions([]);
       return;
     }
 
-    const results: FuseResultItem<ProductType>[] = fuse.search(text); // Sử dụng FuseResult hoặc FuseResultItem
-    const mappedResults: ProductType[] = results.map((res) => res.item);
-    setSuggestions(mappedResults);
+    const results = fuse
+      .search(text)
+      .map((res: { item: ProductType }) => res.item);
+    setSuggestions(results);
   };
 
   useEffect(() => {
@@ -134,8 +133,22 @@ const Navbar = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setShowDropdown(true)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && query.trim()) {
+                    router.push(`/search?query=${encodeURIComponent(query)}`);
+                    setShowDropdown(false);
+                  }
+                }}
               />
-              <div className="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
+              <div
+                className="absolute inset-y-0 right-3 flex items-center text-gray-400 cursor-pointer"
+                onClick={() => {
+                  if (query.trim()) {
+                    router.push(`/search?query=${encodeURIComponent(query)}`);
+                    setShowDropdown(false);
+                  }
+                }}
+              >
                 <FiSearch />
               </div>
               {showDropdown && suggestions.length > 0 && (
@@ -144,9 +157,14 @@ const Navbar = () => {
                     Sản phẩm gợi ý
                   </div>
                   {suggestions.map((item, idx) => (
-                    <div
+                    <Link
                       key={idx}
+                      href={`/Product/${item.productcode}`}
                       className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => {
+                        setShowDropdown(false);
+                        setQuery("");
+                      }}
                     >
                       <Image
                         src={`${baseURL}${item?.pathimg}`}
@@ -165,7 +183,7 @@ const Navbar = () => {
                           </span>
                         </p>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -243,7 +261,6 @@ const Navbar = () => {
           {/* User Avatar */}
           {!user || Object.keys(user).length === 0 ? (
             <FiUser
-              size={30}
               onClick={() => setShowModal(true)}
               className="text-xl text-white hover:text-gray-200 cursor-pointer bg-[#d32f2f] rounded-xl p-2 ml-2"
             />
