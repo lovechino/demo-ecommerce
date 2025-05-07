@@ -100,7 +100,7 @@ export default function Hero() {
                 onMouseEnter={() => setShowArrows(true)}
                 onMouseLeave={() => setShowArrows(false)}
               >
-                {showArrows && (
+                {(showArrows || window.innerWidth < 768) && (
                   <motion.button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -156,7 +156,7 @@ export default function Hero() {
                   </motion.div>
                 </AnimatePresence>
 
-                {showArrows && (
+                {(showArrows || window.innerWidth < 768) && (
                   <motion.button
                     onClick={(e) => {
                       e.stopPropagation();

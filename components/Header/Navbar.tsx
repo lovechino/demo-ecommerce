@@ -137,6 +137,7 @@ const Navbar = () => {
                   if (e.key === "Enter" && query.trim()) {
                     router.push(`/search?query=${encodeURIComponent(query)}`);
                     setShowDropdown(false);
+                    setQuery("");
                   }
                 }}
               />
@@ -146,6 +147,7 @@ const Navbar = () => {
                   if (query.trim()) {
                     router.push(`/search?query=${encodeURIComponent(query)}`);
                     setShowDropdown(false);
+                    setQuery("");
                   }
                 }}
               >

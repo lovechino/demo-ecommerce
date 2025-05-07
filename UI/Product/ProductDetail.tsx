@@ -20,6 +20,12 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
   const [resview, setReview] = useState<any>(null);
   const dispatch = useAppDispatch();
+  const [showModal, setShowModal] = useState(false);
+
+  const formatCurrency = (amount: number) => {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
   const GetData = async () => {
     const response = await GetProductById(id);
     const resReview = await getReviewProducts();
@@ -54,21 +60,94 @@ const ProductDetailUi = ({ id }: DetailType) => {
     {
       Image:
         "https://cdn.tgdd.vn/Products/Images/5698/299348/arm-humanmotion-h1pro-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Hum...",
+      title: "Giảm 100K khi mua kèm giá treo Hum..."
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299350/arm-xiaomi-mi-display-1c-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá đỡ...",
+      title: "Giảm 100K khi mua kèm giá đỡ..."
     },
     {
       img: "https://cdn.tgdd.vn/Products/Images/5698/299349/arm-northbayou-f80-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá treo Nort...",
-    },
+      title: "Giảm 100K khi mua kèm giá treo Nort..."
+    }
   ];
-  const [showAll, setShowAll] = useState(false);
+  const capacities = [
+    { label: "S25 Ultra 1TB", price: 36490000 },
+    { label: "S25 Ultra 512GB", price: 32690000 },
+    { label: "S25 Ultra 256GB", price: 29890000 },
+    { label: "S25 Plus 512GB", price: 26190000 },
+    { label: "S25 Plus 256GB", price: 23190000 },
+    { label: "S25 512GB", price: 22690000 },
+    { label: "S25 256GB", price: 19690000 }
+  ];
+  const selectedCapacity = "S25 Ultra 256GB";
+
+  const technicalSpecs = [
+    { label: "Kích thước màn hình", value: "6.74 inches" },
+    { label: "Công nghệ màn hình", value: "AMOLED" },
+    {
+      label: "Camera sau",
+      value: "50 MP (chính), 64MP kính tiềm vọng, 8MP góc siêu rộng"
+    },
+    { label: "Camera trước", value: "32 MP, f/2.4" },
+    { label: "Chipset", value: "Snapdragon 8 Plus Gen 1" },
+    { label: "Công nghệ NFC", value: "Có" },
+    { label: "Dung lượng RAM", value: "12 GB" },
+    { label: "Bộ nhớ trong", value: "256 GB" },
+    { label: "Pin", value: "4700 mAh" },
+    { label: "Sạc nhanh", value: "SuperVOOC 100W" },
+    { label: "Hệ điều hành", value: "Android 13" },
+    { label: "Kích thước", value: "163.1 x 74.2 x 7.9 mm" },
+    { label: "Trọng lượng", value: "196g" },
+    { label: "Màu sắc", value: "Đen, Trắng, Xanh" },
+    { label: "Bảo hành", value: "12 tháng chính hãng" }
+  ];
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 bg-opacity-20 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-lg">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Thông số kỹ thuật</h2>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div className="space-y-4">
+                {technicalSpecs.map((spec, index) => (
+                  <div
+                    key={index}
+                    className="flex justify-between py-2 border-b border-gray-100"
+                  >
+                    <span className="font-medium text-gray-700">
+                      {spec.label}:
+                    </span>
+                    <span className="text-gray-600">{spec.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold">{product?.ProductName}</h1>
       </div>
@@ -130,7 +209,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col gap-6 p-4 bg-white rounded-xl shadow-md">
+          <div className=" flex flex-col gap-6 p-4 bg-white rounded-xl shadow-md">
             {/* Gợi ý phụ kiện mua kèm */}
             <div>
               <div className="flex gap-2 mb-4">
@@ -165,7 +244,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 <div className="text-gray-700 font-semibold text-base">
                   Tạm tính:{" "}
                   <span className="text-red-600 text-lg font-bold">
-                    {product?.Price}đ
+                    {formatCurrency(Number(product?.Price))}đ
                   </span>
                   <div className="text-xs italic text-gray-500">
                     (Tiết kiệm 0đ)
@@ -181,7 +260,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                         Price: product?.Price,
                         pathimg: product?.Image,
                         qualitiy: quality,
-                        maxQuantity: 10,
+                        maxQuantity: 10
                       })
                     )
                   }
@@ -201,6 +280,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
               Còn Hàng
             </span>
           </h2>
+
           <div className="text-sm text-gray-600 space-x-2">
             <span>
               Thương hiệu:{" "}
@@ -212,9 +292,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </span>
           </div>
           <div className="space-x-2 text-xl font-bold text-red-600">
-            2,090,000₫
+            {formatCurrency(2090000)}₫
             <span className="line-through text-gray-400 text-base font-normal">
-              2,500,000₫
+              {formatCurrency(2500000)}₫
             </span>
           </div>
           {/* Countdown */}
@@ -239,6 +319,23 @@ const ProductDetailUi = ({ id }: DetailType) => {
           <div className="text-sm text-gray-600">
             🔥 Đã bán <span className="text-red-500 font-bold">27</span> sản
             phẩm
+          </div>
+          {/* Dung lượng */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+            {capacities.map((item) => (
+              <button
+                key={item.label}
+                className={`border px-4 py-2 rounded-lg text-sm text-left
+              ${
+                item.label === selectedCapacity
+                  ? "border-red-500 text-red-600"
+                  : "border-gray-300 text-gray-700"
+              }`}
+              >
+                <div>{item.label}</div>
+                <div className="text-xs">{formatCurrency(item.price)}</div>
+              </button>
+            ))}
           </div>
 
           <div className="flex items-center gap-2">
@@ -339,7 +436,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
                     Price: product?.Price,
                     pathimg: product?.Image,
                     qualitiy: quality,
-                    maxQuantity: 10,
+                    maxQuantity: 10
                   })
                 )
               }
@@ -412,17 +509,11 @@ const ProductDetailUi = ({ id }: DetailType) => {
           })}
         </div>
       </div> */}
+      {/* sản phẩm tương tự */}
       <div className="p-4">
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">SẢN PHẨM TƯƠNG TỰ</h2>
-          <div className="flex gap-2 mb-4">
-            <button className="px-4 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold">
-              Mua kèm giá sốc
-            </button>
-            <button className="px-4 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold">
-              Phụ kiện mua cùng
-            </button>
-          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {/* Card 1 */}
             <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
@@ -446,9 +537,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 Màn hình ASUS VU249CFE 24 inch
               </div>
               <div className="text-red-600 font-bold text-lg text-center mt-2">
-                2.990.000đ{" "}
+                {formatCurrency(2990000)}đ{" "}
                 <span className="text-gray-400 line-through text-base font-normal">
-                  3.990.000đ
+                  {formatCurrency(3990000)}đ
                 </span>
               </div>
               <div className="bg-gray-100 text-xs text-gray-700 rounded px-2 py-1 mt-2 text-center">
@@ -492,9 +583,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 Màn hình di động ASUS ZenScreen MB169C 16 inch
               </div>
               <div className="text-red-600 font-bold text-lg text-center mt-2">
-                3.190.000đ{" "}
+                {formatCurrency(3190000)}đ{" "}
                 <span className="text-gray-400 line-through text-base font-normal">
-                  3.390.000đ
+                  {formatCurrency(3390000)}đ
                 </span>
               </div>
               <div className="flex justify-between items-center mt-2">
@@ -538,9 +629,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 Màn hình MSI Pro MP275 E2 27 inch
               </div>
               <div className="text-red-600 font-bold text-lg text-center mt-2">
-                2.990.000đ{" "}
+                {formatCurrency(2990000)}đ{" "}
                 <span className="text-gray-400 line-through text-base font-normal">
-                  3.490.000đ
+                  {formatCurrency(3490000)}đ
                 </span>
               </div>
               <div className="flex justify-between items-center mt-2">
@@ -559,97 +650,8 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 </span>
               </div>
             </div>
+
             {/* Card 4 */}
-            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
-              <div className="absolute -top-3 left-0">
-                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                  Giảm 2%
-                </span>
-              </div>
-              <Image
-                src={sptt}
-                alt="sptt"
-                className="mx-auto h-28 object-contain"
-              />
-              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-                0.5<small className="text-base">ms</small>
-              </div>
-              <div className="text-red-600 font-bold text-center text-base">
-                25 inch 200 Hz Full HD
-              </div>
-              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-                Màn hình Gaming MSI MAG 255F E20 25 inch
-              </div>
-              <div className="text-red-600 font-bold text-lg text-center mt-2">
-                3.090.000đ{" "}
-                <span className="text-gray-400 line-through text-base font-normal">
-                  3.169.000đ
-                </span>
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                  Trả góp 0%
-                </span>
-                <span className="text-gray-400 text-sm flex items-center">
-                  <svg
-                    className="w-5 h-5 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                  </svg>
-                  Yêu thích
-                </span>
-              </div>
-            </div>
-            {/* Card 5 */}
-            <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
-              <div className="absolute -top-3 left-0">
-                <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
-                  Giảm 2%
-                </span>
-              </div>
-              <Image
-                src={sptt}
-                alt="sptt"
-                className="mx-auto h-28 object-contain"
-              />
-              <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
-                0.5<small className="text-base">ms</small>
-              </div>
-              <div className="text-red-600 font-bold text-center text-base">
-                25 inch 200 Hz Full HD
-              </div>
-              <div className="text-gray-800 font-semibold text-center text-sm mt-1">
-                Màn hình Gaming MSI MAG 255F E20 25 inch
-              </div>
-              <div className="text-red-600 font-bold text-lg text-center mt-2">
-                3.090.000đ{" "}
-                <span className="text-gray-400 line-through text-base font-normal">
-                  3.169.000đ
-                </span>
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
-                  Trả góp 0%
-                </span>
-                <span className="text-gray-400 text-sm flex items-center">
-                  <svg
-                    className="w-5 h-5 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                  </svg>
-                  Yêu thích
-                </span>
-              </div>
-            </div>
-            {/* Card 6 */}
             <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
               <div className="absolute -top-3 left-0">
                 <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
@@ -671,9 +673,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 Màn hình Gaming MSI G255F 25 inch
               </div>
               <div className="text-red-600 font-bold text-lg text-center mt-2">
-                3.190.000đ{" "}
+                {formatCurrency(3190000)}đ{" "}
                 <span className="text-gray-400 line-through text-base font-normal">
-                  3.590.000đ
+                  {formatCurrency(3590000)}đ
                 </span>
               </div>
               <div className="flex justify-between items-center mt-2">
@@ -704,7 +706,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
         {/* Cột trái: Đặc điểm nổi bật + Nội dung chính */}
         <div className="lg:col-span-2 space-y-6">
           {/* Đặc điểm nổi bật */}
-          <div className="bg-white shadow p-6 rounded-xl">
+          <div className="bg-white shadow p-6 rounded-xl border border-black/20">
             <h2 className="text-xl font-bold text-red-600 mb-4">
               Đặc Điểm Nổi Bật Của{" "}
               {product?.ProductName || "OPPO Reno10 Pro+ 5G 12GB 256GB"}
@@ -765,7 +767,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
               <div
                 className={`transition-all duration-300 ease-in-out ${
-                  showAll
+                  showModal
                     ? "h-auto opacity-100"
                     : "h-0 opacity-0 overflow-hidden"
                 }`}
@@ -793,9 +795,9 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
             <button
               className="text-blue-600 mt-4 text-sm font-medium hover:underline"
-              onClick={() => setShowAll(!showAll)}
+              onClick={() => setShowModal(true)}
             >
-              {showAll ? "Thu gọn" : "Xem thêm chi tiết"}
+              Xem thêm chi tiết
             </button>
           </div>
 
@@ -928,12 +930,14 @@ const ProductDetailUi = ({ id }: DetailType) => {
           </div>
         </div>
         {/* Cột phải: Thông số kỹ thuật - Chỉ hiển thị trên desktop */}
-        <div className="hidden lg:block bg-white border border-black/20 shadow p-6 rounded-xl">
+        <div className="hidden lg:block bg-white border border-black/20 shadow p-6 rounded-xl h-fit">
           <h2 className="text-lg font-bold mb-4 text-gray-800">
             Thông số kỹ thuật
           </h2>
 
-          <div className="space-y-4 text-sm text-gray-700">
+          <div className="space-y-4 text-sm text-gray-700 border border-black/20 rounded-md p-4 flex flex-col items-center">
+            {" "}
+            {/* Thêm flex flex-col items-center */}
             <div className="flex justify-between">
               <span className="font-medium">Kích thước màn hình:</span>
               <span>6.74 inches</span>
@@ -957,42 +961,28 @@ const ProductDetailUi = ({ id }: DetailType) => {
               <span>32 MP, f/2.4</span>
             </div>
             <div className="flex justify-between">
+              <span className="font-medium">Camera trước:</span>
+              <span>32 MP, f/2.4</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Camera trước:</span>
+              <span>32 MP, f/2.4</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Camera trước:</span>
+              <span>32 MP, f/2.4</span>
+            </div>
+            <div className="flex justify-between">
               <span className="font-medium">Chipset:</span>
               <span>Snapdragon 8 Plus Gen 1</span>
             </div>
-
-            <div
-              className={`transition-all duration-300 ease-in-out ${
-                showAll ? "h-auto opacity-100" : "h-0 opacity-0 overflow-hidden"
-              }`}
+            <button
+              className="text-blue-600 mt-4 text-sm font-medium hover:underline border border-black/20 rounded-md px-4 py-2"
+              onClick={() => setShowModal(true)}
             >
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="font-medium">Công nghệ NFC:</span>
-                  <span>Có</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Dung lượng RAM:</span>
-                  <span>12 GB</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Bộ nhớ trong:</span>
-                  <span>256 GB</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-medium">Pin:</span>
-                  <span>4700 mAh</span>
-                </div>
-              </div>
-            </div>
+              Xem thêm chi tiết
+            </button>
           </div>
-
-          <button
-            className="text-blue-600 mt-4 text-sm font-medium hover:underline"
-            onClick={() => setShowAll(!showAll)}
-          >
-            {showAll ? "Thu gọn" : "Xem thêm chi tiết"}
-          </button>
         </div>
       </div>
     </div>
