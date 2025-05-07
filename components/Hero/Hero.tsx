@@ -8,37 +8,35 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import { baseURL } from "@/Utils/Axios";
 import { useEffect, useState } from "react";
-import { GetAllProduct, GetListGroupProduct } from "@/Apis/Product";
+import { GetListGroupProduct } from "@/Apis/Product";
 import { Menu } from "@/Utils/type";
 
 import placeholderImg from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 export default function Hero() {
-  GetAllProduct();
   const product = useSelector((state: RootState) => state.product.list);
   const products = product?.slice(1, 16);
   const [menu, setMenu] = useState<Menu[]>([]);
   const [selectedProductIndex, setSelectedProductIndex] = useState(0);
-
   const [showArrows, setShowArrows] = useState(false);
+
   useEffect(() => {
     if (!product || product.length < 16) return;
 
     const timer = setInterval(() => {
-      setSelectedProductIndex(
-        (current) => (current === 14 ? 0 : current + 1) // vì slice(1,6) có 5 phần tử
-      );
+      setSelectedProductIndex((current) => (current === 14 ? 0 : current + 1));
     }, 5000);
 
     return () => clearInterval(timer);
   }, [product]);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await GetListGroupProduct();
       setMenu(response);
     };
     fetchData();
-  }, [menu]);
+  }, []);
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-4">
@@ -61,7 +59,6 @@ export default function Hero() {
                   <li>
                     <div className="flex items-center justify-between p-3 hover:bg-blue-50 transition-colors duration-150 cursor-pointer">
                       <div className="flex items-center gap-3">
-                        {/* Có thể thêm icon ở đây nếu muốn */}
                         <Image
                           src={category?.Description}
                           alt="item"
@@ -85,7 +82,6 @@ export default function Hero() {
 
         {/* Main banner */}
         <div className="w-full md:w-3/5 flex flex-col gap-4">
-          {/* Main Samsung banner */}
           <motion.div
             className="border border-white rounded-md overflow-hidden mb-0 cursor-pointer"
             onClick={() =>
@@ -204,12 +200,12 @@ export default function Hero() {
                     DEAL RỘN RÀNG
                   </h1>
 
-                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md  border-3 border-white  ">
+                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md border-3 border-white">
                     <span className="text-white text-xs md:text-sm font-bold mr-1">
                       GIẢM ĐẾN 40%
                     </span>
                   </div>
-                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md  border-3 border-white">
+                  <div className="bg-pink-500 rounded-full px-4 py-1 mb-3 shadow-md border-3 border-white">
                     <span className="text-white text-xs md:text-sm font-bold mr-1">
                       Hàng chính hãng
                     </span>
@@ -219,7 +215,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Product categories row - luôn ở dưới main banner */}
+          {/* Product dot indicators */}
           <div className="mt-3 flex justify-center gap-2">
             {products &&
               products.length > 0 &&
@@ -227,24 +223,20 @@ export default function Hero() {
                 <button
                   key={index}
                   onClick={() => setSelectedProductIndex(index)}
-                  className={`w-2 h-2 rounded-full transition-colors duration-200
-                    ${
-                      selectedProductIndex === index
-                        ? "bg-blue-500"
-                        : "bg-gray-300"
-                    }
-                  `}
+                  className={`w-2 h-2 rounded-full transition-colors duration-200 ${
+                    selectedProductIndex === index
+                      ? "bg-blue-500"
+                      : "bg-gray-300"
+                  }`}
                   aria-label={`Chọn sản phẩm ${index + 1}`}
                 />
               ))}
           </div>
         </div>
 
-        {/* Right banners */}
-        {/* w-full md:w-1/5 flex flex-col gap-4 border-white */}
-        <div className=" hidden md:flex md:flex-col md:gap-4 w-full md:w-1/5 border-white">
-          {/* iPad Air banner */}
-          {product && product?.length > 1 && (
+        {/* Right side banners */}
+        <div className="hidden md:flex md:flex-col md:gap-4 w-full md:w-1/5 border-white">
+          {product && product.length > 1 && (
             <div className="bg-pink-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white">
               <Link href={`/Product/${product[1]?.productcode}`}>
                 <Image
@@ -261,40 +253,29 @@ export default function Hero() {
               </Link>
             </div>
           )}
-          {/* Laptop/banner khác */}
-          {product && product?.length > 8 && (
-            <div className="bg-green-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white">
-              <Link href={`/Product/${product[8]?.productcode}`}>
-                <Image
-                  src={
-                    product[8]?.pathimg
-                      ? `${baseURL}${product[8]?.pathimg}`
-                      : placeholderImg
-                  }
-                  alt={product[8]?.productname || "Ảnh sản phẩm"}
-                  width={100}
-                  height={100}
-                  className="rounded-lg object-contain mb-2 cursor-pointer"
-                />
-              </Link>
-            </div>
-          )}
-          {product && product?.length > 8 && (
-            <div className="bg-green-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white">
-              <Link href={`/Product/${product[9]?.productcode}`}>
-                <Image
-                  src={
-                    product[9]?.pathimg
-                      ? `${baseURL}${product[9]?.pathimg}`
-                      : placeholderImg
-                  }
-                  alt={product[9]?.productname || "Ảnh sản phẩm"}
-                  width={100}
-                  height={100}
-                  className="rounded-lg object-contain mb-2 cursor-pointer"
-                />
-              </Link>
-            </div>
+          {product && product.length > 8 && (
+            <>
+              {[8, 9].map((i) => (
+                <div
+                  key={i}
+                  className="bg-green-100 rounded-md p-4 flex flex-col items-center shadow-md border border-white"
+                >
+                  <Link href={`/Product/${product[i]?.productcode}`}>
+                    <Image
+                      src={
+                        product[i]?.pathimg
+                          ? `${baseURL}${product[i]?.pathimg}`
+                          : placeholderImg
+                      }
+                      alt={product[i]?.productname || "Ảnh sản phẩm"}
+                      width={100}
+                      height={100}
+                      className="rounded-lg object-contain mb-2 cursor-pointer"
+                    />
+                  </Link>
+                </div>
+              ))}
+            </>
           )}
         </div>
       </div>

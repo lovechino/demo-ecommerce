@@ -5,7 +5,7 @@ import axiosInstance from "@/Utils/Axios";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-export const GetAllProduct = () => {
+export const getAllProduct = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +21,7 @@ export const GetAllProduct = () => {
       dispatch(setListProduct(response.data));
     };
     fetchData();
-  }, []);
+  }, [dispatch]);
 };
 
 export const GetProductById = async (id: string) => {
@@ -45,10 +45,14 @@ export const getReviewProducts = async () => {
     .then((res) => res.data);
 };
 
-export const GetListGroupProduct = async()=>{
-  return await axiosInstance.get("/MobileLogin/GetListGroupProduct").then(res=>res.data)
-}
+export const GetListGroupProduct = async () => {
+  return await axiosInstance
+    .get("/MobileLogin/GetListGroupProduct")
+    .then((res) => res.data);
+};
 
-export const GetListProductByGroup = async (id : string) => {
-  return await axiosInstance.post(`/Product/GetListProductByGroup?groupcode=${id}`).then(res=>res.data)
-}
+export const GetListProductByGroup = async (id: string) => {
+  return await axiosInstance
+    .post(`/Product/GetListProductByGroup?groupcode=${id}`)
+    .then((res) => res.data);
+};

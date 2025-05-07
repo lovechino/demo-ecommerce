@@ -39,7 +39,6 @@ const ListProductHome = () => {
     };
     fetchMenuAndProducts();
   }, []);
-  console.log(menu);
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col justify-center items-center px-2 py-6">
@@ -50,7 +49,7 @@ const ListProductHome = () => {
         const filteredProducts = products;
         return (
           <div key={group.Code} className="mb-8 w-full">
-            <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2 md:gap-4">
+            <div className="flex flex-col justify-start md:flex-row md:items-center gap-2 mb-2 md:gap-4">
               <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center md:text-left">
                 {group.Name}
               </h2>
