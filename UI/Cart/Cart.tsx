@@ -9,18 +9,22 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { CartIntemType } from "@/Utils/type";
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
-import Image from "next/image";
+// import Image from "next/image";
+import { useRouter } from "next/navigation";
+// import QR from "@/components/Payment/QR";
 // import emptyCart from "@/public/Image/t?i xu?ng.jpg";
 
 // Gi? l?p user dang nh?p
 const user = {
-  name: "Nguy?n Van A",
+  name: "Nguyen Van A",
   phone: "0912345678",
   email: "nguyenvana@email.com",
 };
 
 const CartPage = () => {
+  const router = useRouter();
   const [selectedItems, setSelectedItems] = useState<CartIntemType[]>([]);
+  // const [showQR, setShowQR] = useState(false);
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
   console.log("items", items);
@@ -44,10 +48,10 @@ const CartPage = () => {
     setTimeout(() => {
       if (coupon.trim().toUpperCase() === "KEEPWARM") {
         setCouponStatus("success");
-        setCouponMessage("Mã gi?m giá dã du?c áp d?ng!");
+        setCouponMessage("Mã giảm giá dã được áp dụng!");
       } else {
         setCouponStatus("error");
-        setCouponMessage("Mã gi?m giá không h?p l?!");
+        setCouponMessage("Mã giảm giá không hợp lệ ");
       }
       setLoading(false);
     }, 800);
@@ -58,10 +62,10 @@ const CartPage = () => {
     "Thanh toán khi nh?n hàng"
   );
   const paymentMethods = [
-    "Thanh toán khi nh?n hàng",
+    "Thanh toán khi nhận hàng",
     "Ví MOMO",
     "Thanh toán qua ZaloPay",
-    "Ví di?n t? VNPAY",
+    "Ví điện tử VNPAY",
   ];
 
   const handleItemCheckboxChange = (item: CartIntemType) => {
@@ -109,7 +113,7 @@ const CartPage = () => {
     if (item.qualitiy < max) {
       dispatch(inCreaseItem(item));
     } else {
-      alert(`S? lu?ng t?i da cho s?n ph?m này là ${max}`);
+      alert(`Số luợng tối da cho sản phẩm này là ${max}`);
     }
   };
 
@@ -154,38 +158,74 @@ const CartPage = () => {
     }
   }, []);
 
+  const handlePayment = () => {
+    // Clear all items from cart
+    items.forEach((item) => {
+      dispatch(removeItem(item.id));
+    });
+    
+    // Clear selected items
+    setSelectedItems([]);
+    
+    // Save success message to localStorage
+    localStorage.setItem('paymentSuccess', JSON.stringify({
+      message: 'Đặt hàng thành công!',
+      timestamp: new Date().getTime()
+    }));
+    
+    // Redirect to home page
+    router.push('/Cart/Payment');
+ 
+  };
+
+  // Check for success message on component mount
+  // useEffect(() => {
+  //   const successData = localStorage.getItem('paymentSuccess');
+  //   if (successData) {
+  //     const { timestamp } = JSON.parse(successData);
+  //     // Remove success message after 5 seconds
+  //     const timeout = setTimeout(() => {
+  //       localStorage.removeItem('paymentSuccess');
+  //     }, 5000);
+  //     return () => clearTimeout(timeout);
+  //   }
+  // }, []);
+
   return (
     <>
+      {/* Success Message */}
+   
+
       <div className="flex flex-col lg:flex-row p-4 lg:p-8 gap-8">
         {/* Left section */}
         <section className="flex-1 space-y-8">
           {/* CoolCash Box */}
           <div className="bg-gray-100 p-6 rounded-lg">
             <button className="w-full bg-blue-600 text-white py-2 rounded-lg mb-4">
-              Join CoolClub d? nh?n nhi?u uu dãi hon
+              Join CoolClub dể nhận nhiều uu dãi hon
             </button>
             <div className="text-center text-sm text-gray-600">
               <p>
-                Tham gia <strong>CoolClub</strong> d? nh?n ngay{" "}
-                <strong>voucher -15%</strong> cho don hàng d?u tiên và hàng ngàn
+                Tham gia <strong>CoolClub</strong> dể nhận ngay{" "}
+                <strong>voucher -15%</strong> cho don hàng đầu tiên và hàng ngàn
                 uu dãi khác!
               </p>
               <Link href="#" className="text-blue-500 underline block mt-2">
-                Tìm hi?u thêm
+                Tìm hiểu thêm
               </Link>
             </div>
           </div>
 
           {/* Order Info */}
           <div className="bg-white p-6 rounded-lg shadow space-y-6">
-            <h2 className="text-xl font-semibold">Thông tin don hàng</h2>
+            <h2 className="text-xl font-semibold">Thông tin đơn hàng</h2>
 
             {/* Customer Info */}
             <div className="space-y-4">
               {/* Name and Phone */}
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1">
-                  <label className="block mb-1 text-sm">H? và tên</label>
+                  <label className="block mb-1 text-sm">Họ và tên</label>
                   <div className="flex gap-2">
                     {/* <select
                       className="border rounded-lg p-2"
@@ -197,18 +237,18 @@ const CartPage = () => {
                     </select> */}
                     <input
                       type="text"
-                      placeholder="Nh?p h? và tên c?a b?n"
+                      placeholder="Nhập họ và tên của bạn"
                       className="border rounded-lg p-2 flex-1"
                     />
                   </div>
                 </div>
                 <div className="flex-1">
-                  <label className="block mb-1 text-sm">S? di?n tho?i</label>
+                  <label className="block mb-1 text-sm">Số điện thoại</label>
                   <div className="flex items-center gap-2">
                     <span className="p-2 bg-gray-100 rounded-lg">+84</span>
                     <input
                       type="number"
-                      placeholder="Nh?p s? di?n tho?i"
+                      placeholder="Nhập số điện thoại"
                       className="border rounded-lg p-2 flex-1"
                     />
                   </div>
@@ -220,7 +260,7 @@ const CartPage = () => {
                 <label className="block mb-1 text-sm">Email</label>
                 <input
                   type="email"
-                  placeholder="Nh?p email d? theo dõi don hàng"
+                  placeholder="Nhập email của bạn"
                   className="border rounded-lg p-2 w-full"
                 />
               </div>
@@ -228,13 +268,13 @@ const CartPage = () => {
               {/* Address */}
               <div className="flex flex-col md:flex-row gap-4">
                 <select className="border rounded-lg p-2 flex-1">
-                  <option>--Ch?n T?nh/Thành ph?--</option>
+                  <option>--Chọn Tỉnh/Thành phố--</option>
                 </select>
                 <select className="border rounded-lg p-2 flex-1">
-                  <option>--Ch?n Qu?n/Huy?n--</option>
+                  <option>--Chọn Quận/Huyện--</option>
                 </select>
                 <select className="border rounded-lg p-2 flex-1">
-                  <option>--Ch?n Phu?ng/Xã--</option>
+                  <option>--Chọn Phuờng/Xã--</option>
                 </select>
               </div>
 
@@ -248,11 +288,11 @@ const CartPage = () => {
               </div>
 
               {/* Contact Others */}
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <input type="checkbox" id="callWithOtherPerson" />
                   <label htmlFor="callWithOtherPerson">
-                    G?i cho ngu?i khác
+                    Gửi cho người khác
                   </label>
                 </div>
 
@@ -264,29 +304,29 @@ const CartPage = () => {
                     </div>
                     <div className="flex items-center gap-2">
                       <input type="checkbox" id="female" />
-                      <label htmlFor="female">N?</label>
+                      <label htmlFor="female">Nữ</label>
                     </div>
                   </div>
                   <div className="flex flex-col flex-1 gap-2">
                     <input
                       type="text"
-                      placeholder="H? và tên"
+                      placeholder="Họ và tên"
                       className="border rounded-lg p-2"
                     />
                     <input
                       type="text"
-                      placeholder="S? di?n tho?i"
+                      placeholder="Số điện thoại"
                       className="border rounded-lg p-2"
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
 
           {/* Payment Methods */}
           <div className="bg-white p-6 rounded-lg shadow space-y-4">
-            <h2 className="text-xl font-semibold">Hình th?c thanh toán</h2>
+            <h2 className="text-xl font-semibold">Hình thức thanh toán</h2>
 
             {/* Payment options */}
             <div className="space-y-4">
@@ -314,12 +354,29 @@ const CartPage = () => {
                 </div>
               ))}
             </div>
+
+            {/* Show QR when Momo is selected */}
+           
+            {/* {paymentMethod === "Ví MOMO" && (
+              <div className="mt-6 p-4 border rounded-lg">
+                <h3 className="text-lg font-semibold mb-4">Quét mã QR để thanh toán</h3>
+                <QR />
+                <div className="mt-4 text-center">
+                  <button
+                    onClick={handlePayment}
+                    className="bg-blue-500 text-white px-6 py-2 rounded-lg"
+                  >
+                    Xác nhận thanh toán
+                  </button>
+                </div>
+              </div>
+            )} */}
           </div>
 
           <p className="text-center text-sm">
-            Chính sách d?i tr? và hoàn ti?n{" "}
+            Chính sách đổi trả và hoàn tiền{" "}
             <Link href="#" className="text-blue-500 underline">
-              t?i dây
+              tại dây
             </Link>
             .
           </p>
@@ -329,23 +386,23 @@ const CartPage = () => {
         <section className="flex-1 space-y-6">
           {/* Cart Section */}
           <div className="bg-white p-6 rounded-lg shadow">
-            <h2 className="text-xl font-semibold mb-4">Gi? hàng</h2>
+            <h2 className="text-xl font-semibold mb-4">Giỏ hàng</h2>
 
             {/* T?ng s? s?n ph?m dã ch?n */}
             {selectedItems.length > 0 && (
               <div className="mb-2 text-blue-600 font-semibold">
-                Ðã ch?n {selectedTotalQuantity} s?n ph?m
+                Ðã chọn {selectedTotalQuantity} sản phẩm
               </div>
             )}
 
-            {/* Xóa nhi?u s?n ph?m dã ch?n */}
+            {/* Xóa nhi?u s?n ph?m dã chọn */}
             {selectedItems.length > 0 && (
               <div className="mb-2">
                 <button
                   onClick={handleRemoveSelected}
                   className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
                 >
-                  Xóa các s?n ph?m dã ch?n
+                  Xóa các sản phẩm đã chọn
                 </button>
               </div>
             )}
@@ -358,13 +415,13 @@ const CartPage = () => {
                   className="w-32 h-32 mb-4"
                 /> */}
                 <em className="text-gray-400 mb-2">
-                  Gi? hàng c?a b?n dang tr?ng\nB?t d?u mua s?m thôi!
+                  Giỏ hàng của bạn dang trống Bắt đầu mua sắm thôi!
                 </em>
                 <Link
                   href="/"
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2"
                 >
-                  Ti?p t?c mua s?m
+                  Tiếp tục mua sắm
                 </Link>
               </div>
             ) : (
@@ -383,12 +440,12 @@ const CartPage = () => {
                               items.length > 0
                             }
                           />
-                          <label htmlFor="chkAllItems">T?t c? s?n ph?m</label>
+                          <label htmlFor="chkAllItems">Tất cả sản phẩm</label>
                         </div>
                       </th>
                       <th className="p-3">ÐVT</th>
-                      <th className="p-3">S? lu?ng</th>
-                      <th className="p-3">T?ng ti?n</th>
+                      <th className="p-3">Số lượng</th>
+                      <th className="p-3">Tổng tiền</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -407,13 +464,13 @@ const CartPage = () => {
                                 {item.productname}
                               </Link>
                               <div className="text-sm text-gray-500">
-                                Thu?c tính s?n ph?m
+                                Thuộc tính sản phẩm
                               </div>
                               <div className="text-sm">{item.Price}</div>
                               {isItemSelected(item) && (
                                 <div className="mt-2 text-sm text-blue-500">
-                                  Thông tin chi ti?t s?n ph?m {item.productname}
-                                  {/* Hi?n th? thêm thông tin s?n ph?m ? dây */}
+                                  Thông tin chi tiết sản phẩm {item.productname}
+                                  {/* Hiện thị thêm thông tin sản phẩm ở dây */}
                                 </div>
                               )}
                               <button
@@ -425,7 +482,7 @@ const CartPage = () => {
                             </div>
                           </div>
                         </td>
-                        <td className="p-3">Ðon v? tính</td>
+                        <td className="p-3">Ðon vị tính</td>
                         <td className="p-3">
                           <div className="flex items-center justify-center gap-2">
                             <button
@@ -472,7 +529,7 @@ const CartPage = () => {
             )}
 
             <em className="block text-sm text-gray-500 mt-4">
-              Có <strong>15</strong> ngu?i khác cung dang xem gi? hàng này
+              Có <strong>15</strong> nguời khác cung dang xem giá hàng này
             </em>
           </div>
 
@@ -487,7 +544,7 @@ const CartPage = () => {
                   <div>
                     <div className="font-semibold">KEEPWARM</div>
                     <div className="text-sm">
-                      T?ng 1 dôi v? khi mua don t? 299K
+                      Tặng 1 đôi vớ khi mua don từ 299K
                     </div>
                     <div className="text-xs text-gray-500">HSD: 30/11/2024</div>
                   </div>
@@ -500,7 +557,7 @@ const CartPage = () => {
           {/* Discount Actions */}
           <div className="flex justify-between items-center text-sm text-gray-700">
             <div>
-              Xóa mã gi?m giá <b>KEEPWARM</b>
+              Xóa mã giảm giá <b>KEEPWARM</b>
             </div>
             <div className="flex gap-2">
               <input
@@ -508,14 +565,14 @@ const CartPage = () => {
                 value={coupon}
                 onChange={(e) => setCoupon(e.target.value)}
                 className="border p-2 rounded-lg"
-                placeholder="Nh?p mã gi?m giá"
+                placeholder="Nhập mã giảm giá"
               />
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-lg"
                 onClick={handleApplyCoupon}
                 disabled={loading}
               >
-                Áp d?ng
+                Áp dụng
               </button>
             </div>
           </div>
@@ -548,27 +605,27 @@ const CartPage = () => {
                   d="M4 12a8 8 0 018-8v8z"
                 ></path>
               </svg>
-              <span className="ml-2">Ðang x? lý...</span>
+              <span className="ml-2">Ðang xử lý...</span>
             </div>
           )}
 
           {/* Pricing Info */}
           <div className="bg-white p-6 rounded-lg shadow space-y-2">
             <div className="flex justify-between">
-              <p>T?m tính</p>
-              <p className="text-right">Giá t?m tính</p>
+              <p>Tạm tính</p>
+              <p className="text-right">Giá tạm tính</p>
             </div>
             <div className="flex justify-between">
-              <p>Gi?m giá</p>
+              <p>Giảm giá</p>
               <p>0d</p>
             </div>
             <div className="flex justify-between">
-              <p>Phí v?n chuy?n</p>
-              <p>Mi?n phí</p>
+              <p>Phí vận chuyển</p>
+              <p>Miễn phí</p>
             </div>
             <div className="border-t my-2"></div>
             <div className="flex justify-between font-bold text-lg">
-              <p>T?ng c?ng</p>
+              <p>Tổng cộng</p>
               <p>{selectedTotalAmount} VNÐ</p>{" "}
               {/* Hi?n th? t?ng ti?n s?n ph?m dã ch?n */}
             </div>
@@ -582,34 +639,34 @@ const CartPage = () => {
           <div className="flex items-center gap-2">
             <img src="https://www.coolmate.me/images/COD.svg" className="w-8" />
             <p>
-              <strong>COD</strong> Thanh toán khi nh?n hàng
+              <strong>COD</strong> Thanh toán khi nhận hàng
             </p>
           </div>
           <div className="flex flex-col text-sm">
             <p>Voucher</p>
             <p>
-              <strong>KEEPWARM</strong> T?ng ...
+              <strong>KEEPWARM</strong> Tặng ...
             </p>
           </div>
         </div>
         <div className="flex flex-col md:flex-row items-center gap-4">
           {!user && (
             <Link href="/login" className="text-blue-500 underline">
-              Ðang nh?p
+              Ðang nhập
             </Link>
           )}
           <div className="flex flex-col items-end translate-y-1">
             <div className="font-semibold">
-              T?ng ti?n:{" "}
-              <span className="text-blue-600">{selectedTotalAmount} VNÐ</span>{" "}
-              {/* Hi?n th? t?ng ti?n s?n ph?m dã ch?n */}
+              Tổng tiền:{" "}
+              <span className="text-blue-600">{selectedTotalAmount} VNÐ</span>
             </div>
           </div>
-          <Link href={`/Cart/Payment`} className="w-full px-0 sm:px-4 ">
-            <button className="bg-blue-500 text-white px-6 py-3 rounded-lg">
-              Thanh toán
-            </button>
-          </Link>
+          <button 
+            onClick={handlePayment}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg w-full sm:w-auto hover:bg-blue-600 transition duration-200"
+          >
+            Thanh toán
+          </button>
         </div>
       </div>
     </>
