@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   compress: true,
+
   images: {
     remotePatterns: [
       {
@@ -35,6 +36,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
   modularizeImports: {
     lodash: {
       transform: "lodash/{{member}}",
@@ -60,6 +62,7 @@ const nextConfig: NextConfig = {
         })
       );
     }
+
     return config;
   },
 };

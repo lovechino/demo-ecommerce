@@ -13,6 +13,24 @@ const ListProductHome = () => {
   const [groupProducts, setGroupProducts] = useState<{
     [key: string]: ProductType[];
   }>({});
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowMoreFilters(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const filterOptions = [
     { label: "All", value: "" },
@@ -99,11 +117,15 @@ const ListProductHome = () => {
         return (
           <div key={group.Code} className="mb-8 w-full">
             <div className="flex flex-col md:flex-row md:items-center gap-2 mb-2 md:gap-4">
-              <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-center md:text-left">
+              <h2 className="text-xl md:text-2xl font-bold text-gray-800 text-left ml-5 md:text-left">
                 {group.Name}
               </h2>
-              <div className="flex flex-wrap gap-1 justify-center md:justify-start">
-                {filterOptions.map((opt) => (
+              <div
+                className="flex flex-wrap gap-1 justify-center md:justify-start relative"
+                ref={dropdownRef}
+              >
+                {/* Show first 4 filters on mobile */}
+                {filterOptions.slice(0, 4).map((opt) => (
                   <button
                     key={opt.value}
                     className="px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold transition duration-200"
@@ -111,6 +133,45 @@ const ListProductHome = () => {
                     {opt.label}
                   </button>
                 ))}
+
+                {/* More Filters button for mobile */}
+                <button
+                  onClick={() => setShowMoreFilters(!showMoreFilters)}
+                  className="md:hidden px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold transition duration-200"
+                >
+                  More Filters
+                </button>
+
+                {/* Dropdown menu for mobile */}
+                <div
+                  className={`md:hidden absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 w-48 transition-all duration-200 ${
+                    showMoreFilters
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible"
+                  }`}
+                >
+                  {filterOptions.slice(4).map((opt) => (
+                    <button
+                      key={opt.value}
+                      className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 transition-colors"
+                      onClick={() => setShowMoreFilters(false)}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Show all filters on desktop */}
+                <div className="hidden md:flex flex-wrap gap-1">
+                  {filterOptions.slice(4).map((opt) => (
+                    <button
+                      key={opt.value}
+                      className="px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold transition duration-200"
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 

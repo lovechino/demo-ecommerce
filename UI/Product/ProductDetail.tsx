@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import sptt from "@/public/Image/WhatsApp Image 2025-05-05 at 16.55.07_d9bf088d.jpg";
 import { addItem } from "@/Redux/cart";
-// import { addItem } from "@/Redux/cart";
 
 interface DetailType {
   id: string;

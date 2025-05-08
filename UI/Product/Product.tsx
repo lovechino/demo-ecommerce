@@ -3,7 +3,7 @@
 import CardProduct from "@/components/Product/Card";
 import { useAppSelector } from "@/Redux/hook";
 import { ProductType } from "@/Utils/type";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaFilter, FaTruck, FaTags } from "react-icons/fa";
 import { MdSort } from "react-icons/md";
 

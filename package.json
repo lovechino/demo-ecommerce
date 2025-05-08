@@ -10,11 +10,11 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
-    "@next/bundle-analyzer": "^15.3.2",
     "@reduxjs/toolkit": "^2.7.0",
     "antd": "^5.24.8",
     "axios": "^1.9.0",
     "cookies-next": "^5.1.0",
+    "critters": "^0.0.25",
     "framer-motion": "^12.9.7",
     "fuse.js": "^7.1.0",
     "i18next": "^25.0.2",
@@ -33,11 +33,11 @@
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
-    "swiper": "^11.2.6",
-    "terser-webpack-plugin": "^5.3.14"
+    "swiper": "^11.2.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.3.2",
     "@tailwindcss/postcss": "^4",
     "@types/js-image-zoom": "^0.7.4",
     "@types/negotiator": "^0.6.3",
@@ -46,9 +46,11 @@
     "@types/react-dom": "^19",
     "@types/redux-persist": "^4.3.1",
     "@types/webpack": "^5.28.5",
+    "critters-webpack-plugin": "^3.0.2",
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "tailwindcss": "^4",
+    "terser-webpack-plugin": "^5.3.14",
     "typescript": "^5"
   }
 }

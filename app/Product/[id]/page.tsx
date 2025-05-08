@@ -1,4 +1,4 @@
-import ProductDetailUi from "@/UI/Product/ProductDetail";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
 type PageProps = {
@@ -6,6 +6,8 @@ type PageProps = {
     id: string;
   }>;
 };
+
+const ProductDetailUi = dynamic(() => import("@/UI/Product/ProductDetail"));
 
 export default async function ProductDetail({ params }: PageProps) {
   if (!params) {
