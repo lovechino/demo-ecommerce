@@ -50,39 +50,39 @@ const BottomNav = () => {
     <>
       <nav className="fixed bottom-0 left-0 w-full items-center bg-white border-t border-gray-200 shadow-md z-20 md:hidden">
         <ul className="flex justify-around items-center h-16">
-          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600">
+          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600 hover:bg-blue-100 p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow">
             <Link href="/" className="flex flex-col items-center">
-              <AiFillHome className="text-xl" />
+              <AiFillHome className="text-xl transform hover:scale-110 transition-transform duration-300" />
               <span className="text-xs mt-1">Home</span>
             </Link>
           </li>
-          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600">
+          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600 hover:bg-blue-100 p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow">
             <span className="flex flex-col items-center">
-              <AiOutlineMenu className="text-xl" />
+              <AiOutlineMenu className="text-xl transform hover:scale-110 transition-transform duration-300" />
               <span className="text-xs mt-1">Collections</span>
             </span>
           </li>
-          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600">
+          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600 hover:bg-blue-100 p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow">
             <Link href="/Cart" className="flex flex-col items-center">
-              <BsHandbag className="text-xl" />
+              <BsHandbag className="text-xl transform hover:scale-110 transition-transform duration-300" />
               <span className="text-xs mt-1">Cart</span>
             </Link>
           </li>
-          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600">
+          <li className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600 hover:bg-blue-100 p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow">
             <span className="flex flex-col items-center">
-              <AiOutlineHeart className="text-xl" />
+              <AiOutlineHeart className="text-xl transform hover:scale-110 transition-transform duration-300" />
               <span className="text-xs mt-1">Wishlist</span>
             </span>
           </li>
           <li
-            className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600 relative"
+            className="flex flex-col items-center text-gray-600 hover:text-purple-600 focus:text-purple-600 hover:bg-blue-100 p-2 rounded-lg transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow"
             ref={avatarDropdownRefMobile}
           >
             {!user || Object.keys(user).length === 0 ? (
-              <div className=" flex flex-col items-center">
+              <div className="flex flex-col items-center">
                 <FiUser
                   onClick={() => setOpenModal(true)}
-                  className="text-xl hover:text-purple-600 cursor-pointer"
+                  className="text-xl hover:text-purple-600 cursor-pointer transform hover:scale-110 transition-transform duration-300"
                 />
                 <span className="text-xs mt-1">Login</span>
               </div>
@@ -91,7 +91,7 @@ const BottomNav = () => {
                 src={fullPath}
                 alt="User Avatar"
                 onClick={handleToggleAvatarDropdownMobile}
-                className="cursor-pointer"
+                className="cursor-pointer transform hover:scale-110 transition-transform duration-300"
               />
             )}
 
