@@ -1,6 +1,8 @@
 "use client";
 import { getAllProduct } from "@/Apis/Product";
+import Loading from "@/components/Loading/Loading";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 import { FiLoader } from "react-icons/fi";
 const ListPrudctHome = dynamic(
   () => import("@/components/Product/ListProductHome"),
@@ -24,8 +26,10 @@ const HomeScreeen = () => {
   getAllProduct();
   return (
     <div>
-      <Hero />
-      <ListPrudctHome />
+      <Suspense fallback={<Loading />}>
+        <Hero />
+        <ListPrudctHome />
+      </Suspense>
       <Footer />
     </div>
   );

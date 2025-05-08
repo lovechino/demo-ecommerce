@@ -1,5 +1,7 @@
+import Loading from "@/components/Loading/Loading";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
 
 type PageProps = {
   params: Promise<{
@@ -14,5 +16,9 @@ export default async function ProductDetail({ params }: PageProps) {
     redirect("/");
   }
   const value: string = (await params).id;
-  return <ProductDetailUi id={value} />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <ProductDetailUi id={value} />
+    </Suspense>
+  );
 }
