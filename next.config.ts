@@ -10,7 +10,7 @@ const withAnalyzer = withBundleAnalyzer({
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
-
+  output: "standalone",
   images: {
     unoptimized: true,
     remotePatterns: [
