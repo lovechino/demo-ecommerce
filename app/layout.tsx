@@ -8,9 +8,15 @@ import BottomNav from "@/components/Header/BottomNav";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 const siteName = "Komex Digital";
-const siteUrl = "https://your-komex-digital-website.com";
-const description = "Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu.";
-const keywords = ["thiết bị điện tử", "công nghệ", "sản phẩm kỹ thuật số", "giải pháp công nghệ"];
+const siteUrl = "https://ecom.komex.com.vn/";
+const description =
+  "Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu.";
+const keywords = [
+  "thiết bị điện tử",
+  "công nghệ",
+  "sản phẩm kỹ thuật số",
+  "giải pháp công nghệ",
+];
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,7 +36,7 @@ export const metadata: Metadata = {
   description: description,
   keywords: keywords.join(", "),
   icons: logo.src,
- 
+
   openGraph: {
     title: siteName,
     description: description,

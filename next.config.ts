@@ -9,10 +9,10 @@ const withAnalyzer = withBundleAnalyzer({
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-
   compress: true,
 
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

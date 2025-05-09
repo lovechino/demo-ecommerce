@@ -1,27 +1,32 @@
 "use client";
-import { setListProduct } from "@/Redux/product";
-import axiosInstance from "@/Utils/Axios";
-// import { ProductType } from "@/Utils/type";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import axiosInstance from "@/Utils/Axios";
+import { setListProduct } from "@/Redux/product";
+import { useEffect, useState } from "react";
 
 export const getAllProduct = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axiosInstance.post(
-        "/Product/GetListProductByGroup",
-        {},
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      dispatch(setListProduct(response.data));
+    const fetchProducts = async () => {
+      try {
+        const response = await axiosInstance.post(
+          "/Product/GetListProductByGroup",
+          {},
+          { headers: { "Content-Type": "application/json" } }
+        );
+        dispatch(setListProduct(response.data));
+      } catch (err) {
+        console.error("Error fetching products:", err);
+      }
     };
-    fetchData();
+    fetchProducts();
   }, [dispatch]);
+};
+
+export const GetListProductByGroup = async (id: string) => {
+  return await axiosInstance
+    .post(`/Product/GetListProductByGroup?groupCode=${id}`, {})
+    .then((res) => res.data);
 };
 
 export const GetProductById = async (id: string) => {
@@ -29,11 +34,7 @@ export const GetProductById = async (id: string) => {
     .post(
       `/Product/GetProduct?productCode=${id}`,
       {},
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+      { headers: { "Content-Type": "application/json" } }
     )
     .then((res) => res.data)
     .catch((err) => console.log(err));
@@ -48,11 +49,5 @@ export const getReviewProducts = async () => {
 export const GetListGroupProduct = async () => {
   return await axiosInstance
     .get("/MobileLogin/GetListGroupProduct")
-    .then((res) => res.data);
-};
-
-export const GetListProductByGroup = async (id: string) => {
-  return await axiosInstance
-    .post(`/Product/GetListProductByGroup?groupcode=${id}`)
     .then((res) => res.data);
 };

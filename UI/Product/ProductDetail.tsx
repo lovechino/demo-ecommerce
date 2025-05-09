@@ -1,7 +1,6 @@
 "use client";
 
 import { GetProductById, getReviewProducts } from "@/Apis/Product";
-// import CardProduct from "@/components/Product/Card";
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Product, ProductType } from "@/Utils/type";
@@ -433,55 +432,47 @@ const ProductDetailUi = ({ id }: DetailType) => {
             <b>155.000đ</b>
           </div>
 
-          {/* Nút chọn trả góp 0% */}
-          <button className="w-full bg-red-600 text-white py-2 rounded font-bold hover:bg-red-700">
-            CHỌN TRẢ GÓP 0% <br />
-            <span className="text-sm font-normal">
-              Trả trước 0đ | Phụ phí 0đ
-            </span>
-          </button>
+          <div className="flex flex-col gap-4 w-full max-w-xl mx-auto mt-6">
+            {/* Nút chọn trả góp 0% */}
+            <button className="w-full bg-red-600 text-white py-4 rounded-lg font-bold text-xl shadow hover:bg-red-700 transition">
+              CHỌN TRẢ GÓP 0%
+              <div className="text-base font-normal">
+                Trả trước 0đ | Phụ phí 0đ
+              </div>
+            </button>
 
-          {/* Nút mua ngay + thêm vào giỏ */}
-          <div className="flex gap-2">
-            <button
-              onClick={() =>
-                dispatch(
-                  addItem({
-                    id: product?.Id,
-                    productname: product?.ProductName,
-                    Price: product?.Price,
-                    pathimg: product?.Image,
-                    qualitiy: quality,
-                    maxQuantity: 10,
-                  })
-                )
-              }
-              className="flex-1 bg-red-500 text-white py-1.5 md:py-2 lg:py-3 rounded hover:bg-red-600 hover:cursor-pointer"
-            >
-              <span className="text-sm md:text-base lg:text-lg font-bold">
+            {/* Mua ngay + giỏ hàng */}
+            <div className="flex gap-3 w-full">
+              <button className="flex-1 bg-red-500 text-white py-4 rounded-lg font-bold text-xl shadow hover:bg-red-600 transition flex flex-col items-center justify-center">
                 MUA NGAY
-              </span>
-              <br />
-              <span className="text-[10px] md:text-xs lg:text-sm font-normal">
-                (Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)
-              </span>
-            </button>
-            <button className="p-1.5 md:p-2 lg:p-3 border rounded text-red-500 hover:bg-gray-100">
-              <span className="text-lg md:text-xl lg:text-2xl">🛒</span>
-            </button>
+                <span className="text-xs font-normal mt-1">
+                  (Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)
+                </span>
+              </button>
+              <button className="w-20 h-full min-h-[64px] border-2 border-red-400 bg-white text-red-500 rounded-lg flex items-center justify-center text-3xl hover:bg-gray-100 transition">
+                <span role="img" aria-label="cart">
+                  🛒
+                </span>
+              </button>
+            </div>
+
+            {/* Trả góp 0% */}
+            <div className="grid grid-cols-2 gap-3 w-full">
+              <button className="bg-blue-600 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-700 transition flex flex-col items-center">
+                TRẢ GÓP 0%
+                <span className="text-xs font-normal">
+                  (Trả trước chỉ từ 0đ)
+                </span>
+              </button>
+              <button className="bg-blue-500 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-600 transition flex flex-col items-center">
+                TRẢ GÓP 0% QUA THẺ
+                <span className="text-xs font-normal">
+                  (Không phí chuyển đổi 3-6 tháng)
+                </span>
+              </button>
+            </div>
           </div>
 
-          {/* Trả góp 0% - 2 kiểu */}
-          <div className="grid grid-cols-2 gap-2">
-            <button className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 text-sm">
-              TRẢ GÓP 0% <br />
-              <span className="text-xs">(Trả trước chỉ từ 0đ)</span>
-            </button>
-            <button className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 text-sm">
-              TRẢ GÓP 0% QUA THẺ <br />
-              <span className="text-xs">(Không phí chuyển đổi 3-6 tháng)</span>
-            </button>
-          </div>
           {/* Ưu đãi thêm */}
           <div className="border border-black/20 p-4 rounded">
             <h2 className="text-lg font-semibold mb-3">Ưu đãi thêm</h2>

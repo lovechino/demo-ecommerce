@@ -12,24 +12,7 @@ import codImage2 from "@/public/Image/2_anhicon2.webp";
 
 const Footer = () => {
   return (
-    <footer className=" hidden md:bg-black md:py-12 md:px-6 md:px-12 lg:px-24">
-      {/* <section className=" py-4 border-b border-gray-600">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
-          <h2 className="text-lg text-white d-flex row d-flex-center">
-            Đăng kí nhận tin
-          </h2>
-          <div className="flex w-full md:w-auto">
-            <input
-              type="email"
-              placeholder="Email"
-              className="px-4 py-2 w-full md:w-80 bg-white text-black rounded-l"
-            />
-            <button className="text-white px-4 py-2 bg-red-600 hover:bg-red-700 transition rounded-r text-white font-semibold">
-              <i className="fas fa-paper-plane mr-1"></i> Đăng ký
-            </button>
-          </div>
-        </div>
-      </section> */}
+    <footer className=" hidden md:block md:bg-black md:py-12 md:px-6 md:px-12 lg:px-24">
       <div className="bg-black text-white px-4 py-3">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-lg uppercase font-semibold whitespace-nowrap">

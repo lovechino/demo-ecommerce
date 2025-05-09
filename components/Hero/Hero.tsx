@@ -17,13 +17,13 @@ export default function Hero() {
   const [showArrows, setShowArrows] = useState(false);
   const product = useSelector((state: RootState) => state.product.list);
   const products = useMemo(() => {
-    return product?.slice(1, 16) || [];
+    return product?.slice(1, 8) || [];
   }, [product]);
 
   useEffect(() => {
-    if (products.length < 15) return;
+    if (products.length < 6) return;
     const timer = setInterval(() => {
-      setSelectedProductIndex((current) => (current === 14 ? 0 : current + 1));
+      setSelectedProductIndex((current) => (current === 6 ? 0 : current + 1));
     }, 3000);
     return () => clearInterval(timer);
   }, [products]);
