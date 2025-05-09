@@ -112,10 +112,8 @@ const CardProduct: React.FC<CardProps> = ({
             );
           }}
         >
-          <span className="text-xs md:text-sm lg:text-lg font-bold">
-            Mua ngay
-          </span>
-          <AiOutlineShoppingCart size={20} className="text-2xl" />
+          <span className="text-xs md:text-sm font-bold">Mua ngay</span>
+          <AiOutlineShoppingCart size={15} className="text-2xl" />
         </button>
       </div>
     </div>
