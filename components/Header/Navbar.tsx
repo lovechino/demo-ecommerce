@@ -11,6 +11,7 @@ import Link from "next/link";
 import Image from "next/image";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 import { setUser } from "@/Redux/auth";
+import { setActiveItem } from "@/Redux/nav";
 import ProvinceSelectorModal from "./ProvinceSelectorModal";
 import Fuse from "fuse.js";
 import { useRouter } from "next/navigation";
@@ -99,7 +100,11 @@ const Navbar = () => {
     <header className="bg-[#e60012] py-2 w-full shadow-md sticky top-0 z-20">
       <div className="max-w-7xl mx-auto flex flex-row items-center justify-between gap-2 px-4">
         {/* Logo */}
-        <Link href="/" className="flex-shrink-0 flex items-center mr-2">
+        <Link 
+          href="/" 
+          className="flex-shrink-0 flex items-center mr-2"
+          onClick={() => dispatch(setActiveItem('home'))}
+        >
           <Image
             src={logo}
             alt="Logo Komex Digital"
@@ -201,25 +206,38 @@ const Navbar = () => {
         <div className="flex items-center gap-2 md:gap-3">
           <div className="hidden md:flex flex-row items-center gap-2">
             <button className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor">
+              <svg 
+                className="w-5 h-5" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                strokeWidth="2"
+              >
                 <path
-                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
-                  stroke="white"
-                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
               Cửa hàng gần bạn
             </button>
             <button className="bg-[#d32f2f] hover:bg-[#e53935] text-white px-4 py-2 rounded-xl flex items-center gap-2 font-medium">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor">
-                <rect
-                  x="2"
-                  y="7"
-                  width="20"
-                  height="10"
-                  rx="2"
-                  stroke="white"
-                  strokeWidth="2"
+              <svg 
+                className="w-5 h-5" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
                 />
               </svg>
               Tra cứu đơn hàng
@@ -231,20 +249,35 @@ const Navbar = () => {
               onClick={() => setShowCityDropdown(!showCityDropdown)}
               className="bg-[#d32f2f] hover:bg-[#e53935] px-4 py-2 rounded-xl flex items-center gap-1 text-white text-sm font-medium"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor">
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                strokeWidth="2"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
               <span className="font-semibold">{selectedProvince}</span>
-              <svg className="w-4 h-4" fill="none" stroke="currentColor">
+              <svg 
+                className="w-4 h-4" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24" 
+                strokeWidth="2"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
@@ -258,7 +291,11 @@ const Navbar = () => {
           </div>
 
           {/* Giỏ hàng */}
-          <Link href="/Cart" className="flex-shrink-0 relative">
+          <Link 
+            href="/Cart" 
+            className="flex-shrink-0 relative"
+            onClick={() => dispatch(setActiveItem('cart'))}
+          >
             <Badge count={storea.length} size="small" color="#f5222d">
               <BsBag className="text-xl text-white hover:text-gray-200 cursor-pointer" />
             </Badge>
@@ -268,13 +305,19 @@ const Navbar = () => {
           {!user || Object.keys(user).length === 0 ? (
             <FiUser
               size={30}
-              onClick={() => setShowModal(true)}
+              onClick={() => {
+                setShowModal(true);
+                dispatch(setActiveItem('profile'));
+              }}
               className="text-xl text-white hover:text-gray-200 cursor-pointer bg-[#d32f2f] rounded-xl p-2 ml-2"
             />
           ) : (
             <div className="relative" ref={avatarDropdownRef}>
               <div
-                onClick={() => setShowAvatarDropdown((prev) => !prev)}
+                onClick={() => {
+                  setShowAvatarDropdown((prev) => !prev);
+                  dispatch(setActiveItem('profile'));
+                }}
                 className="cursor-pointer bg-[#d32f2f] rounded-xl p-1 ml-2"
               >
                 <Avatar size={30} src={fullPath} alt="User Avatar" />
@@ -294,6 +337,7 @@ const Navbar = () => {
                       <Link
                         href="/Profile"
                         className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => dispatch(setActiveItem('profile'))}
                       >
                         Thông tin tài khoản
                       </Link>
@@ -302,13 +346,17 @@ const Navbar = () => {
                       <Link
                         href="/Cart"
                         className="block px-4 py-2 hover:bg-gray-100"
+                        onClick={() => dispatch(setActiveItem('cart'))}
                       >
                         Lịch sử giao hàng
                       </Link>
                     </li>
                     <li>
                       <button
-                        onClick={() => dispatch(setUser({} as UserProfile))}
+                        onClick={() => {
+                          dispatch(setUser({} as UserProfile));
+                          dispatch(setActiveItem('home'));
+                        }}
                         className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
                       >
                         Đăng xuất

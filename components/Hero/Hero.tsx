@@ -62,7 +62,7 @@ export default function Hero() {
                   <li className=" mt-2">
                     <div className="flex items-center justify-between p-3 hover:bg-blue-200 transition-colors duration-150 cursor-pointer">
                       <div className="flex items-center gap-3">
-                        {/* Có th? thêm icon ? dây n?u mu?n */}
+                        {/* Có thể thêm icon dây nối muốn */}
                         <Image
                           src={category?.Description}
                           alt="item"
@@ -120,7 +120,7 @@ export default function Hero() {
                       );
                     }}
                     className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-blue-100 rounded-full p-2 shadow-md"
-                    aria-label="S?n ph?m tru?c"
+                    aria-label="Sản phẩm trước"
                     whileHover={{ scale: 1.2 }}
                   >
                     <svg
@@ -158,7 +158,7 @@ export default function Hero() {
                       }
                       alt={
                         products[selectedProductIndex]?.productname ||
-                        "?nh s?n ph?m"
+                        "Ảnh sản phẩm"
                       }
                       fill
                       className="object-cover w-full h-full cursor-pointer"
@@ -177,7 +177,7 @@ export default function Hero() {
                       );
                     }}
                     className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-blue-100 rounded-full p-2 shadow-md"
-                    aria-label="S?n ph?m ti?p theo"
+                    aria-label="Sản phẩm tiếp theo"
                     whileHover={{ scale: 1.2 }}
                   >
                     <svg
@@ -236,7 +236,7 @@ export default function Hero() {
                             : "bg-gray-300"
                         }
                       `}
-                        aria-label={`Ch?n s?n ph?m ${index + 1}`}
+                        aria-label={`Chọn sản phẩm ${index + 1}`}
                       />
                     ))}
                 </div>
@@ -258,7 +258,7 @@ export default function Hero() {
                       ? `${baseURL}${product[1]?.pathimg}`
                       : placeholderImg
                   }
-                  alt={product[1]?.productname || "?nh s?n ph?m"}
+                  alt={product[1]?.productname || "Ảnh sản phẩm"}
                   width={100}
                   height={100}
                   className="rounded-lg object-contain mb-2 cursor-pointer"
@@ -276,7 +276,7 @@ export default function Hero() {
                       ? `${baseURL}${product[8]?.pathimg}`
                       : placeholderImg
                   }
-                  alt={product[8]?.productname || "?nh s?n ph?m"}
+                  alt={product[8]?.productname || "Ảnh sản phẩm"}
                   width={100}
                   height={100}
                   className="rounded-lg object-contain mb-2 cursor-pointer"
@@ -293,7 +293,7 @@ export default function Hero() {
                       ? `${baseURL}${product[9]?.pathimg}`
                       : placeholderImg
                   }
-                  alt={product[9]?.productname || "?nh s?n ph?m"}
+                  alt={product[9]?.productname || "Ảnh sản phẩm"}
                   width={100}
                   height={100}
                   className="rounded-lg object-contain mb-2 cursor-pointer"

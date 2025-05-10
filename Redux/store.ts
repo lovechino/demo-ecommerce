@@ -16,6 +16,7 @@ import languageReducer from "./languageSlice";
 import productSlice from "./product";
 import userSlice from "./auth";
 import cartSlice from "./cart";
+import navReducer from "./nav";
 
 const persistConfig = {
   key: "root",
@@ -28,6 +29,7 @@ export const rootReducer = combineReducers({
   user: userSlice,
   cart: cartSlice,
   language: languageReducer,
+  nav: navReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { GetListGroupProduct, GetListProductByGroup } from "@/Apis/Product";
 import CardProduct from "./Card";
 import { useRef } from "react";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaArrowUp } from "react-icons/fa";
 import { Menu, ProductType } from "@/Utils/type";
 
 const SCROLL_AMOUNT = 400; // pixel khi b?m nút
@@ -14,7 +14,9 @@ const ListProductHome = () => {
     [key: string]: ProductType[];
   }>({});
   const [showMoreFilters, setShowMoreFilters] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [selectedFilter, setSelectedFilter] = useState<string>("");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,6 +33,26 @@ const ListProductHome = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const filterOptions = [
     { label: "All", value: "" },
@@ -128,7 +150,11 @@ const ListProductHome = () => {
                 {filterOptions.slice(0, 4).map((opt) => (
                   <button
                     key={opt.value}
-                    className="px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold transition duration-200"
+                    onClick={() => setSelectedFilter(opt.value)}
+                    className={`px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap transition duration-200
+                      hover:bg-blue-500 hover:text-white hover:font-bold active:bg-blue-500 active:text-white active:font-bold
+                      ${selectedFilter === opt.value ? "bg-blue-500 text-white font-bold" : ""}
+                    `}
                   >
                     {opt.label}
                   </button>
@@ -137,7 +163,7 @@ const ListProductHome = () => {
                 {/* More Filters button for mobile */}
                 <button
                   onClick={() => setShowMoreFilters(!showMoreFilters)}
-                  className="md:hidden px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold transition duration-200"
+                  className="md:hidden px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold active:bg-blue-500 active:text-white active:font-bold transition duration-200"
                 >
                   More Filters
                 </button>
@@ -153,8 +179,14 @@ const ListProductHome = () => {
                   {filterOptions.slice(4).map((opt) => (
                     <button
                       key={opt.value}
-                      className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 transition-colors"
-                      onClick={() => setShowMoreFilters(false)}
+                      onClick={() => {
+                        setSelectedFilter(opt.value);
+                        setShowMoreFilters(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm transition-colors
+                        hover:bg-gray-100 active:bg-gray-200
+                        ${selectedFilter === opt.value ? "bg-blue-500 text-white font-bold" : ""}
+                      `}
                     >
                       {opt.label}
                     </button>
@@ -166,7 +198,11 @@ const ListProductHome = () => {
                   {filterOptions.slice(4).map((opt) => (
                     <button
                       key={opt.value}
-                      className="px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap hover:bg-blue-500 hover:text-white hover:font-bold transition duration-200"
+                      onClick={() => setSelectedFilter(opt.value)}
+                      className={`px-3 py-1 border border-gray-300 rounded-full text-xs font-medium whitespace-nowrap transition duration-200
+                        hover:bg-blue-500 hover:text-white hover:font-bold active:bg-blue-500 active:text-white active:font-bold
+                        ${selectedFilter === opt.value ? "bg-blue-500 text-white font-bold" : ""}
+                      `}
                     >
                       {opt.label}
                     </button>
@@ -212,6 +248,22 @@ const ListProductHome = () => {
           </div>
         );
       })}
+
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className={`
+          fixed z-50 bg-gray-400 text-white p-3 rounded-full shadow-lg
+          transition-all duration-300 hover:bg-gray-500
+          ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}
+          md:bottom-8 md:right-8
+          bottom-20 right-4
+        `}
+        style={{ zIndex: 100 }}
+        aria-label="Scroll to top"
+      >
+        <FaArrowUp size={20} />
+      </button>
     </div>
   );
 };

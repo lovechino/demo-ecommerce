@@ -3,12 +3,14 @@ import { GetAllBlog } from "@/Apis/Blog";
 import { baseURL } from "@/Utils/Axios";
 import { Article } from "@/Utils/type";
 import React, { useEffect, useState } from "react";
+import { FaArrowUp } from "react-icons/fa";
 
 const POSTS_PER_PAGE = 6;
 
 const Featuredlist = () => {
   const [list, setList] = useState<Article[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,6 +19,26 @@ const Featuredlist = () => {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
@@ -100,6 +122,20 @@ const Featuredlist = () => {
           </button>
         </div>
       </div>
+      <button
+        onClick={scrollToTop}
+        className={`
+          fixed z-50 bg-gray-400 text-white p-3 rounded-full shadow-lg
+          transition-all duration-300 hover:bg-gray-500
+          ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}
+          md:bottom-8 md:right-8
+          bottom-20 right-4
+        `}
+        style={{ zIndex: 100 }}
+        aria-label="Scroll to top"
+      >
+        <FaArrowUp size={20} />
+      </button>
     </div>
   );
 };

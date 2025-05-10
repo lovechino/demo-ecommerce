@@ -8,17 +8,26 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import sptt from "@/public/Image/WhatsApp Image 2025-05-05 at 16.55.07_d9bf088d.jpg";
 import { addItem } from "@/Redux/cart";
+import { FaArrowUp } from "react-icons/fa";
 
 interface DetailType {
   id: string;
 }
 
+interface Review {
+  UserName: string;
+  Content: string;
+  CreatedAt: string;
+  Image: string;
+}
+
 const ProductDetailUi = ({ id }: DetailType) => {
   const [product, setProduct] = useState<Product>();
-
-  const [resview, setReview] = useState<any>(null);
+  const [resview, setReview] = useState<Review[]>([]);
   const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [selectedBundleTab, setSelectedBundleTab] = useState<"gia-soc" | "phu-kien">("gia-soc");
 
   const formatCurrency = (amount: number) => {
     return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -52,20 +61,39 @@ const ProductDetailUi = ({ id }: DetailType) => {
     console.log(newMap);
   }, [id]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
   const fullpath = `${baseURL}${product?.Image}`;
   // const packingArray = product?.Packing?.split(" x ") || [];
   const bundledItems = [
     {
-      Image:
-        "https://cdn.tgdd.vn/Products/Images/5698/299348/arm-humanmotion-h1pro-thumb-600x600.png",
+      img: "https://product.hstatic.net/200000637881/product/z5944590936820_5d414134b94809e09f0cc3f2fff0c1a7_98a7cb7e908244199dde8f37e8ab0f04_grande.jpg",
       title: "Giảm 100K khi mua kèm giá treo Hum...",
     },
     {
-      img: "https://cdn.tgdd.vn/Products/Images/5698/299350/arm-xiaomi-mi-display-1c-thumb-600x600.png",
-      title: "Giảm 100K khi mua kèm giá đỡ...",
+      img: "https://product.hstatic.net/200000637881/product/z5944590936820_5d414134b94809e09f0cc3f2fff0c1a7_98a7cb7e908244199dde8f37e8ab0f04_grande.jpg",
+      title: "Giảm 100K khi mua kèm giá treo Hum...",
     },
     {
-      img: "https://cdn.tgdd.vn/Products/Images/5698/299349/arm-northbayou-f80-thumb-600x600.png",
+      img: "https://product.hstatic.net/200000637881/product/z5944590936820_5d414134b94809e09f0cc3f2fff0c1a7_98a7cb7e908244199dde8f37e8ab0f04_grande.jpg",
       title: "Giảm 100K khi mua kèm giá treo Nort...",
     },
   ];
@@ -78,7 +106,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "S25 512GB", price: 22690000 },
     { label: "S25 256GB", price: 19690000 },
   ];
-  const selectedCapacity = "S25 Ultra 256GB";
+  const [selectedCapacity, setSelectedCapacity] = useState("S25 Ultra 256GB");
 
   const technicalSpecs = [
     { label: "Kích thước màn hình", value: "6.74 inches" },
@@ -290,33 +318,48 @@ const ProductDetailUi = ({ id }: DetailType) => {
           {/* Phụ kiện mua kèm */}
           <div className="hidden lg:block border border-black/10 p-4 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-shadow duration-300">
             <div className="flex gap-2 mb-4 justify-center">
-              <button className="px-4 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold hover:bg-red-200 transition-colors duration-300">
+              <button
+                className={`px-4 py-1 rounded-full text-sm font-semibold transition-colors duration-300
+                  ${selectedBundleTab === "gia-soc" ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-800 hover:bg-gray-200"}`}
+                onClick={() => setSelectedBundleTab("gia-soc")}
+              >
                 Mua kèm giá sốc
               </button>
-              <button className="px-4 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors duration-300">
+              <button
+                className={`px-4 py-1 rounded-full text-sm font-semibold transition-colors duration-300
+                  ${selectedBundleTab === "phu-kien" ? "bg-red-100 text-red-600" : "bg-gray-100 text-gray-800 hover:bg-gray-200"}`}
+                onClick={() => setSelectedBundleTab("phu-kien")}
+              >
                 Phụ kiện mua cùng
               </button>
             </div>
             {/* Desktop view with grid */}
             <div className="grid grid-cols-1 gap-4">
-              {bundledItems.map((item, index) => (
-                <div
-                  key={index}
-                  className="border border-black/10 rounded-lg p-3 flex items-center gap-4 shadow-[0_2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-all duration-300"
-                >
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="w-20 h-20 object-contain"
-                  />
-                  <div className="flex-1">
-                    <p className="text-sm text-gray-800 mb-2">{item.title}</p>
-                    <button className="bg-red-500 text-white text-sm px-4 py-1 rounded hover:bg-red-600 transition-colors duration-300">
-                      Chọn sản phẩm
-                    </button>
+              {selectedBundleTab === "gia-soc" && (
+                bundledItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className="border border-black/10 rounded-lg p-3 flex items-center gap-4 shadow-[0_2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-all duration-300"
+                  >
+                    <img
+                      src={item.img}
+                      alt={item.title}
+                      className="w-20 h-20 object-contain"
+                    />
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-800 mb-2">{item.title}</p>
+                      <a href="# "  className="bg-red-500 text-white text-sm px-4 py-1 rounded hover:bg-red-600 transition-colors duration-300 inline-block">
+                        Chọn sản phẩm
+                      </a>
+                    </div>
                   </div>
+                ))
+              )}
+              {selectedBundleTab === "phu-kien" && (
+                <div>
+                  <div className="text-center text-gray-500">Chưa có phụ kiện nào.</div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </div>
@@ -369,12 +412,12 @@ const ProductDetailUi = ({ id }: DetailType) => {
               {capacities.map((item) => (
                 <button
                   key={item.label}
+                  onClick={() => setSelectedCapacity(item.label)}
                   className={`border px-4 py-2 rounded-lg text-sm text-left shadow-[0_2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-all duration-300
-                    ${
-                      item.label === selectedCapacity
-                        ? "border-red-500 text-red-600"
-                        : "border-black/10 text-gray-700"
-                    }`}
+                    ${item.label === selectedCapacity
+                    ? "border-red-500 text-red-600"
+                    : "border-black/10 text-gray-700 hover:border-red-400 hover:text-red-500"
+                  }`}
                 >
                   <div>{item.label}</div>
                   <div className="text-xs">{formatCurrency(item.price)}</div>
@@ -959,7 +1002,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </div>
 
             <button
-              className="text-blue-600 mt-4 text-sm font-medium hover:underline"
+              className="text-black  mt-4 text-sm font-medium border border-gray-200 rounded-lg px-6 py-3 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-700"
               onClick={() => setShowModal(true)}
             >
               Xem thêm chi tiết
@@ -1008,7 +1051,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
 
             {/* Danh sách đánh giá */}
             <div className="flex flex-col gap-6">
-              {resview?.map((item: any, index: number) => (
+              {resview?.map((item: Review, index: number) => (
                 <div key={index} className="flex gap-4 items-start">
                   <img
                     className="w-12 h-12 rounded-full"
@@ -1142,7 +1185,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
               <span>Snapdragon 8 Plus Gen 1</span>
             </div>
             <button
-              className="text-blue-600 mt-4 text-sm font-medium hover:underline border border-black/20 rounded-md px-4 py-2"
+              className="text-blue-600 mt-4 text-sm font-medium border border-gray-200 rounded-lg px-6 py-3 transition-colors duration-200 hover:bg-blue-50 hover:text-blue-700"
               onClick={() => setShowModal(true)}
             >
               Xem thêm chi tiết
@@ -1150,6 +1193,21 @@ const ProductDetailUi = ({ id }: DetailType) => {
           </div>
         </div>
       </div>
+      {/* Scroll to Top Button */}
+      <button
+        onClick={scrollToTop}
+        className={`
+          fixed z-50 bg-gray-400 text-white p-3 rounded-full shadow-lg
+          transition-all duration-300 hover:bg-gray-500
+          ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}
+          md:bottom-8 md:right-8
+          bottom-20 right-4
+        `}
+        style={{ zIndex: 100 }}
+        aria-label="Scroll to top"
+      >
+        <FaArrowUp size={20} />
+      </button>
     </div>
   );
 };

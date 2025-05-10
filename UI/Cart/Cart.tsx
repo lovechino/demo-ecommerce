@@ -9,10 +9,11 @@ import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { CartIntemType } from "@/Utils/type";
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
-// import Image from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 // import QR from "@/components/Payment/QR";
-// import emptyCart from "@/public/Image/t?i xu?ng.jpg";
+import { FaArrowUp } from "react-icons/fa";
+import emptyCart from "@/public/Image/lovepik-empty-shopping-cart-png-image_401651506_wh860.png";
 
 // Gi? l?p user dang nh?p
 const user = {
@@ -24,6 +25,7 @@ const user = {
 const CartPage = () => {
   const router = useRouter();
   const [selectedItems, setSelectedItems] = useState<CartIntemType[]>([]);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   // const [showQR, setShowQR] = useState(false);
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
@@ -59,7 +61,7 @@ const CartPage = () => {
 
   // Phuong th?c thanh toán (radio)
   const [paymentMethod, setPaymentMethod] = useState(
-    "Thanh toán khi nh?n hàng"
+    "Thanh toán khi nhận hàng"
   );
   const paymentMethods = [
     "Thanh toán khi nhận hàng",
@@ -84,7 +86,7 @@ const CartPage = () => {
   const handleCheckAll = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setSelectedItems([...items]);
-      console.log("dã ch?n t?t c? s?n ph?m");
+      console.log("Đã chọn tất cả sản phẩm");
     } else {
       setSelectedItems([]);
     }
@@ -94,7 +96,7 @@ const CartPage = () => {
     return selectedItems.some((selectedItem) => selectedItem.id === item.id);
   };
 
-  // Tính t?ng ti?n c?a các s?n ph?m dã ch?n
+  // Tính tổng tiền của các sản phẩm đã chọn
   const selectedTotalAmount = useMemo(() => {
     return selectedItems.reduce(
       (total, item) => total + item.Price * item.qualitiy,
@@ -102,12 +104,12 @@ const CartPage = () => {
     );
   }, [selectedItems]);
 
-  // Hàm l?y s? lu?ng t?i da cho s?n ph?m
+  // Hàm lấy số lượng tối đa cho sản phẩm
   const getMaxQuantity = (item: CartIntemType): number => {
     return item.maxQuantity ?? 10;
   };
 
-  // Hàm tang s? lu?ng s?n ph?m, ki?m tra t?n kho
+  // Hàm tăng số lượng sản phẩm, kiểm tra tồn kho
   const handleIncrease = (item: CartIntemType) => {
     const max = getMaxQuantity(item);
     if (item.qualitiy < max) {
@@ -117,18 +119,18 @@ const CartPage = () => {
     }
   };
 
-  // Xóa nhi?u s?n ph?m cùng lúc
+  // Xóa nhiều sản phẩm cùng lúc
   const handleRemoveSelected = () => {
     selectedItems.forEach((item) => dispatch(removeItem(item.id)));
     setSelectedItems([]);
   };
 
-  // Luu selectedItems vào localStorage m?i khi thay d?i
+  // Lưu selectedItems vào localStorage mỗi khi thay đổi
   useEffect(() => {
     localStorage.setItem("selectedCartItems", JSON.stringify(selectedItems));
   }, [selectedItems]);
 
-  // Khi load trang, l?y l?i selectedItems t? localStorage
+  // Khi load trang, lấy lại selectedItems từ localStorage
   useEffect(() => {
     const saved = localStorage.getItem("selectedCartItems");
     if (saved) {
@@ -140,7 +142,7 @@ const CartPage = () => {
     // eslint-disable-next-line
   }, []);
 
-  // Khi user dã dang nh?p, t? d?ng di?n thông tin khách hàng
+  // Khi user đã đăng nhập, tải thông tin khách hàng
   useEffect(() => {
     if (user) {
       const nameInput = document.getElementById(
@@ -190,6 +192,26 @@ const CartPage = () => {
   //     return () => clearTimeout(timeout);
   //   }
   // }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
 
   return (
     <>
@@ -388,14 +410,14 @@ const CartPage = () => {
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-semibold mb-4">Giỏ hàng</h2>
 
-            {/* T?ng s? s?n ph?m dã ch?n */}
+            {/* Tổng số sản phẩm đã chọn */}
             {selectedItems.length > 0 && (
               <div className="mb-2 text-blue-600 font-semibold">
                 Ðã chọn {selectedTotalQuantity} sản phẩm
               </div>
             )}
 
-            {/* Xóa nhi?u s?n ph?m dã chọn */}
+            {/* Xóa nhiều sản phẩm đã chọn */}
             {selectedItems.length > 0 && (
               <div className="mb-2">
                 <button
@@ -409,11 +431,11 @@ const CartPage = () => {
 
             {items.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8">
-                {/* <Image
+                <Image
                   src={emptyCart}
                   alt="empty cart"
                   className="w-32 h-32 mb-4"
-                /> */}
+                />
                 <em className="text-gray-400 mb-2">
                   Giỏ hàng của bạn dang trống Bắt đầu mua sắm thôi!
                 </em>
@@ -669,6 +691,21 @@ const CartPage = () => {
           </button>
         </div>
       </div>
+
+      <button
+        onClick={scrollToTop}
+        className={`
+          fixed z-50 bg-gray-400 text-white p-3 rounded-full shadow-lg
+          transition-all duration-300 hover:bg-gray-500
+          ${showScrollTop ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10 pointer-events-none'}
+          md:bottom-8 md:right-8
+          bottom-20 right-4
+        `}
+        style={{ zIndex: 100 }}
+        aria-label="Scroll to top"
+      >
+        <FaArrowUp size={20} />
+      </button>
     </>
   );
 };
