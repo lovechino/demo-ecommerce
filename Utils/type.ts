@@ -268,6 +268,7 @@ export interface Product {
   DeletedBy: string;
   DeletedTime: string;
   IsDeleted: boolean;
+  Warranty: number;
 }
 
 export interface Article {
@@ -320,4 +321,13 @@ export interface Article {
   Tags: string;
   expiry_date: string; // Có thể là Date nếu xử lý thời gian
   org_id: number | null;
+}
+
+export interface Review {
+  Id: number;
+  UserName: string;
+  Content: string;
+  Image: string;
+  CreatedAt: string;
+  Rating: number;
 }

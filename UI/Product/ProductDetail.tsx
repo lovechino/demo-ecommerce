@@ -4,7 +4,7 @@ import { GetProductById, getReviewProducts } from "@/Apis/Product";
 import { useAppDispatch, useAppSelector } from "@/Redux/hook";
 import { baseURL } from "@/Utils/Axios";
 import { Product, ProductType } from "@/Utils/type";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import sptt from "@/public/Image/WhatsApp Image 2025-05-05 at 16.55.07_d9bf088d.jpg";
 import { addItem } from "@/Redux/cart";
@@ -101,6 +101,93 @@ const ProductDetailUi = ({ id }: DetailType) => {
     { label: "Bảo hành", value: "12 tháng chính hãng" },
   ];
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const bundleScrollRef = useRef<HTMLDivElement>(null);
+  const [showArrows, setShowArrows] = useState(false);
+  const [showBundleArrows, setShowBundleArrows] = useState(false);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const scrollAmount = container.clientWidth;
+      const newScrollLeft = container.scrollLeft - scrollAmount;
+      
+      if (newScrollLeft <= 0) {
+        // Nếu đã ở đầu, cuộn đến cuối
+        container.scrollTo({
+          left: container.scrollWidth,
+          behavior: 'smooth'
+        });
+      } else {
+        container.scrollTo({
+          left: newScrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const scrollAmount = container.clientWidth;
+      const newScrollLeft = container.scrollLeft + scrollAmount;
+      
+      if (newScrollLeft >= container.scrollWidth - container.clientWidth) {
+        // Nếu đã ở cuối, cuộn về đầu
+        container.scrollTo({
+          left: 0,
+          behavior: 'smooth'
+        });
+      } else {
+        container.scrollTo({
+          left: newScrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
+  const scrollBundleLeft = () => {
+    if (bundleScrollRef.current) {
+      const container = bundleScrollRef.current;
+      const scrollAmount = container.clientWidth;
+      const newScrollLeft = container.scrollLeft - scrollAmount;
+      
+      if (newScrollLeft <= 0) {
+        container.scrollTo({
+          left: container.scrollWidth,
+          behavior: 'smooth'
+        });
+      } else {
+        container.scrollTo({
+          left: newScrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
+  const scrollBundleRight = () => {
+    if (bundleScrollRef.current) {
+      const container = bundleScrollRef.current;
+      const scrollAmount = container.clientWidth;
+      const newScrollLeft = container.scrollLeft + scrollAmount;
+      
+      if (newScrollLeft >= container.scrollWidth - container.clientWidth) {
+        container.scrollTo({
+          left: 0,
+          behavior: 'smooth'
+        });
+      } else {
+        container.scrollTo({
+          left: newScrollLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto">
       {/* Modal */}
@@ -152,55 +239,33 @@ const ProductDetailUi = ({ id }: DetailType) => {
         </h1>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-2 mt-4">
-        {/* Hình ảnh */}
-        <div className="w-full lg:w-1/2 flex flex-col items-center">
-          <div className="border border-black/20 rounded-lg overflow-hidden shadow-sm mb-4 flex justify-center items-center w-full max-w-[500px] mx-auto">
+      <div className="flex flex-col lg:flex-row gap-8 mt-4">
+        {/* Cột trái: Hình ảnh và thông tin cơ bản */}
+        <div className="w-full lg:w-1/2 space-y-6">
+          {/* Hình ảnh sản phẩm */}
+          <div className="border border-black/10 rounded-lg overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-shadow duration-300">
             <img
               className="w-full h-[400px] object-contain"
               src={fullpath}
               alt="Ảnh chính sản phẩm"
             />
           </div>
-          <div className="grid grid-cols-5 gap-2 mb-4 w-full max-w-[500px] mx-auto">
-            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
-              <img
-                className="w-full h-full object-contain"
-                src={fullpath}
-                alt="Ảnh nhỏ 1"
-              />
-            </div>
-            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
-              <img
-                className="w-full h-full object-contain"
-                src={fullpath}
-                alt="Ảnh nhỏ 2"
-              />
-            </div>
-            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
-              <img
-                className="w-full h-full object-contain"
-                src={fullpath}
-                alt="Ảnh nhỏ 3"
-              />
-            </div>
-            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
-              <img
-                className="w-full h-full object-contain"
-                src={fullpath}
-                alt="Ảnh nhỏ 4"
-              />
-            </div>
-            <div className="aspect-square border border-black/20 rounded overflow-hidden cursor-pointer hover:border-red-500 transition-colors">
-              <img
-                className="w-full h-full object-contain"
-                src={fullpath}
-                alt="Ảnh nhỏ 5"
-              />
-            </div>
+          
+          {/* Thumbnail images */}
+          <div className="grid grid-cols-5 gap-2">
+            {[1, 2, 3, 4, 5].map((index) => (
+              <div key={index} className="aspect-square border border-black/10 rounded-lg overflow-hidden cursor-pointer hover:border-red-500 transition-all duration-300 shadow-[0_2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)]">
+                <img
+                  className="w-full h-full object-contain"
+                  src={fullpath}
+                  alt={`Ảnh nhỏ ${index}`}
+                />
+              </div>
+            ))}
           </div>
+
           {/* Thông tin sản phẩm */}
-          <div className="col-span-1 border border-black/20 p-4 rounded-lg w-full max-w-xs md:max-w-sm lg:max-w-md">
+          <div className="border border-black/10 p-4 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-shadow duration-300">
             <h3 className="text-lg font-semibold mb-3 text-center">
               Thông tin sản phẩm
             </h3>
@@ -221,273 +286,180 @@ const ProductDetailUi = ({ id }: DetailType) => {
               </li>
             </ul>
           </div>
-          <div className="flex flex-col gap-6 p-4 bg-white rounded-xl shadow-md w-full max-w-xs md:max-w-sm lg:max-w-md">
-            {/* Gợi ý phụ kiện mua kèm */}
-            <div>
-              <div className="flex gap-2 mb-4 justify-center">
-                <button className="px-4 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold">
-                  Mua kèm giá sốc
-                </button>
-                <button className="px-4 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold">
-                  Phụ kiện mua cùng
-                </button>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {bundledItems.map((item, index) => (
-                  <div
-                    key={index}
-                    className="border border-black/20 rounded-lg p-3 flex flex-col items-center text-center shadow-sm"
-                  >
-                    <img
-                      src={item.img}
-                      alt={item.title}
-                      className="w-24 h-24 object-contain mb-3"
-                    />
-                    <p className="text-sm text-gray-800 mb-3 line-clamp-2">
-                      {item.title}
-                    </p>
-                    <button className="bg-red-500 text-white text-sm px-4 py-1 rounded hover:bg-red-600">
+
+          {/* Phụ kiện mua kèm */}
+          <div className="hidden lg:block border border-black/10 p-4 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-shadow duration-300">
+            <div className="flex gap-2 mb-4 justify-center">
+              <button className="px-4 py-1 bg-red-100 text-red-600 rounded-full text-sm font-semibold hover:bg-red-200 transition-colors duration-300">
+                Mua kèm giá sốc
+              </button>
+              <button className="px-4 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold hover:bg-gray-200 transition-colors duration-300">
+                Phụ kiện mua cùng
+              </button>
+            </div>
+            {/* Desktop view with grid */}
+            <div className="grid grid-cols-1 gap-4">
+              {bundledItems.map((item, index) => (
+                <div
+                  key={index}
+                  className="border border-black/10 rounded-lg p-3 flex items-center gap-4 shadow-[0_2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-all duration-300"
+                >
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-20 h-20 object-contain"
+                  />
+                  <div className="flex-1">
+                    <p className="text-sm text-gray-800 mb-2">{item.title}</p>
+                    <button className="bg-red-500 text-white text-sm px-4 py-1 rounded hover:bg-red-600 transition-colors duration-300">
                       Chọn sản phẩm
                     </button>
                   </div>
-                ))}
-              </div>
-              <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mt-4">
-                <div className="text-gray-700 font-semibold text-base text-center sm:text-left">
-                  Tạm tính:{" "}
-                  <span className="text-red-600 text-lg font-bold">
-                    {formatCurrency(Number(product?.Price))}đ
-                  </span>
-                  <div className="text-xs italic text-gray-500">
-                    (Tiết kiệm 0đ)
-                  </div>
                 </div>
-                <button
-                  className="bg-pink-500 text-white px-6 py-2 rounded font-bold hover:cursor-pointer hover:bg-pink-600 w-full sm:w-auto"
-                  onClick={() =>
-                    dispatch(
-                      addItem({
-                        id: product?.Id,
-                        productname: product?.ProductName,
-                        Price: product?.Price,
-                        pathimg: product?.Image,
-                        qualitiy: quality,
-                        maxQuantity: 10,
-                      })
-                    )
-                  }
-                >
-                  MUA NGAY
-                </button>
-              </div>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Thông tin sản phẩm */}
-        <div className="w-full lg:w-1/2 space-y-4 flex flex-col items-center lg:items-start">
-          <h2 className="text-2xl font-semibold text-center lg:text-left transition-transform duration-300 hover:-translate-y-1">
-            {product?.ProductName}
-            <span className="ml-2 text-sm bg-green-200 text-green-800 px-2 py-1 rounded">
-              Còn Hàng
-            </span>
-          </h2>
+        {/* Cột phải: Thông tin chi tiết và mua hàng */}
+        <div className="w-full lg:w-1/2 space-y-6">
+          <div className="border border-black/10 p-6 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-shadow duration-300">
+            <h2 className="text-2xl font-semibold mb-4">
+              {product?.ProductName}
+              <span className="ml-2 text-sm bg-green-200 text-green-800 px-2 py-1 rounded">
+                Còn Hàng
+              </span>
+            </h2>
 
-          <div className="text-sm text-gray-600 space-x-2 text-center lg:text-left">
-            <span>
-              Thương hiệu:{" "}
-              <span className="text-red-600 font-semibold">TIROSS</span>
-            </span>
-            |<span>Loại: Khác</span>|
-            <span>
-              MSP: <span className="font-semibold text-red-600">TS9447</span>
-            </span>
-          </div>
-          <div className="space-x-2 text-xl font-bold text-red-600 text-center lg:text-left">
-            {formatCurrency(2090000)}₫
-            <span className="line-through text-gray-400 text-base font-normal">
-              {formatCurrency(2500000)}₫
-            </span>
-          </div>
-          {/* Countdown */}
-          <div className="bg-gradient-to-r from-red-600 to-orange-400 text-white px-4 py-2 rounded flex items-center justify-between">
-            <span className="font-bold">KẾT THÚC TRONG:</span>
-            <div className="flex gap-1 text-center text-xs font-semibold">
-              <div className="bg-white text-black px-2 py-1 rounded">
-                00 Ngày
-              </div>
-              <div className="bg-white text-black px-2 py-1 rounded">
-                09 Giờ
-              </div>
-              <div className="bg-white text-black px-2 py-1 rounded">
-                00 Phút
-              </div>
-              <div className="bg-white text-black px-2 py-1 rounded">
-                22 Giây
-              </div>
-            </div>
-          </div>
-
-          <div className="text-sm text-gray-600">
-            🔥 Đã bán <span className="text-red-500 font-bold">27</span> sản
-            phẩm
-          </div>
-          {/* Dung lượng */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {capacities.map((item) => (
-              <button
-                key={item.label}
-                className={`border px-4 py-2 rounded-lg text-sm text-left
-              ${
-                item.label === selectedCapacity
-                  ? "border-red-500 text-red-600"
-                  : "border-gray-300 text-gray-700"
-              }`}
-              >
-                <div>{item.label}</div>
-                <div className="text-xs">{formatCurrency(item.price)}</div>
-              </button>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-2">
-            <div className="flex text-yellow-400">
-              {/* 5 sao */}
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="..." />
-              </svg>
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="..." />
-              </svg>
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="..." />
-              </svg>
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="..." />
-              </svg>
-              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                <path d="..." />
-              </svg>
-            </div>
-            {/* <span className="text-sm text-gray-600">(5 đánh giá)</span> */}
-          </div>
-
-          {/* <div className="text-2xl font-bold text-red-500">
-            {product?.Price} vnđ
-          </div> */}
-
-          {/* <div className="flex gap-4">
-            {packingArray.map((item: string, index: number) => (
-              <button
-                key={index}
-                className="px-4 py-2 border rounded hover:bg-gray-100"
-              >
-                {item}
-              </button>
-            ))}
-          </div> */}
-
-          <div className="flex flex-col ml-5 gap-2 mb-5">
-            <span className="text-base">Số Lượng Sản Phẩm</span>
-            <div className="flex flex-row gap-4">
-              <button
-                onClick={() => setQuality((q) => Math.max(1, q - 1))}
-                className="w-6 h-6 flex justify-center items-center border rounded-2xl text-base hover:bg-gray-100"
-                aria-label="Giảm số lượng"
-              >
-                -
-              </button>
-              <input
-                className="w-12 border rounded-2xl text-center text-sm"
-                type="number"
-                min={1}
-                value={quality}
-                onChange={(e) => {
-                  const val = Math.max(1, Number(e.target.value));
-                  setQuality(val);
-                }}
-              />
-              <button
-                onClick={() => setQuality((q) => q + 1)}
-                className="w-6 h-6 flex justify-center items-center border rounded-2xl text-base hover:bg-gray-100"
-                aria-label="Tăng số lượng"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded">
-            Thêm vào giỏ hàng
-          </button> */}
-
-          <div className="pt-4">
-            <h3 className="font-semibold">Đặc điểm nổi bật</h3>
-            <p className="text-gray-700">Sản phẩm tuyệt vời cho sức khỏe.</p>
-          </div>
-          {/* Tiết kiệm + ưu đãi sinh viên */}
-          <div className="text-sm text-red-600">
-            Tiết kiệm thêm đến <b>93.000đ</b> cho Smember <br />
-            Ưu đãi cho Học sinh - sinh viên, Giảng viên - giáo viên đến{" "}
-            <b>155.000đ</b>
-          </div>
-
-          <div className="flex flex-col gap-4 w-full max-w-xl mx-auto mt-6">
-            {/* Nút chọn trả góp 0% */}
-            <button className="w-full bg-red-600 text-white py-4 rounded-lg font-bold text-xl shadow hover:bg-red-700 transition">
-              CHỌN TRẢ GÓP 0%
-              <div className="text-base font-normal">
-                Trả trước 0đ | Phụ phí 0đ
-              </div>
-            </button>
-
-            {/* Mua ngay + giỏ hàng */}
-            <div className="flex gap-3 w-full">
-              <button className="flex-1 bg-red-500 text-white py-4 rounded-lg font-bold text-xl shadow hover:bg-red-600 transition flex flex-col items-center justify-center">
-                MUA NGAY
-                <span className="text-xs font-normal mt-1">
-                  (Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)
-                </span>
-              </button>
-              <button className="w-20 h-full min-h-[64px] border-2 border-red-400 bg-white text-red-500 rounded-lg flex items-center justify-center text-3xl hover:bg-gray-100 transition">
-                <span role="img" aria-label="cart">
-                  🛒
-                </span>
-              </button>
+            <div className="text-sm text-gray-600 space-x-2 mb-4">
+              <span>
+                Thương hiệu:{" "}
+                <span className="text-red-600 font-semibold">TIROSS</span>
+              </span>
+              |<span>Loại: Khác</span>|
+              <span>
+                MSP: <span className="font-semibold text-red-600">TS9447</span>
+              </span>
             </div>
 
-            {/* Trả góp 0% */}
-            <div className="grid grid-cols-2 gap-3 w-full">
-              <button className="bg-blue-600 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-700 transition flex flex-col items-center">
-                TRẢ GÓP 0%
-                <span className="text-xs font-normal">
-                  (Trả trước chỉ từ 0đ)
-                </span>
+            <div className="space-x-2 text-xl font-bold text-red-600 mb-4">
+              {formatCurrency(2090000)}₫
+              <span className="line-through text-gray-400 text-base font-normal">
+                {formatCurrency(2500000)}₫
+              </span>
+            </div>
+
+            {/* Countdown */}
+            <div className="bg-gradient-to-r from-red-600 to-orange-400 text-white px-4 py-2 rounded-lg shadow-[0_2px_4px_rgba(0,0,0,0.1)] mb-4">
+              <span className="font-bold">KẾT THÚC TRONG:</span>
+              <div className="flex gap-1 text-center text-xs font-semibold">
+                <div className="bg-white text-black px-2 py-1 rounded shadow-sm">00 Ngày</div>
+                <div className="bg-white text-black px-2 py-1 rounded shadow-sm">09 Giờ</div>
+                <div className="bg-white text-black px-2 py-1 rounded shadow-sm">00 Phút</div>
+                <div className="bg-white text-black px-2 py-1 rounded shadow-sm">22 Giây</div>
+              </div>
+            </div>
+
+            <div className="text-sm text-gray-600 mb-4">
+              🔥 Đã bán <span className="text-red-500 font-bold">27</span> sản phẩm
+            </div>
+
+            {/* Dung lượng */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-4">
+              {capacities.map((item) => (
+                <button
+                  key={item.label}
+                  className={`border px-4 py-2 rounded-lg text-sm text-left shadow-[0_2px_4px_rgba(0,0,0,0.05)] hover:shadow-[0_4px_8px_rgba(0,0,0,0.1)] transition-all duration-300
+                    ${
+                      item.label === selectedCapacity
+                        ? "border-red-500 text-red-600"
+                        : "border-black/10 text-gray-700"
+                    }`}
+                >
+                  <div>{item.label}</div>
+                  <div className="text-xs">{formatCurrency(item.price)}</div>
+                </button>
+              ))}
+            </div>
+
+            {/* Số lượng */}
+            <div className="mb-4">
+              <span className="text-base block mb-2">Số Lượng Sản Phẩm</span>
+              <div className="flex flex-row gap-4">
+                <button
+                  onClick={() => setQuality((q) => Math.max(1, q - 1))}
+                  className="w-6 h-6 flex justify-center items-center border border-black/10 rounded-2xl text-base hover:bg-gray-100 shadow-[0_2px_4px_rgba(0,0,0,0.05)] transition-all duration-300"
+                  aria-label="Giảm số lượng"
+                >
+                  -
+                </button>
+                <input
+                  className="w-12 border border-black/10 rounded-2xl text-center text-sm shadow-[0_2px_4px_rgba(0,0,0,0.05)]"
+                  type="number"
+                  min={1}
+                  value={quality}
+                  onChange={(e) => {
+                    const val = Math.max(1, Number(e.target.value));
+                    setQuality(val);
+                  }}
+                />
+                <button
+                  onClick={() => setQuality((q) => q + 1)}
+                  className="w-6 h-6 flex justify-center items-center border border-black/10 rounded-2xl text-base hover:bg-gray-100 shadow-[0_2px_4px_rgba(0,0,0,0.05)] transition-all duration-300"
+                  aria-label="Tăng số lượng"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Nút mua hàng */}
+            <div className="flex flex-col gap-4">
+              <button className="w-full bg-red-600 text-white py-4 rounded-lg font-bold text-xl shadow-[0_4px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)] hover:bg-red-700 transition-all duration-300">
+                CHỌN TRẢ GÓP 0%
+                <div className="text-base font-normal">
+                  Trả trước 0đ | Phụ phí 0đ
+                </div>
               </button>
-              <button className="bg-blue-500 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-600 transition flex flex-col items-center">
-                TRẢ GÓP 0% QUA THẺ
-                <span className="text-xs font-normal">
-                  (Không phí chuyển đổi 3-6 tháng)
-                </span>
-              </button>
+
+              <div className="flex gap-3">
+                <button className="flex-1 bg-red-500 text-white h-20 min-h-[64px] rounded-lg font-bold text-xl shadow-[0_4px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)] hover:bg-red-600 transition-all duration-300 flex flex-col items-center justify-center">
+                  MUA NGAY
+                  <span className="text-xs font-normal mt-1">
+                    (Giao nhanh từ 2 giờ hoặc nhận tại cửa hàng)
+                  </span>
+                </button>
+                <button className="w-20 h-20 min-h-[64px] border-2 border-red-400 bg-white text-red-500 rounded-lg flex items-center justify-center text-3xl hover:bg-gray-300 transition-all duration-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)]">
+                  <span role="img" aria-label="cart">🛒</span>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <button className="bg-blue-600 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-700 transition-all duration-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)] flex flex-col items-center">
+                  TRẢ GÓP 0%
+                  <span className="text-xs font-normal">
+                    (Trả trước chỉ từ 0đ)
+                  </span>
+                </button>
+                <button className="bg-blue-500 text-white py-3 rounded-lg font-bold text-base hover:bg-blue-600 transition-all duration-300 shadow-[0_4px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_12px_rgba(0,0,0,0.15)] flex flex-col items-center">
+                  TRẢ GÓP 0% QUA THẺ
+                  <span className="text-xs font-normal">
+                    (Không phí chuyển đổi 3-6 tháng)
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
 
           {/* Ưu đãi thêm */}
-          <div className="border border-black/20 p-4 rounded">
+          <div className="border border-black/10 p-4 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)] transition-shadow duration-300">
             <h2 className="text-lg font-semibold mb-3">Ưu đãi thêm</h2>
             <ul className="space-y-2 text-sm text-gray-700">
               <li>✅ Ưu đãi dành cho thành viên Smember</li>
               <li>✅ Hoàn tiền đến 2 triệu khi mở thẻ tín dụng HSBC</li>
-              <li>
-                ✅ Giảm đến 1 triệu khi thanh toán qua thẻ tín dụng Vietbank
-              </li>
-              <li>
-                ✅ Giảm đến 1 triệu khi thanh toán qua thẻ Muadee by HDBank
-              </li>
-              <li>
-                ✅ Giảm ngay 800K khi trả góp qua thẻ tín dụng Techcombank
-              </li>
+              <li>✅ Giảm đến 1 triệu khi thanh toán qua thẻ tín dụng Vietbank</li>
+              <li>✅ Giảm đến 1 triệu khi thanh toán qua thẻ Muadee by HDBank</li>
+              <li>✅ Giảm ngay 800K khi trả góp qua thẻ tín dụng Techcombank</li>
               <li>✅ Mở thẻ VIB nhận E-Voucher đến 600K</li>
               <li>✅ Giảm đến 500.000đ khi thanh toán qua Kredivo</li>
             </ul>
@@ -521,7 +493,208 @@ const ProductDetailUi = ({ id }: DetailType) => {
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-bold">SẢN PHẨM TƯƠNG TỰ</h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {/* Mobile view with horizontal scroll */}
+          <div 
+            className="lg:hidden relative group"
+            onMouseEnter={() => setShowArrows(true)}
+            onMouseLeave={() => setShowArrows(false)}
+          >
+            <button
+              onClick={scrollLeft}
+              className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-opacity duration-300 ${
+                showArrows ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+
+            <div
+              ref={scrollContainerRef}
+              className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide snap-x snap-mandatory"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {/* Card 1 */}
+              <div className="flex-none w-[280px] relative bg-white rounded-2xl shadow p-4 border border-black/20 snap-start">
+                <div className="absolute -top-3 left-0">
+                  <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                    Giảm 25%
+                  </span>
+                </div>
+                <Image
+                  src={sptt}
+                  alt="sptt"
+                  className="mx-auto h-28 object-contain"
+                />
+                <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                  1<small className="text-base">ms</small>
+                </div>
+                <div className="text-red-600 font-bold text-center text-base">
+                  24 inch 100 Hz Full HD
+                </div>
+                <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                  Màn hình ASUS VU249CFE 24 inch
+                </div>
+                <div className="text-red-600 font-bold text-lg text-center mt-2">
+                  {formatCurrency(2990000)}đ{" "}
+                  <span className="text-gray-400 line-through text-base font-normal">
+                    {formatCurrency(3990000)}đ
+                  </span>
+                </div>
+                <div className="bg-gray-100 text-xs text-gray-700 rounded px-2 py-1 mt-2 text-center">
+                  Tặng ly thủy tinh bọc da ASUS
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="flex-none w-[280px] relative bg-white rounded-2xl shadow p-4 border border-black/20 snap-start">
+                <div className="absolute -top-3 left-0">
+                  <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                    Giảm 6%
+                  </span>
+                </div>
+                <Image
+                  src={sptt}
+                  alt=""
+                  className="mx-auto h-28 object-contain"
+                />
+                <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                  5<small className="text-base">ms</small>
+                </div>
+                <div className="text-red-600 font-bold text-center text-base">
+                  16 inch 60 Hz Full HD
+                </div>
+                <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                  Màn hình di động ASUS ZenScreen MB169C 16 inch
+                </div>
+                <div className="text-red-600 font-bold text-lg text-center mt-2">
+                  {formatCurrency(3190000)}đ{" "}
+                  <span className="text-gray-400 line-through text-base font-normal">
+                    {formatCurrency(3390000)}đ
+                  </span>
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                    Trả góp 0%
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="flex-none w-[280px] relative bg-white rounded-2xl shadow p-4 border border-black/20 snap-start">
+                <div className="absolute -top-3 left-0">
+                  <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                    Giảm 14%
+                  </span>
+                </div>
+                <Image
+                  src={sptt}
+                  alt="sptt"
+                  className="mx-auto h-28 object-contain"
+                />
+                <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                  1<small className="text-base">ms</small>{" "}
+                  <span className="text-gray-700 text-xs ml-2">sRGB 116%</span>
+                </div>
+                <div className="text-red-600 font-bold text-center text-base">
+                  27 inch 120 Hz Full HD
+                </div>
+                <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                  Màn hình MSI Pro MP275 E2 27 inch
+                </div>
+                <div className="text-red-600 font-bold text-lg text-center mt-2">
+                  {formatCurrency(2990000)}đ{" "}
+                  <span className="text-gray-400 line-through text-base font-normal">
+                    {formatCurrency(3490000)}đ
+                  </span>
+                </div>
+              </div>
+
+              {/* Card 4 */}
+              <div className="flex-none w-[280px] relative bg-white rounded-2xl shadow p-4 border border-black/20 snap-start">
+                <div className="absolute -top-3 left-0">
+                  <span className="bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-tl-2xl rounded-br-2xl">
+                    Giảm 11%
+                  </span>
+                </div>
+                <Image
+                  src={sptt}
+                  alt="sptt"
+                  className="mx-auto h-28 object-contain"
+                />
+                <div className="text-yellow-400 text-2xl font-bold text-center mt-2">
+                  1<small className="text-base">ms</small>
+                </div>
+                <div className="text-red-600 font-bold text-center text-base">
+                  25 inch 180 Hz Full HD
+                </div>
+                <div className="text-gray-800 font-semibold text-center text-sm mt-1">
+                  Màn hình Gaming MSI G255F 25 inch
+                </div>
+                <div className="text-red-600 font-bold text-lg text-center mt-2">
+                  {formatCurrency(3190000)}đ{" "}
+                  <span className="text-gray-400 line-through text-base font-normal">
+                    {formatCurrency(3590000)}đ
+                  </span>
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <span className="bg-blue-100 text-blue-600 text-xs px-2 py-1 rounded">
+                    Trả góp 0%
+                  </span>
+                  <span className="flex items-center">
+                    <span className="text-yellow-400 mr-1">★★★★★</span>
+                    <span className="text-gray-400 text-sm flex items-center">
+                      <svg
+                        className="w-5 h-5 ml-1"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
+                      </svg>
+                      Yêu thích
+                    </span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={scrollRight}
+              className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 p-2 rounded-full shadow-lg hover:bg-white transition-opacity duration-300 ${
+                showArrows ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <svg
+                className="w-6 h-6 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Desktop view with grid */}
+          <div className="hidden lg:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {/* Card 1 */}
             <div className="relative bg-white rounded-2xl shadow p-4 border border-black/20">
               <div className="absolute -top-3 left-0">
@@ -639,21 +812,6 @@ const ProductDetailUi = ({ id }: DetailType) => {
                 {formatCurrency(2990000)}đ{" "}
                 <span className="text-gray-400 line-through text-base font-normal">
                   {formatCurrency(3490000)}đ
-                </span>
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <span></span>
-                <span className="text-gray-400 text-sm flex items-center">
-                  <svg
-                    className="w-5 h-5 mr-1"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12 21C12 21 4 13.36 4 8.5C4 5.42 6.42 3 9.5 3C11.24 3 12.91 3.81 14 5.08C15.09 3.81 16.76 3 18.5 3C21.58 3 24 5.42 24 8.5C24 13.36 16 21 16 21H12Z" />
-                  </svg>
-                  Yêu thích
                 </span>
               </div>
             </div>
@@ -871,7 +1029,7 @@ const ProductDetailUi = ({ id }: DetailType) => {
             </div>
           </div>
           {/* Form gửi đánh giá */}
-          <div className="mt-10 p-6 bg-gray-50 rounded-xl shadow-inner">
+          <div className="mt-10 p-6 bg-gray-50 rounded-xl shadow-inner pb-24">
             <h2 className="text-2xl font-bold text-center text-red-700 mb-6">
               Hãy cho chúng tôi biết đánh giá của bạn
             </h2>
