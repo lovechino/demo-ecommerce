@@ -20,7 +20,7 @@ jobs:
           Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\public -Recurse -Force
           Copy-Item .\public C:\inetpub\wwwroot\EcomKomex\standalone\public -Recurse -Force
           Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\.next -Recurse -Force
-          Copy-Item .\.next C:\inetpub\wwwroot\EcomKomex\tandalone\.next -Recurse -Force
+          Copy-Item .\.next C:\inetpub\wwwroot\EcomKomex\standalone\.next -Recurse -Force
           Copy-Item .\.next\static C:\inetpub\wwwroot\EcomKomex\standalone\.next\static -Recurse -Force
           Remove-Item C:\inetpub\wwwroot\EcomKomex\standalone\package.json -Force
           Copy-Item .\.next\package.json C:\inetpub\wwwroot\EcomKomex\standalone\package.json -Force
@@ -29,6 +29,6 @@ jobs:
       - name: Restart IIS website EcomKomex
         run: |
           # Restart IIS website using appcmd
-          & "C:\Windows\System32\inetsrv\appcmd.exe" stop site \site.name:"EcomKomex"
+          & "C:\Windows\System32\inetsrv\appcmd.exe" stop site /site.name:"EcomKomex"
           Start-Sleep -Seconds 5
-          & "C:\Windows\System32\inetsrv\appcmd.exe" start site \site.name:"EcomKomex"
+          & "C:\Windows\System32\inetsrv\appcmd.exe" start site /site.name:"EcomKomex"
