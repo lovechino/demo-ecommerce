@@ -89,6 +89,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
+    <head>
+  <meta charSet="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu." />
+  <meta name="keywords" content="thiết bị điện tử, công nghệ, sản phẩm kỹ thuật số, giải pháp công nghệ" />
+
+
+  <meta property="og:title" content="Komex Digital" />
+  <meta property="og:description" content="Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu." />
+  <meta property="og:image" content="https://demo-ecommerce-swart.vercel.app/Image/og-image.jpg" />
+  <meta property="og:url" content="https://demo-ecommerce-swart.vercel.app/" />
+  <meta property="og:type" content="website" />
+
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Komex Digital" />
+  <meta name="twitter:description" content="Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu." />
+  <meta name="twitter:image" content="https://demo-ecommerce-swart.vercel.app/Image/og-image.jpg" />
+
+  <title>Komex Digital</title>
+</head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
