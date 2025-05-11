@@ -2,6 +2,7 @@
 import { getAllProduct } from "@/Apis/Product";
 import Loading from "@/components/Loading/Loading";
 
+
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { FiLoader } from "react-icons/fi";

@@ -5,7 +5,7 @@ import StoreProvider from "@/Redux/StoreProvider";
 import NavTop from "@/components/Header/NarTop";
 import Navbar from "@/components/Header/Navbar";
 import BottomNav from "@/components/Header/BottomNav";
-import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
+import logo from "@/public/Image/2zcB726UgVFR5RBnjJ66CqIuBQ9U0XKo_1694581378____e37386722a535bca4a4b7b79d79c315c.png";
 
 const siteName = "Komex Digital";
 const siteUrl = "https://demo-ecommerce-swart.vercel.app/";
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     siteName: siteName,
     images: [
       {
-        url: "https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/company_logos/2zcB726UgVFR5RBnjJ66CqIuBQ9U0XKo_1694581378____e37386722a535bca4a4b7b79d79c315c.png",
+        url: logo.src,
         width: 1200,
         height: 630,
         alt: siteName,
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
     creator: "@yourhandle",
     images: [
       {
-        url: "https://cdn-new.topcv.vn/unsafe/https://static.topcv.vn/company_logos/2zcB726UgVFR5RBnjJ66CqIuBQ9U0XKo_1694581378____e37386722a535bca4a4b7b79d79c315c.png",
+        url: logo.src,
         width: 1200,
         height: 630,
         alt: siteName,
@@ -88,7 +88,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html lang="vi">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

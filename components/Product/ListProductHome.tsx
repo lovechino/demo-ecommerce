@@ -117,7 +117,7 @@ const ListProductHome = () => {
     };
     fetchMenuAndProducts();
   }, []);
-  console.log(menu);
+
 
   return (
     <div className="w-full max-w-7xl mx-auto flex flex-col justify-center items-center px-2 py-6">

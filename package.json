@@ -11,6 +11,7 @@
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.6.1",
     "@reduxjs/toolkit": "^2.7.0",
+    "@shopify/storefront-api-client": "^1.0.7",
     "antd": "^5.24.8",
     "axios": "^1.9.0",
     "cookies-next": "^5.1.0",
