@@ -1,13 +1,12 @@
-🔧 Getting Started
-# Clone the project
-git clone https://github.com/lovechino/demo-ecommerce
-cd demo-ecommerce
+<p align="center">
+  <a href="https://github.com/lovechino/demo-ecommerce.git">
+    <img src="https://img.shields.io/github/stars/yourusername/your-repo-name?style=social" alt="GitHub stars" />
+  </a>
+</p>
 
-# Install dependencies
-npm install
-
-# Start the development server
-npm run dev
+<p align="center">
+  🚀 If you find this project useful or interesting, please consider giving it a ⭐️ to support the work!
+</p>
 
 # 🚀 Project Name (Next.js App)
 
@@ -32,6 +31,18 @@ A modern web application built with [Next.js 15](https://nextjs.org/), TypeScrip
 ├── package.json      # Project dependencies and scripts
 └── ...               # Configuration and environment files
 
+🔧 Getting Started
+
+# Clone the project
+git clone https://github.com/lovechino/demo-ecommerce.git
+cd demo-ecommerce
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+
 🧠 Technologies Used
 Next.js 15
 
@@ -42,3 +53,8 @@ Redux Toolkit
 Tailwind CSS (if applicable)
 
 ESLint + Prettier for code formatting
+
+📦 Available Scripts
+Script                 	Description
+npm run dev     	Run the app in development mode
+npm run build	     Build the app for production
