@@ -106,7 +106,7 @@ export default function RootLayout({
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Komex Digital" />
   <meta name="twitter:description" content="Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu." />
-  <meta name="twitter:image" content="https://demo-ecommerce-swart.vercel.app/Image/og-image.jpg" />
+  <meta name="twitter:image" content="https://demo-ecommerce-swart.vercel.app/Image/logokomex.jpgnew" />
 
   <title>Komex Digital</title>
 </head>
