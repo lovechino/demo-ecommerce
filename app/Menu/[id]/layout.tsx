@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import logo from "@/public/Image/komex-digital-logo_a39f6b3a05934b128b6b2e4e11ee89e1.webp";
 
 const siteName = "Komex Digital";
-const siteUrl = "https://your-komex-digital-website.com";
+const siteUrl = "https://demo-ecommerce-swart.vercel.app";
 const description =
   "Komex Digital - Cung cấp các giải pháp và sản phẩm công nghệ hàng đầu.";
 const keywords = [
