@@ -14,7 +14,7 @@ A modern web application built with [Next.js 15](https://nextjs.org/), TypeScrip
 
 ## 🔗 Live Demo
 
-👉 [View the live demo here](https://your-demo-link.com)
+👉 [View the live demo here](https://demo-ecommerce-swart.vercel.app/)
 
 ## 📁 Folder Structure
 
