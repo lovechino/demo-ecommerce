@@ -5,7 +5,7 @@ import StoreProvider from "@/Redux/StoreProvider";
 import NavTop from "@/components/Header/NarTop";
 import Navbar from "@/components/Header/Navbar";
 import BottomNav from "@/components/Header/BottomNav";
-import logo from "@/public/Image/2zcB726UgVFR5RBnjJ66CqIuBQ9U0XKo_1694581378____e37386722a535bca4a4b7b79d79c315c.png";
+import logo from "@/public/Image/logokomex.jpg";
 
 const siteName = "Komex Digital";
 const siteUrl = "https://demo-ecommerce-swart.vercel.app/";
