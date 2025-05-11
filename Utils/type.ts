@@ -1,3 +1,17 @@
+
+export interface ShopifyProduct {
+  id: number;
+  title: string;
+  body_html: string;
+  vendor: string;
+  product_type: string;
+  images: { src: string }[];
+  variants: {
+    id: number;
+    price: string;
+  }[];
+}
+
 export interface ProductType {
   id: number;
   productcode: string;

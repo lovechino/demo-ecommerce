@@ -2,10 +2,12 @@
 import { useDispatch } from "react-redux";
 import axiosInstance from "@/Utils/Axios";
 import { setListProduct } from "@/Redux/product";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const getAllProduct = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const dispatch = useDispatch();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -51,3 +53,5 @@ export const GetListGroupProduct = async () => {
     .get("/MobileLogin/GetListGroupProduct")
     .then((res) => res.data);
 };
+
+
